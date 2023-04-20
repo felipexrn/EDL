@@ -1,0 +1,26 @@
+Incremental
+0 ms - 10 tamanho - 10 taxa
+0 ms - 100 tamanho - 10 taxa
+5 ms - 1000 tamanho - 10 taxa
+100 ms - 10000 tamanho - 10 taxa
+2520 ms - 100000 tamanho - 10 taxa
+701001 ms - 1000000 tamanho - 10 taxa
+0 ms - 10 tamanho - 100 taxa
+0 ms - 100 tamanho - 100 taxa
+0 ms - 1000 tamanho - 100 taxa
+7 ms - 10000 tamanho - 100 taxa
+455 ms - 100000 tamanho - 100 taxa
+70724 ms - 1000000 tamanho - 100 taxa
+0 ms - 10 tamanho - 1000 taxa
+0 ms - 100 tamanho - 1000 taxa
+0 ms - 1000 tamanho - 1000 taxa
+0 ms - 10000 tamanho - 1000 taxa
+75 ms - 100000 tamanho - 1000 taxa
+6833 ms - 1000000 tamanho - 1000 taxa
+Duplicação
+0 ms - 10 tamanho
+1 ms - 100 tamanho
+0 ms - 1000 tamanho
+1 ms - 10000 tamanho
+54 ms - 100000 tamanho
+32 ms - 1000000 tamanho
