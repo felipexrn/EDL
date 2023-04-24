@@ -35,7 +35,7 @@ public class testeFila {
       System.out.println("Estado da Fila");
       System.out.println(f.toString());
 
-      System.out.println("Esvazinado a Fila");
+      System.out.println("Esvaziando a Fila");
       while (f.size() > 0) {
         System.out.println("Saiu " + f.first());
         f.dequeue();
