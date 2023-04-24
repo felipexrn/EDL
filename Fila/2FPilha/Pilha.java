@@ -23,7 +23,8 @@ public class Pilha implements IPilha {
     else {
       int len = f1.size();
       for (int i = 0; i < len-1; i++) f2.enqueue(f1.dequeue());
-      Object temp = f1.dequeue();
+      Object temp = f1.first();
+      f2.enqueue(f1.dequeue());
       len = f2.size();
       for (int i = 0; i < len; i++) f1.enqueue(f2.dequeue());
       return temp;
@@ -46,7 +47,7 @@ public class Pilha implements IPilha {
     else {
       int len = f1.size();
       for (int i = 0; i < len-1; i++) f2.enqueue(f1.dequeue());
-      Object temp = f1.first();
+      Object temp = f1.dequeue();
       len = f2.size();
       for (int i = 0; i < len; i++) f1.enqueue(f2.dequeue());
       return temp;
