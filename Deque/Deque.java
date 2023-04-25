@@ -116,11 +116,24 @@ public class Deque {  // {begin, end, , , } capacity
   public String toString() {
     String s = "{";
     int j = begin;
-    for (int i = 0; j != end; j = (j + 1) % capacity) {
+    for (int i = 0; j != end; i++) {
       s += D[j];
-      if (j != end -1 || end != 0) s += ", ";
+      j = (j + 1) % capacity;
+      if (j != end) s += ", ";
     }
     s += "}";
+    return s;
+  }
+  public String strStruct() {
+    String s = "{";
+    for(int i = 0; i < capacity; i++){ 
+      s += D[i];
+    if (i < capacity -1)
+      s += ", ";
+    }
+    s += "}";
+    System.out.println(begin);
+    System.out.println(end);
     return s;
   }
 }

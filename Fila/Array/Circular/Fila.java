@@ -60,8 +60,7 @@ public class Fila implements IFila {
     for(int i = 0; j != end; i++){ 
       s += queue[j];
       j = (j + 1) % length;
-    if (j != end)
-      s += ", ";
+      if (j != end) s += ", ";
     }
     s += "}";
     return s;

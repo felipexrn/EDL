@@ -7,11 +7,15 @@ public class testeDeque {
       D.insertFirst(i);
       System.out.println(D.first());
       System.out.println(D.toString());
+      System.out.println(D.strStruct());
       System.out.println(D.size());
+      System.out.println("menor " + D.acessSmaller());
     }
     System.out.println("Estado final do Deque");
     System.out.println(D.toString());
     System.out.println(D.size());
+    System.out.println(D.strStruct());
+    System.out.println("menor " + D.acessSmaller());
   }
 }
   
