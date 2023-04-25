@@ -16,20 +16,15 @@ public class Deque {  // {begin, end, , , } capacity
     smaller = 0;
   }
   public void insertFirst(Object o) {
-    if (isFull()) {
-      this.malloc();
-    }
+    if (isFull()) this.malloc();
     if (begin == 0) begin = capacity -1;
     else begin = (begin - 1) % capacity;
     D[begin] = o;
     if (this.size() == 1) smaller = begin;
     else if ((int) o < (int) D[smaller]) smaller = begin;
-    System.out.println("capacidade " + capacity);
   }
   public void insertLast(Object o) {
-    if (isFull()) {
-      this.malloc();
-    }
+    if (isFull()) this.malloc();
     D[end] = o;
     if (end == capacity -1) end = 0;
     else end = (end + 1) % capacity;
@@ -50,9 +45,9 @@ public class Deque {  // {begin, end, , , } capacity
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
       Object temp = D[end];
-      D[end] = null;
       if (end == 0) begin = capacity -1;
       end = (end - 1) % capacity;
+      D[end] = null;
       return temp;
     }
   }
@@ -132,8 +127,9 @@ public class Deque {  // {begin, end, , , } capacity
       s += ", ";
     }
     s += "}";
-    System.out.println(begin);
-    System.out.println(end);
+    System.out.println("capacidade " + capacity);
+    System.out.println("begin " + begin);
+    System.out.println("end " + end);
     return s;
   }
 }
