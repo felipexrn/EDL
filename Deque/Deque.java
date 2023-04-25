@@ -1,4 +1,4 @@
-public class Deque {
+public class Deque {  // {begin, end, , , } capacity
   private Object[] D;
   private int begin;
   private int end;
@@ -19,8 +19,8 @@ public class Deque {
     if (isFull()) {
       // add capacity
     }
-    if (begin == capacity -1) begin = 0;
-    begin = (begin + 1) % capacity;
+    if (begin == 0) begin = capacity -1;
+    begin = (begin - 1) % capacity;
     D[begin] = o;
     if (this.size() > 0)
       if (o < D[smaller]) smaller = begin;
@@ -29,8 +29,8 @@ public class Deque {
     if (isFull()) {
       // add capacity
     }
-    if (end == 0) end = capacity -1;
-    end = (end - 1) % capacity;
+    if (end == capacity -1) end = 0;
+    end = (end + 1) % capacity;
     D[end] = o;
     if (this.size() > 0)
       if (o < D[smaller]) smaller = end;
@@ -39,8 +39,9 @@ public class Deque {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
       Object temp = D[begin];
-      if (begin == 0) begin = capacity -1;
-      else begin = (begin - 1) % capacity;
+      D[begin] = null;
+      if (begin == capacity -1) begin = 0;
+      else begin = (begin + 1) % capacity;
       return temp;
     }
   }
@@ -48,24 +49,25 @@ public class Deque {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
       Object temp = D[end];
-      if (end == capacity -1) begin = 0;
-      end = (end + 1) % capacity;
+      D[end] = null;
+      if (end == 0) begin = capacity -1;
+      end = (end - 1) % capacity;
       return temp;
     }
   }
   public Object First() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
-      Object temp;
-      if (end == 0) temp = D[capacity -1];
-      else temp = D[end+1];
-      return temp;
+      return D[begin];
     }
   }
   public Object Last() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
-      return D[begin];
+      Object temp;
+      if (end == 0) temp = D[capacity -1];
+      else temp = D[end-1];
+      return temp;
     }
   }
   public boolean isFull() {
@@ -77,8 +79,21 @@ public class Deque {
   public int size() {
     return (capacity - begin + end) % capacity
   }
-  public Object AcessSmaller() {
+  public Object acessSmaller() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
-    else return D[smaller];
+    else {
+      if (D[smaller] == null) setNextSmaller();
+      return D[smaller];
+    }
+  }
+  public Object setNextSmaller() {
+    Object temp = D[begin];
+    j = begin;
+    for (int i = 0; j != end; j = (j + 1) % capacity) {
+      if (D[j] < temp) {
+        temp = D[j];
+        smaller = j;
+      }
+    }
   }
 }
