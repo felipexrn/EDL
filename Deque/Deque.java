@@ -44,7 +44,7 @@ public class Deque {  // {begin, end, , , } capacity
   public Object removeLast() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
-      if (end == 0) begin = capacity -1;
+      if (end == 0) end = capacity -1;
       end = (end - 1) % capacity;
       Object temp = D[end];
       D[end] = null;
