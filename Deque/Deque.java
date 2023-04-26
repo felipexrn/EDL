@@ -102,7 +102,7 @@ public class Deque {  // {begin, end, , , } capacity
     smaller = j;
     for (int i = 0; j != end; i++) {
       newDeque[i] = D[j];
-      j = (j + 1) % newCapacity;
+      j = (j + 1) % capacity;
       if ((int) newDeque[i] <= (int) D[smaller]) smaller = i;
     }
     begin = 0;
