@@ -44,9 +44,9 @@ public class Deque {  // {begin, end, , , } capacity
   public Object removeLast() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
-      Object temp = D[end];
       if (end == 0) begin = capacity -1;
       end = (end - 1) % capacity;
+      Object temp = D[end];
       D[end] = null;
       return temp;
     }
@@ -99,14 +99,19 @@ public class Deque {  // {begin, end, , , } capacity
     else newCapacity += tx;
     Object[] newDeque = new Object[newCapacity];
     int j = begin;
+    smaller = j;
     for (int i = 0; j != end; i++) {
       newDeque[i] = D[j];
-      j = (j + 1) % capacity;
+      j = (j + 1) % newCapacity;
+      if ((int) newDeque[i] <= (int) D[smaller]) smaller = i;
     }
     begin = 0;
     end = j;
     D = newDeque;
     capacity = newCapacity;
+  }
+  public void empty() {
+    while (!this.isEmpty()) this.removeLast();
   }
   public String toString() {
     String s = "{";
