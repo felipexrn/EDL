@@ -78,11 +78,11 @@ public class Deque {  // {begin, end, , , } capacity
   public Object acessSmaller() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
-      if (D[smaller] == null) setNextSmaller();
+      if (D[smaller] == null) this.setNextSmaller();
       return D[smaller];
     }
   }
-  public Object setNextSmaller() {
+  public void setNextSmaller() {
     Object temp = D[begin];
     int j = begin;
     for (int i = 0; j != end; j = (j + 1) % capacity) {
@@ -91,7 +91,6 @@ public class Deque {  // {begin, end, , , } capacity
         smaller = j;
       }
     }
-    return temp;
   }
   private void malloc() {
     int newCapacity = capacity;
