@@ -31,14 +31,12 @@ public class testeDeque {
     System.out.println(D1.toString());
     System.out.println(D1.strStruct());
     System.out.println("size " + D1.size());
-       
+    
     Deque D2 = new Deque(capacity, isDouble, tax);
     System.out.println("Inserindo " + in + " elementos no início do Deque 2");
     for (int i = 0; i < in; i++) {
       D2.insertFirst(i);
       System.out.println(D2.first());
-      System.out.println(D2.toString());
-      System.out.println(D2.strStruct());
     }
     System.out.println("Estado do Deque 2");
     System.out.println(D2.toString());
@@ -57,13 +55,13 @@ public class testeDeque {
     System.out.println("menor " + D2.acessSmaller());
 
     System.out.println("Esvaziando o Deque 2");
-    D1.empty();
+    D2.empty();
     System.out.println("Estado do Deque 2");
-    System.out.println(D1.toString());
-    System.out.println(D1.strStruct());
-    System.out.println("size " + D1.size());
+    System.out.println(D2.toString());
+    System.out.println(D2.strStruct());
+    System.out.println("size " + D2.size());
 
-    System.out.println("Teste de Exceção Deque 2");
+    System.out.println("Teste de Exceção Deque");
     D1.removeFirst();
     D2.removeFirst();
   }

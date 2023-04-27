@@ -62,7 +62,7 @@ public class Deque {  // {begin, end, , , } capacity
     else {
       Object temp;
       if (end == 0) temp = D[capacity -1];
-      else temp = D[end-1];
+      else temp = D[(end - 1) % capacity];
       return temp;
     }
   }
@@ -98,15 +98,16 @@ public class Deque {  // {begin, end, , , } capacity
     if (isd) newCapacity *= 2;
     else newCapacity += tx;
     Object[] newDeque = new Object[newCapacity];
-    int j = begin;
+    int j = begin, newEnd = 0;
     smaller = j;
     for (int i = 0; j != end; i++) {
       newDeque[i] = D[j];
       j = (j + 1) % capacity;
+      newEnd = i+1;
       if ((int) newDeque[i] <= (int) D[smaller]) smaller = i;
     }
     begin = 0;
-    end = j;
+    end = newEnd;
     D = newDeque;
     capacity = newCapacity;
   }
@@ -132,9 +133,6 @@ public class Deque {  // {begin, end, , , } capacity
       s += ", ";
     }
     s += "}";
-    System.out.println("capacidade " + capacity);
-    System.out.println("begin " + begin);
-    System.out.println("end " + end);
     return s;
   }
 }
