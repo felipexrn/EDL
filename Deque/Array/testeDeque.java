@@ -23,7 +23,7 @@ public class testeDeque {
 
     System.out.println("Removendo " + out + " elementos no fim do Deque");
     for (int i = 0; i < out; i++) {
-      if (i % 2 == 0) {
+      if (i % 2 != 0) {
         System.out.println(D.removeLast());
       }
       else {
@@ -36,7 +36,7 @@ public class testeDeque {
     System.out.println("size " + D.size());
     System.out.println("menor " + D.acessSmaller());
 
-    System.out.println("Inserindo novo menor " + menor1 + " no Deque");
+    System.out.println("Inserindo novo menor " + menor1 + " no fim do Deque");
     D.insertLast(menor1);
     System.out.println("Estado do Deque");
     System.out.println(D.toString());
@@ -44,7 +44,7 @@ public class testeDeque {
     System.out.println("size " + D.size());
     System.out.println("menor " + D.acessSmaller());
 
-    System.out.println("Inserindo novo menor " + menor2 + " no Deque");
+    System.out.println("Inserindo novo menor " + menor2 + " no início do Deque");
     D.insertFirst(menor2);
     System.out.println("Estado do Deque");
     System.out.println(D.toString());
