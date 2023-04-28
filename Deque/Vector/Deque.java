@@ -8,26 +8,30 @@ public class Deque {
   public void insertFirst(Object o) {
     if (this.size() == 0) smaller = 0;
     else if ((int) o > (int) Deque.get(smaller)) smaller++;
+    else smaller = 0;
     Deque.add(0, o);
   }
   public void insertLast(Object o) {
     if (this.size() == 0) smaller = 0;
-    else if ((int) o < (int) Deque.get(smaller)) smaller++;
+    else if ((int) o < (int) Deque.get(smaller)) smaller = this.size();
     Deque.add(o);
   }
   public Object removeFirst() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
+      Object lastMin = Deque.get(smaller);
       Object temp = Deque.remove(0);
-      this.setNextSmaller();
+      if (temp == lastMin) this.setNextSmaller();
+      else smaller--;
       return temp;
     }
   }
   public Object removeLast() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
+      Object lastMin = Deque.get(smaller);
       Object temp = Deque.remove(Deque.size() -1);
-      this.setNextSmaller();
+      if (temp == lastMin) this.setNextSmaller();
       return temp;
     }
   }
@@ -52,7 +56,6 @@ public class Deque {
   public Object acessSmaller() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
-      if (Deque.get(smaller) == null) this.setNextSmaller();
       return Deque.get(smaller);
     }
   }

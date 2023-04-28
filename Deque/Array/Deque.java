@@ -28,26 +28,33 @@ public class Deque {  // {begin, end, , , } capacity
     D[end] = o;
     if (end == capacity -1) end = 0;
     else end = (end + 1) % capacity;
-    if (this.size() == 1) smaller = end;
-    else if ((int) o < (int) D[smaller]) smaller = end;
+    if (this.size() == 1) smaller = begin;
+    else if ((int) o < (int) D[smaller]) {
+      if (end == 0) smaller = capacity -1;
+      else smaller = (end - 1) % capacity;
+    }
   }
   public Object removeFirst() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
+      Object lastMin = D[smaller];
       Object temp = D[begin];
       D[begin] = null;
       if (begin == capacity -1) begin = 0;
       else begin = (begin + 1) % capacity;
+      if (temp == lastMin) this.setNextSmaller();
       return temp;
     }
   }
   public Object removeLast() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
+      Object lastMin = D[smaller];
       if (end == 0) end = capacity -1;
-      end = (end - 1) % capacity;
+      else end = (end - 1) % capacity;
       Object temp = D[end];
       D[end] = null;
+      if (temp == lastMin) this.setNextSmaller();
       return temp;
     }
   }
@@ -78,18 +85,18 @@ public class Deque {  // {begin, end, , , } capacity
   public Object acessSmaller() {
     if (isEmpty()) throw new EmptyDequeException("Empty Deque");
     else {
-      if (D[smaller] == null) this.setNextSmaller();
       return D[smaller];
     }
   }
   public void setNextSmaller() {
     Object temp = D[begin];
     int j = begin;
-    for (int i = 0; j != end; j = (j + 1) % capacity) {
-      if ((int) D[j] < (int) temp) {
+    for (int i = 0; j != end; i++){
+      if (D[j] != null && (int) D[j] <= (int) temp) {
         temp = D[j];
         smaller = j;
       }
+      j = (j + 1) % capacity;
     }
   }
   private void malloc() {
