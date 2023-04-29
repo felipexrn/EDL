@@ -59,6 +59,12 @@ public class List {
     Object temp = new Object();
     return temp;
   }
+  public Object getFirstElement() {
+    return begin.getNext().getElement();
+  }
+  public Object getLastElement() {
+    return end.getPrevious().getElement();
+  }
   public Object replace(Object o, int i) {
     Object temp = new Object();
     return temp;
