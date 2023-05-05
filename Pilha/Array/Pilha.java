@@ -4,6 +4,7 @@ public class Pilha implements IPilha {
   private int capacity;
   private boolean FC;
   private int tx;
+  private int smaller;
   public Pilha(int tam, boolean Crescimento, int taxa) {
     FC = Crescimento;  
     tx = taxa;
@@ -35,6 +36,8 @@ public class Pilha implements IPilha {
       S = temp;
     }
     S[++t] = o;
+    if (this.size() == 1) smaller = t;
+    else if ((int) o < (int) S[smaller]) smaller = t;
   }
   public void adicionaPilha(Pilha P) {
     Pilha P2 = new Pilha(capacity, FC, tx);
@@ -49,13 +52,31 @@ public class Pilha implements IPilha {
     if (this.isEmpty()) throw new PilhaVaziaExcecao("Pilha vazia");
     else {
       Object temp = S[t];
+      Object lastMin = S[smaller];
       S[t] = null;
       t = t-1;
+      if (temp == lastMin) this.setNextSmaller();
       return temp;
     }
   }
   public void empty() {
     t = -1;
+  }
+  public Object acessSmaller() {
+    if (isEmpty()) throw new PilhaVaziaExcecao("Pilha vazia");
+    else {
+      return S[smaller];
+    }
+  }
+  public void setNextSmaller() {
+    Object temp = S[0];
+    smaller = t;
+    for (int i = 0; i < t+1; i++){
+      if (S[i] != null && (int) S[i] <= (int) temp) {
+        temp = S[i];
+        smaller = i;
+      }
+    }
   }
   public void print(){
     System.out.print("{");

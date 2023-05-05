@@ -4,6 +4,7 @@ public interface IFila {
   public Object first() throws EmptyQueueException;
   public abstract int size();
   public abstract boolean isEmpty();
+  public abstract Object acessSmaller();
   public abstract String strStruct();
   public abstract String toString();
 }

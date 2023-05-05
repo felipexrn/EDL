@@ -9,13 +9,17 @@ public class testePilha {
 		  System.out.println(i);		  
 		}
     p1.print();
-		System.out.println("retirando " + in + " elementos na pilha " + nomesPilhas[0]);
+    System.out.println("O menor elemento da Pilha é " + p1.acessSmaller());
+    
+		System.out.println("retirando " + out + " elementos na pilha " + nomesPilhas[0]);
     System.out.println("topo - retirado");
 		for(int i = 0; i < out; i++){  
 			System.out.print(p1.top());
       System.out.print(" - ");
       System.out.println(p1.pop());
 		}
+    System.out.println("O menor elemento da Pilha é " + p1.acessSmaller());
+    
     System.out.println("Estado inicial da pilha " + nomesPilhas[0] + " antes do empty()");	
     p1.print();
     p1.empty();
@@ -26,12 +30,17 @@ public class testePilha {
       p1.push(i);
 		  System.out.println(i);		  
 		}
-    PilhaArray p2 = new PilhaArray(1, false, 10);
+    System.out.println("O menor elemento da Pilha é " + p1.acessSmaller());
+
+    
+    Pilha p2 = new Pilha(1, false, 10);
     System.out.println("inserindo " + out + " elementos na pilha " + nomesPilhas[1]);
 		for(int i = 0; i < out; i++){
       p2.push(i);
 		  System.out.println(i);		  
 		}
+    System.out.println("O menor elemento da Pilha é " + p2.acessSmaller());
+    
     System.out.println("Estado inicial das pilhas " + nomesPilhas[0] +  " e " + nomesPilhas[1] + " antes do adiconaPilha()");	
     p2.print();
     p1.print();
@@ -39,5 +48,7 @@ public class testePilha {
     System.out.println("Estado final das pilhas " + nomesPilhas[0] +  " e " + nomesPilhas[1] + " depois do adiconaPilha()");	
     p2.print();
     p1.print();
+    System.out.println("O menor elemento da Pilha é " + p1.acessSmaller());
+    System.out.println("O menor elemento da Pilha é " + p2.acessSmaller());
 	}
 }

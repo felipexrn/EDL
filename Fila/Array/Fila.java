@@ -5,6 +5,7 @@ public class Fila implements IFila {
   private int length;
   private int fc;
   private int tx;
+  private int smaller;
   public Fila(int len, int factor, int tax) {
     queue = new Object[len];
     length = len;
@@ -29,11 +30,15 @@ public class Fila implements IFila {
       length = newLength;
     }
     queue[end++] = o;
+    if (this.size() == 1) smaller = end -1;
+    else if ((int) o < (int) queue[smaller]) smaller = end -1;
   }
   public Object dequeue() {
     if (this.isEmpty()) throw new EmptyQueueException("");
     Object temp = queue[begin];
+    Object lastMin = queue[smaller];
     queue[begin++] = null;
+    if (temp == lastMin) this.setNextSmaller();
     return temp;
   }
   public Object first() {
@@ -48,6 +53,23 @@ public class Fila implements IFila {
   }
   public boolean isFull() {
     return (end == this.length-1);
+  }
+  public Object acessSmaller() {
+    if (isEmpty()) throw new EmptyQueueException("Empty Queue");
+    else {
+      return queue[smaller];
+    }
+  }
+  public void setNextSmaller() {
+    Object temp = queue[begin];
+    int j = begin;
+    for (int i = 0; j != end; i++){
+      if (queue[j] != null && (int) queue[j] <= (int) temp) {
+        temp = queue[j];
+        smaller = j;
+      }
+      j++;
+    }
   }
   public String strStruct() {
     String s = "{";

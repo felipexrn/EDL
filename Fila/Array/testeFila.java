@@ -9,6 +9,7 @@ public class testeFila {
         System.out.println(i);
       }
       System.out.println("A Fila contém " + f.size() + " elementos");
+      System.out.println("O menor elemento da Fila é " + f.acessSmaller());
       
       System.out.println("Saindo " + out + " elementos");
       for (int i = 0; i < out; i++) {
@@ -21,6 +22,8 @@ public class testeFila {
       System.out.println(f.strStruct());
       System.out.println("Estado da Fila");
       System.out.println(f.toString());
+      System.out.println("O menor elemento da Fila é " + f.acessSmaller());
+
       
       for (int i = 0; i < cir; i++) {
         System.out.println("Entrou " + i);
@@ -34,6 +37,7 @@ public class testeFila {
       System.out.println(f.strStruct());
       System.out.println("Estado da Fila");
       System.out.println(f.toString());
+      System.out.println("O menor elemento da Fila é " + f.acessSmaller());
 
       System.out.println("Esvazinado a Fila");
       while (f.size() > 0) {

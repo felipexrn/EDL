@@ -7,6 +7,7 @@ public interface IPilha {
   public void push(Object o);
   public void adicionaPilha(Pilha P);
   public Object pop() throws PilhaVaziaExcecao;
+  public Object acessSmaller();
   public void print();
 }
 
