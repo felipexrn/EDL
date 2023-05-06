@@ -1,23 +1,17 @@
 public class testeVector {
 	public static void main(String[] args) {
-		int in = 10, out = 3, cir = 2;
+		int in = 10, out = 3;
     Vector v = new Vector(1);
     System.out.println("Entrando " + in + " elementos");
-    // j 0 0 1 2
-    // i 0 1 2 3
-    // V[0, , , ]
-    // V[1,0, , ]
-    // V[2,1,0, ]
     for (int i = 0; i < in; i++) {
       v.insertAtRank(0, i); 
       System.out.println(i);
     }
-    System.out.println("A Fila contém " + v.size() + " elementos");
-    System.out.println("Estrutura da Fila");
+    System.out.println("O Vetor contém " + v.size() + " elementos");
+    System.out.println("Estrutura do Vetor");
     System.out.println(v.strStruct());
-    System.out.println("Estado da Fila");
+    System.out.println("Estado do Vetor");
     System.out.println(v.toString());
-    //System.out.println("O menor elemento da Fila é " + f.acessSmaller());
     
     System.out.println("Saindo " + out + " elementos");
     for (int i = 0; i < out; i++) {
@@ -25,39 +19,45 @@ public class testeVector {
       v.removeAtRank(i);
     }
     
-    System.out.println("A Fila contém " + v.size() + " elementos");
-    System.out.println("Estrutura da Fila");
+    System.out.println("O Vetor contém " + v.size() + " elementos");
+    System.out.println("Estrutura do Vetor");
     System.out.println(v.strStruct());
-    System.out.println("Estado da Fila");
+    System.out.println("Estado do Vetor");
     System.out.println(v.toString());
-    //System.out.println("O menor elemento da Fila é " + f.acessSmaller());
 
-    for (int i = 0; i < cir; i++) {
-      System.out.println("Entrou " + i);
-      v.insertAtRank(i / 2, i);
-      System.out.println("Saiu " + i);
-      v.removeAtRank(i / 2);
+    System.out.println("subistituindo " + v.size() + " elementos");
+    for (int i = 0; i < v.size(); i++) {
+      System.out.println(v.elementAtRank(i) + " por " + i*2);
+      v.replaceAtRank(i, i*2);
     }
 
-    System.out.println("A Fila contém " + v.size() + " elementos");
-    System.out.println("Estrutura da Fila");
+    System.out.println("O Vetor contém " + v.size() + " elementos");
+    System.out.println("Estrutura do Vetor");
     System.out.println(v.strStruct());
-    System.out.println("Estado da Fila");
+    System.out.println("Estado do Vetor");
     System.out.println(v.toString());
-    //System.out.println("O menor elemento da Fila é " + f.acessSmaller());
 
-    System.out.println("Esvazinado a Fila");
+    System.out.println("Esvazinado o Vetor");
     while (v.size() > 0) {
       System.out.println("Saiu " + v.removeAtRank(0));
     }
 
-    System.out.println("A Fila contém " + v.size() + " elementos");
-    System.out.println("Estrutura da Fila");
+    System.out.println("O Vetor contém " + v.size() + " elementos");
+    System.out.println("Estrutura do Vetor");
     System.out.println(v.strStruct());
-    System.out.println("Estado da Fila");
+    System.out.println("Estado do Vetor");
     System.out.println(v.toString());
 
     System.out.println("Teste de excecão");
-    System.out.println(v.removeAtRank(0));
+    try {
+      System.out.println("Removendo elemento de Vetor vazio");
+      System.out.println(v.removeAtRank(0));
+      System.out.println("Elemento removido de Vetor vazio");
+    }
+    catch (Exception e) {
+      System.out.println("inserindo elemento índice inválido");
+      v.insertAtRank(-1, 0); 
+      System.out.println("Elemento inserido em índice inválido");
+    }
 	}
 }
