@@ -15,10 +15,10 @@ public class Node {
   public int getPrevious(){
     return this.previous;
   }
-  public void setNext(int newNode){
-    this.next = newNode;
+  public void setNext(int newNodeI){
+    this.next = newNodeI;
   }
-  public void setPrevious(int newNode){
-    this.previous = newNode;
+  public void setPrevious(int newNodeI){
+    this.previous = newNodeI;
   }
 }
