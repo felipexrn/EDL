@@ -41,7 +41,17 @@ public class List {
     size++;
   }
   public void insertAfter(int index, Object o) {
-    
+    Node actual = begin.getNext();
+    Node newNode = new Node();
+    newNode.setElement(o);
+    for (int i = 0; i < index; i++) {
+      actual = actual.getNext();
+    }
+    newNode.setPrevious(actual);
+    newNode.setNext(actual.getNext());
+    actual.getNext().setPrevious(newNode);
+    actual.setNext(newNode);
+    size++;
   }
   public Object removeBegin() {
     if (isEmpty()) throw new EmptyListException("Empty List");
@@ -80,8 +90,7 @@ public class List {
     return temp;
   }
   public Object removeAfter(int index) {
-    Object temp = new Object();
-    return temp;
+    return this.removeBefore(index);
   }
   public Object getElementAt(int index) {
     Node actual = begin.getNext();
