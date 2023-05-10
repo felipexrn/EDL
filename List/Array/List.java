@@ -9,67 +9,84 @@ public class List {
     this.end = 0;
     this.capacity = cap;
   }
-  public void insertFirst(Obcjet o) {
+  public void insertFirst(Object o) {
     if (this.isFull()) this.malloc();
     if (this.begin == 0) this.begin = this.capacity -1;
     else this.begin = (this.begin - 1) % this.capacity;
     Node newNode = new Node();
     newNode.setElement(o);
     newNode.setNext((this.begin + 1) % this.capacity);
-    newNode.setPrevious((this.begin - 1) % this.capacity)
+    newNode.setPrevious((this.begin - 1) % this.capacity);
     l[this.begin] = newNode;
   }
-  public void insertLast(Obcjet o) {
+  public void insertLast(Object o) {
     if (this.isFull()) this.malloc();
     Node newNode = new Node();
     newNode.setElement(o);
     newNode.setNext((this.end + 1) % this.capacity);
-    newNode.setPrevious((this.end - 1) % this.capacity)
+    newNode.setPrevious((this.end - 1) % this.capacity);
     l[this.end] = newNode;
     if (this.end == this.capacity -1) this.end = 0;
     else this.end = (this.end + 1) % this.capacity;
   }
-  public void insertBefore(Node n, Obcjet o) {
+  public void insertBefore(Node n, Object o) {
     if (this.isFull()) this.malloc();
     
     int r = this.begin;
-    for (int i = 0; l[i] != n; i++) r = (this.begin + 1) % this.capacity;
+    for (int i = 0; l[i] != n; i++) {
+      r = (r + 1) % this.capacity;
+      if (i == this.size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+    } 
       
-    for (int i = this.size() -1; i != r; i = (i-1) % this.capacity) {
+    for (int i = (end -1) % capacity; i != r; i = (i -1) % this.capacity) {
       this.l[i].setNext((this.l[i].getNext() + 1) % this.capacity); 
       this.l[i].setPrevious((this.l[i].getPrevious() + 1) % this.capacity); 
-      this.l[i] = this.l[(i-1) % this.capacity];
+      this.l[i] = this.l[(i -1) % this.capacity];
     }
 
-    newNode = new Node();
+    Node newNode = new Node();
     newNode.setElement(o);
     newNode.setNext((r + 1) % this.capacity);
     newNode.setPrevious((r - 1) % this.capacity);
-    this.l[r] = n;
+    this.l[r] = newNode;
   }
-  public void insertAfter(Node n, Obcjet o) {
+  public void insertAfter(Node n, Object o) {
     if (this.isFull()) this.malloc();
+    
     int r = this.begin;
-    for (int i = 0; l[i] != n; i++) r = (this.begin + 1) % this.capacity;
+    for (int i = 0; l[i] != n; i++) {
+      r = (r + 1) % this.capacity;
+      if (i == this.size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+    } 
+
+    r = (r + 1) % this.capacity;
       
-    for (int i = this.size() -1; i > r; i--) {
-      this.l[i] = this.l[i-1];
+    for (int i = (end -1) % capacity; i != r; i = (i -1) % this.capacity) {
       this.l[i].setNext((this.l[i].getNext() + 1) % this.capacity); 
       this.l[i].setPrevious((this.l[i].getPrevious() + 1) % this.capacity); 
+      this.l[i] = this.l[(i -1) % this.capacity];
     }
 
-    newNode = new Node();
+    Node newNode = new Node();
     newNode.setElement(o);
     newNode.setNext((r + 1) % this.capacity);
     newNode.setPrevious((r - 1) % this.capacity);
-    this.l[r] = n;
+    this.l[r] = newNode;
   }
   public Object remove(Node n) {
-    // encontrar no
-    // refazer ligações
-    // retornar elemento
-    Object temp =  n.getElement();
-    return temp;
+    int r = this.begin;
+    for (int i = 0; l[i] != n; i++) {
+      r = (r + 1) % this.capacity;
+      if (i == this.size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+    } 
+
+    for (int i = r; i != (end -1) % capacity; i = (i +1) % this.capacity) {
+      this.l[i].setNext((this.l[i].getNext() - 1) % this.capacity); 
+      this.l[i].setPrevious((this.l[i].getPrevious() - 1) % this.capacity); 
+      this.l[i] = this.l[(i +1) % this.capacity];
+    }
+    
+    return n.getElement(); 
   }
   private void malloc() {
     int newCapacity = this.capacity *= 2;
@@ -91,7 +108,7 @@ public class List {
     q.setElement(temp);
   }
   public Object replaceElement(Node n, Object o) {
-    Obcjet temp = n.getElement();
+    Object temp = n.getElement();
     n.setElement(o);
     return temp;
   }
@@ -111,10 +128,10 @@ public class List {
     return this.l[n.getNext()];
   }
   public boolean isFirst(Node n) {
-    return this.first() == n
+    return this.first() == n;
   }
   public boolean isLast(Node n) {
-    return this.last() == n
+    return this.last() == n;
   }
   public boolean isEmpty() {
     return this.size() == 0;
