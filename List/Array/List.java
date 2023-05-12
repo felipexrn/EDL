@@ -112,6 +112,14 @@ public class List {
     n.setElement(o);
     return temp;
   }
+  public Node findElement(Object o) {
+    int r = this.begin;
+    for (int i = 0; l[i].getElement() != o; i++) {
+      r = (r + 1) % this.capacity;
+      if (i == this.size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+    } 
+    return l[r];
+  }
   public Object first() {
     return this.l[this.begin].getElement();
   }
