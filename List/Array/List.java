@@ -6,25 +6,21 @@ public class List {
   public List(int cap) {
     this.l = new Node[cap];
     this.begin = 0;
-    this.end = 0;
+    this.end = 1;
     this.capacity = cap;
   }
   public void insertFirst(Object o) {
     if (this.isFull()) this.malloc();
     if (this.begin == 0) this.begin = this.capacity -1;
-    else this.begin = (this.begin - 1) % this.capacity;
+    else this.begin = (this.begin - 1);
     Node newNode = new Node();
     newNode.setElement(o);
-    newNode.setNext((this.begin + 1) % this.capacity);
-    newNode.setPrevious((this.begin - 1) % this.capacity);
     l[this.begin] = newNode;
   }
   public void insertLast(Object o) {
     if (this.isFull()) this.malloc();
     Node newNode = new Node();
     newNode.setElement(o);
-    newNode.setNext((this.end + 1) % this.capacity);
-    newNode.setPrevious((this.end - 1) % this.capacity);
     l[this.end] = newNode;
     if (this.end == this.capacity -1) this.end = 0;
     else this.end = (this.end + 1) % this.capacity;
@@ -39,15 +35,11 @@ public class List {
     } 
       
     for (int i = (end -1) % capacity; i != r; i = (i -1) % this.capacity) {
-      this.l[i].setNext((this.l[i].getNext() + 1) % this.capacity); 
-      this.l[i].setPrevious((this.l[i].getPrevious() + 1) % this.capacity); 
       this.l[i] = this.l[(i -1) % this.capacity];
     }
 
     Node newNode = new Node();
     newNode.setElement(o);
-    newNode.setNext((r + 1) % this.capacity);
-    newNode.setPrevious((r - 1) % this.capacity);
     this.l[r] = newNode;
   }
   public void insertAfter(Node n, Object o) {
@@ -62,15 +54,11 @@ public class List {
     r = (r + 1) % this.capacity;
       
     for (int i = (end -1) % capacity; i != r; i = (i -1) % this.capacity) {
-      this.l[i].setNext((this.l[i].getNext() + 1) % this.capacity); 
-      this.l[i].setPrevious((this.l[i].getPrevious() + 1) % this.capacity); 
       this.l[i] = this.l[(i -1) % this.capacity];
     }
 
     Node newNode = new Node();
     newNode.setElement(o);
-    newNode.setNext((r + 1) % this.capacity);
-    newNode.setPrevious((r - 1) % this.capacity);
     this.l[r] = newNode;
   }
   public Object remove(Node n) {
@@ -81,8 +69,6 @@ public class List {
     } 
 
     for (int i = r; i != (end -1) % capacity; i = (i +1) % this.capacity) {
-      this.l[i].setNext((this.l[i].getNext() - 1) % this.capacity); 
-      this.l[i].setPrevious((this.l[i].getPrevious() - 1) % this.capacity); 
       this.l[i] = this.l[(i +1) % this.capacity];
     }
     
@@ -91,14 +77,13 @@ public class List {
   private void malloc() {
     int newCapacity = this.capacity *= 2;
     Node[] newList = new Node[newCapacity];
-    int j = this.begin, newEnd = 0;
-    for (int i = 0; j != this.end; i++) {
+    int j = this.begin;
+    for (int i = 0; i < this.size(); i++) {
       newList[i] = this.l[j];
       j = (j + 1) % this.capacity;
-      newEnd = i+1;
     }
     this.begin = 0;
-    this.end = newEnd;
+    this.end = this.size();
     this.l = newList;
     this.capacity = newCapacity;
   }
@@ -113,12 +98,14 @@ public class List {
     return temp;
   }
   public Node findElement(Object o) {
-    int r = this.begin;
-    for (int i = 0; l[i].getElement() != o; i++) {
-      r = (r + 1) % this.capacity;
-      if (i == this.size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+    int index = this.begin;
+    for (int i = 0; i < this.size(); i++) {
+      if (o != this.l[index].getElement()) index = (index + 1) % capacity;
+      else break;
     } 
-    return l[r];
+    if (index == this.size())
+      throw new ThereIsNoNodeException("There is no corresponding Node");
+    return this.l[index];
   }
   public Object first() {
     return this.l[this.begin].getElement();
@@ -129,11 +116,25 @@ public class List {
     else e = (this.end - 1) % this.capacity;
     return this.l[e].getElement();
   }
-  public Object before(Node n) {
-    return this.l[n.getPrevious()];
+  public Node before(Node n) {
+    int index = this.begin;
+    for (int i = 0; i < this.size(); i++) {
+      if (n != this.l[index]) index = (index + 1) % capacity;
+      else break;
+    }
+    if (index == this.size())
+      throw new ThereIsNoNodeException("There is no corresponding Node");
+    return this.l[index];
   }
-  public Object after(Node n) {
-    return this.l[n.getNext()];
+  public Node after(Node n) {
+    int index = this.begin;
+    for (int i = 0; i < this.size(); i++) {
+      if (n != this.l[index]) index = (index + 1) % capacity;
+      else break;
+    }
+    if (index == this.size())
+      throw new ThereIsNoNodeException("There is no corresponding Node");
+    return this.l[index];
   }
   public boolean isFirst(Node n) {
     return this.first() == n;
@@ -150,11 +151,27 @@ public class List {
   public int size() {
     return (this.capacity - this.begin + this.end) % this.capacity;
   }
+  public String strStruct() {
+    String s = "{";
+    Node actual = this.l[begin];
+    for (int i = 0; i < this.capacity; i++) {
+      if (l[i] == null) s += l[i];
+      else s += l[i].getElement();
+      if (i < this.capacity -1) {
+        s += ", ";   
+      }
+    }
+    return s += "}";
+  }
   public String toString() {
     String s = "{";
+    int j = this.begin;
     for (int i = 0; i < this.size(); i++) {
-      if (i < this.size() -1) s += ", ";
-      s += this.l[i].getElement();
+      s += l[j].getElement();
+      j = (j + 1) % capacity;
+      if (i < this.size() -1) {
+        s += ", ";   
+      }
     }
     return s += "}";
   }
