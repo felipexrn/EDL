@@ -4,7 +4,7 @@ public class List {
   private int end;
   private int capacity;
   public List() {
-    this.capacity = 2;
+    this.capacity = 1;
     this.l = new Node[capacity];
     this.begin = 0;
     this.end = 0;
@@ -77,16 +77,17 @@ public class List {
   private void malloc() {
     int newCapacity = this.capacity * 2;
     Node[] newList = new Node[newCapacity];
-    int j = this.begin;
+    int j = this.begin, newEnd = 0;
     for (int i = 0; i < this.size(); i++) {
-      if (j == this.capacity -1) j = 0; 
-      else j = (j + 1) % this.capacity;
       newList[i] = this.l[j];
+      j = (j + 1) % this.capacity;
+      newEnd = i+1;
     }
-    this.begin = 0;
-    this.end = this.size();
     this.l = newList;
     this.capacity = newCapacity;
+    this.begin = 0;
+    this.end = newEnd;
+    this.strStruct();
   }
   public void swapElements(Node n, Node q) {
     Object temp = n.getElement();
