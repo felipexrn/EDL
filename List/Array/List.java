@@ -3,11 +3,11 @@ public class List {
   private int begin;
   private int end;
   private int capacity;
-  public List(int cap) {
-    this.l = new Node[cap];
+  public List() {
+    this.capacity = 2;
+    this.l = new Node[capacity];
     this.begin = 0;
-    this.end = 1;
-    this.capacity = cap;
+    this.end = 0;
   }
   public void insertFirst(Object o) {
     if (this.isFull()) this.malloc();
@@ -75,12 +75,13 @@ public class List {
     return n.getElement(); 
   }
   private void malloc() {
-    int newCapacity = this.capacity *= 2;
+    int newCapacity = this.capacity * 2;
     Node[] newList = new Node[newCapacity];
     int j = this.begin;
     for (int i = 0; i < this.size(); i++) {
+      if (j == this.capacity -1) j = 0; 
+      else j = (j + 1) % this.capacity;
       newList[i] = this.l[j];
-      j = (j + 1) % this.capacity;
     }
     this.begin = 0;
     this.end = this.size();
