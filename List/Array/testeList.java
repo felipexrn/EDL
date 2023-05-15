@@ -3,11 +3,13 @@ public class testeList {
     System.out.println("Estado da List");
     System.out.println(lista.toString());
     System.out.println("size " + lista.size());
+    System.out.println("begin " + lista.getBegin());
+    System.out.println("end " + lista.getEnd());
     System.out.println("Estrutura da Array");
     System.out.println(lista.strStruct());
   }
   public static void main(String[] args) {
-    int in1 = 4, in2 = 10, in3 = 3, in4 = -1, in5 = -2;
+    int in1 = 4, in2 = 10, in3 = 9, in4 = -1, in5 = -2;
     List l = new List();
     System.out.println("\ninserindo " + in1 + " elementos no início");
     for (int i = 0; i < in1; i++) {

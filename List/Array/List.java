@@ -32,6 +32,7 @@ public class List {
       r = (r + 1) % capacity;
       if (i == size()) throw new ThereIsNoNodeException("There is no corresponding Node");
     } 
+    if (begin == r && begin == 0) begin = capacity -1;
     if (r == 0) r = capacity -1;
     else r--;
     System.out.println("before r " + r);
@@ -43,6 +44,7 @@ public class List {
       l[i] = l[j];
       j = (j +1) % capacity;
     }
+    //end = (end +1) % capacity;
 
     Node newNode = new Node();
     newNode.setElement(o);
@@ -158,6 +160,12 @@ public class List {
   }
   public int size() {
     return (capacity - begin + end) % capacity;
+  }
+  public int getBegin() {
+    return begin;
+  }
+  public int getEnd() {
+    return end;
   }
   public String strStruct() {
     String s = "{";
