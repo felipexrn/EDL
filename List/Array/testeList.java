@@ -9,7 +9,7 @@ public class testeList {
     System.out.println(lista.strStruct());
   }
   public static void main(String[] args) {
-    int in1 = 4, in2 = 10, in3 = 9, in4 = -1, in5 = -2;
+    int in1 = 4, in2 = 10, in3 = 7, in4 = -1, in5 = -2;
     List l = new List();
     System.out.println("\ninserindo " + in1 + " elementos no início");
     for (int i = 0; i < in1; i++) {
