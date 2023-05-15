@@ -32,7 +32,9 @@ public class List {
       r = (r + 1) % capacity;
       if (i == size()) throw new ThereIsNoNodeException("There is no corresponding Node");
     } 
-    System.out.println("rBefore " + r);
+    if (r == 0) r = capacity -1;
+    else r--;
+    System.out.println("before r " + r);
     
     int j;
     if (end == 0) j = capacity -1;
@@ -54,10 +56,8 @@ public class List {
       r = (r + 1) % capacity;
       if (i == size()) throw new ThereIsNoNodeException("There is no corresponding Node");
     } 
-
-    System.out.println("rAfter " + r);
-    
     r = (r + 1) % capacity;
+    System.out.println("after r " + r);
       
     for (int i = (end -1) % capacity; i != r; i = (i -1) % capacity) {
       l[i] = l[(i -1) % capacity];
