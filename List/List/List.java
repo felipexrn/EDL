@@ -31,7 +31,7 @@ public class List {
     Node actual = begin.getNext();
     Node newNode = new Node();
     newNode.setElement(o);
-    for (int i = 0; i < index; i++) {
+    while (actual != n) {
       actual = actual.getNext();
     }
     newNode.setPrevious(actual.getPrevious());
@@ -44,7 +44,7 @@ public class List {
     Node actual = begin.getNext();
     Node newNode = new Node();
     newNode.setElement(o);
-    for (int i = 0; i < index; i++) {
+    while (actual != n) {
       actual = actual.getNext();
     }
     newNode.setPrevious(actual);
@@ -79,7 +79,7 @@ public class List {
   public Object removeBefore(Node n) {
     Object temp = new Object();
     Node actual = begin.getNext();
-    for (int i = 0; i < index; i++) {
+    while (actual != n) {
       actual = actual.getNext();
     }
     temp = actual.getElement();
@@ -91,7 +91,18 @@ public class List {
     return temp;
   }
   public Object removeAfter(Node n) {
-    return this.removeBefore(index);
+    Object temp = new Object();
+    Node actual = begin.getNext();
+    while (actual != n) {
+      actual = actual.getNext();
+    }
+    temp = actual.getElement();
+    actual.getPrevious().setNext(actual.getNext());
+    actual.getNext().setPrevious(actual.getPrevious());
+    actual.setNext(null);
+    actual.setPrevious(null);
+    size--;
+    return temp;
   }
   public Object swapElements(Node q, Node p) {}
   public Node findElement(Object o) {}
@@ -106,7 +117,7 @@ public class List {
   public Object replaceElement(Node n, Object o) {
     Object temp = new Object();
     Node actual = begin.getNext();
-    for (int i = 0; i < index; i++) {
+    while (actual != n) {
       actual = actual.getNext();
     }
     temp = actual.getElement();
