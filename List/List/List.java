@@ -53,7 +53,10 @@ public class List {
     actual.setNext(newNode);
     size++;
   }
-  public Object remove(Node n) {}
+  public Object remove(Node n) {
+    Object temp = n.getElement();
+    return temp;
+  }
   public Object removeFirst() {
     if (isEmpty()) throw new EmptyListException("Empty List");
     Node oldNode = begin.getNext();
@@ -104,16 +107,27 @@ public class List {
     size--;
     return temp;
   }
-  public Object swapElements(Node q, Node p) {}
-  public Node findElement(Object o) {}
+  public void swapElements(Node q, Node p) {
+    Object temp = q.getElement();
+    q.setElement(p.getElement());
+    p.setElement(temp);
+  }
+  public Node findElement(Object o) {
+    Node actual = begin.getNext();
+    return actual;
+  }
   public Object first() {
     return begin.getNext().getElement();
   }
-  public Object lastt() {
+  public Object last() {
     return end.getPrevious().getElement();
   }
-  public Object before(Node n) {}
-  public Object after(Node n) {}
+  public Node before(Node n) {
+    return n.getPrevious();
+  }
+  public Node after(Node n) {
+    return n.getNext();
+  }
   public Object replaceElement(Node n, Object o) {
     Object temp = new Object();
     Node actual = begin.getNext();
@@ -124,8 +138,12 @@ public class List {
     actual.setElement(o);
     return temp;
   }
-  public boolean isFirst() {}
-  public boolean isLast() {}
+  public boolean isFirst(Node n) {
+    return begin.getNext() == n;
+  }
+  public boolean isLast(Node n) {
+    return end.getNext() == n;
+  }
   public boolean isEmpty() {
     return (size == 0);
   }
@@ -133,7 +151,7 @@ public class List {
     return this.size;
   }
   public void empty() {
-    while(!this.isEmpty()) this.removeBegin();
+    while(!this.isEmpty()) this.removeFirst();
   }
   public String toString() {
     String s = "{";
