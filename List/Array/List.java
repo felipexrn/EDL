@@ -8,7 +8,7 @@ public class List {
     l = new Node[capacity];
     begin = 0;
     end = 0;
-  } // Ok
+  } 
   public void insertFirst(Object o) {
     if (isFull()) malloc();
     if (begin == 0) begin = capacity -1;
@@ -16,21 +16,22 @@ public class List {
     Node newNode = new Node();
     newNode.setElement(o);
     l[begin] = newNode;
-  } // Ok
+  } 
   public void insertLast(Object o) {
     if (isFull()) malloc();
     Node newNode = new Node();
     newNode.setElement(o);
     l[end] = newNode;
     end = (end + 1) % capacity;
-  } // Ok
+  } 
   public void insertBefore(Node n, Object o) {
     if (isFull()) malloc();
     
     int r = begin;
     for (int i = 0; l[r] != n; i++) {
       r = (r + 1) % capacity;
-      if (i == size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+      if (i == size())
+        throw new ThereIsNoNodeException("There is no corresponding Node");
     } 
     end = (end +1) % capacity;
     System.out.println("before r " + r);
@@ -48,14 +49,15 @@ public class List {
     Node newNode = new Node();
     newNode.setElement(o);
     l[r] = newNode;
-  } // Ok
+  } 
   public void insertAfter(Node n, Object o) {
     if (isFull()) malloc();
     
     int r = begin;
     for (int i = 0; l[i] != n; i++) {
       r = (r + 1) % capacity;
-      if (i == size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+      if (i == size())
+        throw new ThereIsNoNodeException("There is no corresponding Node");
     } 
     r = (r + 1) % capacity;
     System.out.println("after r " + r);
@@ -74,13 +76,15 @@ public class List {
     Node newNode = new Node();
     newNode.setElement(o);
     l[r] = newNode;
-  } // Ok
+  } 
   public Object remove(Node n) {
-    if (isEmpty()) throw new EmptyListException("Empty List");
+    if (isEmpty())
+      throw new EmptyListException("Empty List");
     int r = begin;
     for (int i = 0; l[i] != n; i++) {
       r = (r + 1) % capacity;
-      if (i == size()) throw new ThereIsNoNodeException("There is no corresponding Node");
+      if (i == size())
+        throw new ThereIsNoNodeException("There is no corresponding Node");
     } 
 
     int j = (r +1) % capacity;
@@ -93,7 +97,7 @@ public class List {
     else end--;
     
     return n.getElement(); 
-  } // Ok
+  } 
   private void malloc() {
     int newCapacity = capacity * 2;
     Node[] newList = new Node[newCapacity];
@@ -108,17 +112,17 @@ public class List {
     begin = 0;
     end = newEnd;
     strStruct();
-  } // Ok
+  } 
   public void swapElements(Node n, Node q) {
     Object temp = n.getElement();
     n.setElement(q.getElement());
     q.setElement(temp);
-  } // Ok
+  } 
   public Object replaceElement(Node n, Object o) {
     Object temp = n.getElement();
     n.setElement(o);
     return temp;
-  } // Ok
+  } 
   public Node findElement(Object o) {
     int index = begin;
     for (int i = 0; i < size(); i++) {
@@ -128,16 +132,16 @@ public class List {
     if (index == size())
       throw new ThereIsNoNodeException("There is no corresponding Node");
     return l[index];
-  } // Ok
+  } 
   public Object first() {
     return l[begin].getElement();
-  } // Ok
+  } 
   public Object last() {
     int e;
     if (end == 0) e = capacity -1;
     else e = end - 1;
     return l[e].getElement();
-  } // ok
+  } 
   public Node before(Node n) {
     
     int index = begin;
@@ -152,7 +156,7 @@ public class List {
     index--;
     
     return l[index];
-  } // Ok
+  } 
   public Node after(Node n) {
     int index = begin;
     for (int i = 0; i < size(); i++) {
@@ -166,31 +170,31 @@ public class List {
     index++;
      
     return l[index];
-  } // Ok
+  } 
   public boolean isFirst(Node n) {
     return l[begin] == n;
-  } // Ok
+  } 
   public boolean isLast(Node n) {
     int e;
     if (end == 0) e = capacity -1;
     else e = (end - 1) % capacity;
     return l[e] == n;
-  } // Ok
+  } 
   public boolean isEmpty() {
     return size() == 0;
-  } // Ok
+  } 
   public boolean isFull() {
     return size() == capacity -1;
-  } // Ok
+  } 
   public int size() {
     return (capacity - begin + end) % capacity;
-  } // Ok
+  } 
   public int getBegin() {
     return begin;
-  } // Ok
+  } 
   public int getEnd() {
     return end;
-  } // Ok
+  } 
   public String strStruct() {
     String s = "{";
     Node actual = l[begin];
@@ -202,7 +206,7 @@ public class List {
       }
     }
     return s += "}";
-  } // Ok
+  } 
   public String toString() {
     String s = "{";
     int j = begin;
@@ -214,5 +218,5 @@ public class List {
       }
     }
     return s += "}";
-  } // Ok
+  } 
 }
