@@ -75,19 +75,19 @@ public class testeList {
 
     System.out.println("\no elemento " + in10 + " é o último? " + l.isLast(l.findElement(in10)));
 
-    System.out.println("Esvaziando a List");
-    while(!l.isEmpty()) l.remove(l.findElement(l.first()));
+    System.out.println("\nEsvaziando a List");
+    l.empty();
     estado(l);
 
     System.out.println("\ntestes de exceção ");
     try {
-      System.out.println("Buscando elemento inexistente");
+      System.out.println("\nBuscando elemento inexistente");
       l.isLast(l.findElement(99));
-      System.out.println("Elemento encontrado");
+      System.out.println("\nElemento encontrado");
     } catch (Exception e) {
-      System.out.println("Removendo elemento da List vazia");
+      System.out.println("\nRemovendo elemento da List vazia");
       l.remove(l.findElement(0));
-      System.out.println("Elemento removido");
+      System.out.println("\nElemento removido");
     }    
   }
 }
