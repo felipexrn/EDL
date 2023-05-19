@@ -1,6 +1,6 @@
 public class testeSequence {
   public static void estado(Sequence seq) {
-    System.out.println("Estado da Sequence");
+    System.out.println("\nEstado da Sequence");
     System.out.println(seq.toString());
     System.out.println("size " + seq.size());
   }
@@ -21,54 +21,54 @@ public class testeSequence {
     estado(s);
     
     System.out.println("\ninserindo elemento " + in4 +
-                       " antes do elemento " + in3 + " na List");
+                       " antes do elemento " + in3 + " na Sequence");
     s.insertBefore(s.findElement(in3),in4);
     estado(s);
 
     System.out.println("\ninserindo elemento " + in5 +
-                       " depois do elemento " + in3 + " na List");
+                       " depois do elemento " + in3 + " na Sequence");
     s.insertAfter(s.findElement(in3),in5);
     estado(s);
 
     System.out.println("\ninserindo elemento " + in4 +
-                       " antes do elemento " + in7 + " na List");
+                       " antes do elemento " + in7 + " na Sequence");
     s.insertBefore(s.findElement(in7),in4);
     estado(s);
 
     System.out.println("\ninserindo elemento " + in9 +
-                       " depois do elemento " + in8 + " na List");
+                       " depois do elemento " + in8 + " na Sequence");
     s.insertAfter(s.findElement(in8),in9);
     estado(s);
 
-    System.out.println("\nremovendo elemento " + in6 + " da List");
+    System.out.println("\nremovendo elemento " + in6 + " da Sequence");
     s.remove(s.findElement(in6));
     estado(s);
 
-    System.out.println("\nremovendo elemento " + s.first() + " da List");
+    System.out.println("\nremovendo elemento " + s.first() + " da Sequence");
     s.remove(s.findElement(s.first()));
     estado(s);
 
-    System.out.println("\nremovendo elemento " + s.last() + " da List");
+    System.out.println("\nremovendo elemento " + s.last() + " da Sequence");
     s.remove(s.findElement(s.last()));
     estado(s);
 
     System.out.println("\ntrocando os elementos " + s.first() +
-                       " por " + s.last() + " da List");
+                       " por " + s.last() + " da Sequence");
     s.swapElements(s.findElement(s.first()),s.findElement(s.last()));
     estado(s);
 
     System.out.println("\nsubistituindo o elemento " + s.first() +
-                       " por " + in10 + " da List");
+                       " por " + in10 + " da Sequence");
     s.replaceElement(s.findElement(s.first()),in10);
     estado(s);
 
     System.out.println("\nsubistituindo o elemento " + s.last() +
-                       " por " + in11 + " da List");
+                       " por " + in11 + " da Sequence");
     s.replaceElement(s.findElement(s.last()),in11);
     estado(s);
     
     System.out.println("\nsubistituindo o elemento " + s.last() +
-                       " por " + in12 + " da List");
+                       " por " + in12 + " da Sequence");
     s.replaceElement(s.findElement(s.last()),in12);
     estado(s);
 
@@ -90,7 +90,7 @@ public class testeSequence {
     System.out.println("\no elemento " + in10 + " é o último? "
                        + s.isLast(s.findElement(in10)));
 
-    System.out.println("\nEsvaziando a List");
+    System.out.println("\nEsvaziando a Sequence");
     s.empty();
     estado(s);
 
@@ -101,8 +101,8 @@ public class testeSequence {
       s.insertAtRank(0, i); 
       System.out.println(i);
     }
-    System.out.println("O Vetor contém " + s.size() + " elementos");
-    System.out.println("Estado do Vetor");
+    System.out.println("O Sequence contém " + s.size() + " elementos");
+    System.out.println("Estado do Sequence");
     System.out.println(s.toString());
     
     System.out.println("Saindo " + out + " elementos");
@@ -111,8 +111,8 @@ public class testeSequence {
       s.removeAtRank(i);
     }
     
-    System.out.println("O Vetor contém " + s.size() + " elementos");
-    System.out.println("Estado do Vetor");
+    System.out.println("O Sequence contém " + s.size() + " elementos");
+    System.out.println("Estado do Sequence");
     System.out.println(s.toString());
 
     System.out.println("subistituindo " + s.size() + " elementos");
@@ -121,17 +121,17 @@ public class testeSequence {
       s.replaceAtRank(i, i*2);
     }
 
-    System.out.println("O Vetor contém " + s.size() + " elementos");
-    System.out.println("Estado do Vetor");
+    System.out.println("O Sequence contém " + s.size() + " elementos");
+    System.out.println("Estado do Sequence");
     System.out.println(s.toString());
 
-    System.out.println("Esvazinado o Vetor");
+    System.out.println("Esvaziando o Sequence");
     while (s.size() > 0) {
       System.out.println("Saiu " + s.removeAtRank(0));
     }
 
-    System.out.println("O Vetor contém " + s.size() + " elementos");
-    System.out.println("Estado do Vetor");
+    System.out.println("O Sequence contém " + s.size() + " elementos");
+    System.out.println("Estado do Sequence");
     System.out.println(s.toString());
 
     System.out.println("\nTestes de excecão");

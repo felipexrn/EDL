@@ -26,6 +26,9 @@ public class Sequence {
   public void swapElements(Node q, Node p) {
     S.swapElements(q, p);
   }
+  public Node findElement(Object o) {
+    return S.findElement(o);
+  }
   public void insertAtRank(int r, Object o) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
       throw new InvalidIndexSequenceException("Invalid Index");
@@ -101,6 +104,12 @@ public class Sequence {
   }
   public boolean isEmpty() {
     return S.isEmpty();
+  }
+  public boolean isFirst(Node n) {
+    return S.isFirst();
+  }
+  public boolean isLast(Node n) {
+    return S.isLast(); 
   }
   public String toString() {
     return S.toString();
