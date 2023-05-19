@@ -163,6 +163,12 @@ public class List {
   public boolean isLast(Node n) {
     return end.getPrevious() == n;
   } 
+  public Node getBegin() {
+    return begin.getNext();
+  }
+  public Node getEnd() {
+    return end.getPrevious();
+  }
   public boolean isEmpty() {
     return (size == 0);
   } 

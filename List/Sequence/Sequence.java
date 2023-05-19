@@ -1,6 +1,6 @@
 public class Sequence {
   private List S;
-  pubic Sequence() {
+  public Sequence() {
     S = new List();
   }
   public void insertFirst(Object o) {
@@ -28,33 +28,33 @@ public class Sequence {
   }
   public void insertAtRank(int r, Object o) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
-      throw new InvalidIndexVectorException("Invalid Index");
-    Node actual fisrt();
+      throw new InvalidIndexSequenceException("Invalid Index");
+    Node actual = S.getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     insertBefore(actual, o);
   }
   public Object removeAtRank(int r) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
-      throw new InvalidIndexVectorException("Invalid Index");
+      throw new InvalidIndexSequenceException("Invalid Index");
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
-    Node actual fisrt();
+    Node actual = S.getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     return remove(actual);
   }
   public Object elementAtRank(int r) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
-      throw new InvalidIndexVectorException("Invalid Index");
-    Node actual fisrt();
+      throw new InvalidIndexSequenceException("Invalid Index");
+    Node actual = S.getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     return actual.getElement();
   }
   public Object replaceAtRank(int r, Object o) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
-      throw new InvalidIndexVectorException("Invalid Index");
+      throw new InvalidIndexSequenceException("Invalid Index");
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
-    Node actual fisrt();
+    Node actual = S.getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     Object temp = actual.getElement();
     actual.setElement(o);
@@ -62,10 +62,10 @@ public class Sequence {
   }
   public Object atRank(int r) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
-      throw new InvalidIndexVectorException("Invalid Index");
+      throw new InvalidIndexSequenceException("Invalid Index");
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
-     Node actual fisrt();
+     Node actual = S.getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     return actual.getElement();
   }
@@ -74,7 +74,7 @@ public class Sequence {
       throw new EmptySequenceException("Empty Sequence");
 
     int r = 0;
-    Node actual = first();
+    Node actual = S.getBegin();
     while (actual.getElement() != o) {
       r++;
       actual = actual.getNext();
