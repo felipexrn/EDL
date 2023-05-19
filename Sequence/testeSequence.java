@@ -5,7 +5,7 @@ public class testeSequence {
     System.out.println("size " + seq.size());
   }
   public static void main(String[] args) {
-    int in1 = 4, in2 = 10, in3 = 7, in4 = -1, in5 = -2, in6 = 5,
+    int in = 10, out = 5, in1 = 4, in2 = 10, in3 = 7, in4 = -1, in5 = -2, in6 = 5,
       in7 = 3, in8 = 9, in9 = -3, in10 = -5, in11 = -3, in12 = -4;
     Sequence s = new Sequence();
     System.out.println("\ninserindo " + in1 + " elementos no início");
@@ -94,72 +94,62 @@ public class testeSequence {
     s.empty();
     estado(s);
 
-     
-
-    System.out.println("Entrando " + in + " elementos");
+    System.out.println("\nEntrando " + in + " elementos");
     for (int i = 0; i < in; i++) {
       s.insertAtRank(0, i); 
       System.out.println(i);
     }
-    System.out.println("O Sequence contém " + s.size() + " elementos");
-    System.out.println("Estado do Sequence");
-    System.out.println(s.toString());
+    estado(s);
     
-    System.out.println("Saindo " + out + " elementos");
+    System.out.println("\nSaindo " + out + " elementos");
     for (int i = 0; i < out; i++) {
       System.out.println(s.elementAtRank(i));
       s.removeAtRank(i);
     }
     
-    System.out.println("O Sequence contém " + s.size() + " elementos");
-    System.out.println("Estado do Sequence");
-    System.out.println(s.toString());
+    estado(s);
 
-    System.out.println("subistituindo " + s.size() + " elementos");
+    System.out.println("\nsubistituindo " + s.size() + " elementos");
     for (int i = 0; i < s.size(); i++) {
       System.out.println(s.elementAtRank(i) + " por " + i*2);
       s.replaceAtRank(i, i*2);
     }
 
-    System.out.println("O Sequence contém " + s.size() + " elementos");
-    System.out.println("Estado do Sequence");
-    System.out.println(s.toString());
+    estado(s);
 
-    System.out.println("Esvaziando o Sequence");
+    System.out.println("\nO elemento " + s.atRank(2) + " está na posição " + s.rankOf(s.atRank(2)));
+    
+
+    System.out.println("\nEsvaziando o Sequence");
     while (s.size() > 0) {
       System.out.println("Saiu " + s.removeAtRank(0));
     }
 
-    System.out.println("O Sequence contém " + s.size() + " elementos");
-    System.out.println("Estado do Sequence");
-    System.out.println(s.toString());
+    estado(s);
 
     System.out.println("\nTestes de excecão");
     try {
       System.out.println("\nRemovendo elemento através do removeAtRank() da Sequence vazia");
       System.out.println(s.removeAtRank(0));
-      System.out.println("Elemento removido da Sequence vazia");
+      System.out.println("\nElemento removido da Sequence vazia");
     }
     catch (Exception e) {
       try {
-        System.out.println("inserindo elemento em índice inválido por meio do insertAtRank()");
+        System.out.println("\ninserindo elemento em índice inválido por meio do insertAtRank()");
         s.insertAtRank(-1, 0); 
-        System.out.println("Elemento inserido em índice inválido");
+        System.out.println("\nElemento inserido em índice inválido");
       }
-      catch (Exception e) {
+      catch (Exception f) {
         try {
           System.out.println("\nBuscando elemento inexistente por meio do findElement()");
           s.isLast(s.findElement(99));
           System.out.println("\nElemento encontrado");
-        } catch (Exception e) {
+        } catch (Exception g) {
           System.out.println("\nRemovendo elemento através do remove() da Sequence vazia");
           s.remove(s.findElement(0));
           System.out.println("\nElemento removido");
         } 
       }
-    }
-
-    System.out.println("\ntestes de exceção ");
-    
+    } 
   }
 }

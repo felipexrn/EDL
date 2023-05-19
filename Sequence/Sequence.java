@@ -71,7 +71,7 @@ public class Sequence {
      Node actual = S.getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     return actual.getElement();
-  }
+  } 
   public int rankOf(Object o) {
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
@@ -106,10 +106,13 @@ public class Sequence {
     return S.isEmpty();
   }
   public boolean isFirst(Node n) {
-    return S.isFirst();
+    return S.isFirst(n);
   }
   public boolean isLast(Node n) {
-    return S.isLast(); 
+    return S.isLast(n); 
+  }
+  public void empty() {
+    S.empty();
   }
   public String toString() {
     return S.toString();
