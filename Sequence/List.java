@@ -28,33 +28,21 @@ public class List {
     size++;
   } 
   public void insertBefore(Node n, Object o) {  
-    Node actual = begin.getNext();
     Node newNode = new Node();
     newNode.setElement(o);
-    while (actual != n) {
-      actual = actual.getNext();
-      if (actual.getNext() == null)
-        throw new ThereIsNoNodeException("There is no corresponding Node");
-    }  
-    newNode.setPrevious(actual.getPrevious());
-    newNode.setNext(actual);
-    actual.getPrevious().setNext(newNode);
-    actual.setPrevious(newNode);
+    newNode.setPrevious(n.getPrevious());
+    newNode.setNext(n);
+    n.getPrevious().setNext(newNode);
+    n.setPrevious(newNode);
     size++;
   } 
   public void insertAfter(Node n, Object o) {
-    Node actual = begin.getNext();
     Node newNode = new Node();
     newNode.setElement(o);
-    while (actual != n) {
-      actual = actual.getNext();
-      if (actual.getNext() == null)
-        throw new ThereIsNoNodeException("There is no corresponding Node");
-    }
-    newNode.setPrevious(actual);
-    newNode.setNext(actual.getNext());
-    actual.getNext().setPrevious(newNode);
-    actual.setNext(newNode);
+    newNode.setPrevious(n);
+    newNode.setNext(n.getNext());
+    n.getNext().setPrevious(newNode);
+    n.setNext(newNode);
     size++;
   } 
   public Object remove(Node n) {
@@ -71,8 +59,6 @@ public class List {
     Object temp = oldNode.getElement();
     oldNode.getNext().setPrevious(begin);
     begin.setNext(oldNode.getNext());
-    oldNode.setPrevious(null);
-    oldNode.setNext(null);
     size--;
     return temp;
   } 
@@ -82,38 +68,22 @@ public class List {
     Object temp = oldNode.getElement();
     oldNode.getPrevious().setNext(end);
     end.setPrevious(oldNode.getPrevious());
-    oldNode.setPrevious(null);
-    oldNode.setNext(null);
     size--;
     return temp;
   } 
   public Object removeBefore(Node n) {
     if (isEmpty()) throw new EmptyListException("Empty List");
-    Object temp = new Object();
-    Node actual = begin.getNext();
-    while (actual != n) {
-      actual = actual.getNext();
-    }
-    temp = actual.getElement();
-    actual.getPrevious().setNext(actual.getNext());
-    actual.getNext().setPrevious(actual.getPrevious());
-    actual.setNext(null);
-    actual.setPrevious(null);
+    Object temp = n.getElement();
+    n.getPrevious().setNext(n.getNext());
+    n.getNext().setPrevious(n.getPrevious());
     size--;
     return temp;
   } 
   public Object removeAfter(Node n) {
     if (isEmpty()) throw new EmptyListException("Empty List");
-    Object temp = new Object();
-    Node actual = begin.getNext();
-    while (actual != n) {
-      actual = actual.getNext();
-    }
-    temp = actual.getElement();
-    actual.getPrevious().setNext(actual.getNext());
-    actual.getNext().setPrevious(actual.getPrevious());
-    actual.setNext(null);
-    actual.setPrevious(null);
+    Object temp = n.getElement();
+    n.getPrevious().setNext(n.getNext());
+    n.getNext().setPrevious(n.getPrevious());
     size--;
     return temp;
   } 
@@ -176,8 +146,18 @@ public class List {
     return this.size;
   } 
   public void empty() {
-    while(!this.isEmpty()) this.removeFirst();
+    while(this.size() != 0) this.removeFirst();
   } 
+  public String strStruct() {
+    String s = "{";
+    Node actual = begin;
+    while (actual.getNext() != null) {
+      s += actual.getElement();
+      if (actual != begin  || actual != end) s += ", ";
+      actual = actual.getNext();
+    }
+    return s += actual.getElement() + "}";
+  }
   public String toString() {
     String s = "{";
     Node actual = new Node();

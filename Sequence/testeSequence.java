@@ -3,6 +3,8 @@ public class testeSequence {
     System.out.println("\nEstado da Sequence");
     System.out.println(seq.toString());
     System.out.println("size " + seq.size());
+    System.out.println("\nEstrutura da Sequence");
+    System.out.println(seq.strStruct());
   }
   public static void main(String[] args) {
     int in = 10, out = 5, in1 = 4, in2 = 10, in3 = 7, in4 = -1, in5 = -2, in6 = 5,
@@ -98,6 +100,7 @@ public class testeSequence {
     for (int i = 0; i < in; i++) {
       s.insertAtRank(0, i); 
       System.out.println(i);
+      System.out.println(s.strStruct());
     }
     estado(s);
     

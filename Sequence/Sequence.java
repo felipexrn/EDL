@@ -1,34 +1,34 @@
-public class Sequence {
+public class Sequence extends List{
   private List S;
   public Sequence() {
     S = new List();
   }
-  public void insertFirst(Object o) {
+  /*public void insertFirst(Object o) {
     S.insertFirst(o);
-  }
-  public void insertLast(Object o) {
+  }*/
+  /*public void insertLast(Object o) {
     S.insertLast(o);
-  }
-  public void insertBefore(Node n, Object o) {
+  }*/
+  /*public void insertBefore(Node n, Object o) {
     S.insertBefore(n, o);
-  }
-  public void insertAfter(Node n, Object o) {
+  }*/
+  /*public void insertAfter(Node n, Object o) {
     S.insertAfter(n, o);
-  }
-  public Object remove(Node n) {
+  }*/
+  /*public Object remove(Node n) {
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
     return S.remove(n);
-  }
-  public Object replaceElement(Node n, Object o) {
+  }*/
+  /*public Object replaceElement(Node n, Object o) {
     return S.replaceElement(n, o);
-  }
-  public void swapElements(Node q, Node p) {
+  }*/
+  /*public void swapElements(Node q, Node p) {
     S.swapElements(q, p);
-  }
-  public Node findElement(Object o) {
+  }*/
+  /*public Node findElement(Object o) {
     return S.findElement(o);
-  }
+  }*/
   public void insertAtRank(int r, Object o) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
       throw new InvalidIndexSequenceException("Invalid Index");
@@ -87,34 +87,34 @@ public class Sequence {
     
     return r;
   }
-  public Object first() {
+  /*public Object first() {
     return S.first();
-  }
-  public Object last() {
+  }*/
+  /*public Object last() {
     return S.last();
-  }
-  public Node before(Node n) {
+  }*/
+  /*public Node before(Node n) {
     return S.before(n);
-  }
-  public Node after(Node n) {
+  }*/
+  /*public Node after(Node n) {
     return S.after(n);
-  }
-  public int size() {
+  }*/
+  /*public int size() {
     return S.size();
-  }
-  public boolean isEmpty() {
+  }*/
+  /*public boolean isEmpty() {
     return S.isEmpty();
-  }
-  public boolean isFirst(Node n) {
+  }*/
+  /*public boolean isFirst(Node n) {
     return S.isFirst(n);
-  }
-  public boolean isLast(Node n) {
+  }*/
+  /*public boolean isLast(Node n) {
     return S.isLast(n); 
-  }
-  public void empty() {
+  }*/
+  /*public void empty() {
     S.empty();
-  }
-  public String toString() {
+  }*/
+  /*public String toString() {
     return S.toString();
-  }
+  }*/
 }
