@@ -1,38 +1,9 @@
 public class Sequence extends List{
   private List S;
-  public Sequence() {
-    S = new List();
-  }
-  /*public void insertFirst(Object o) {
-    S.insertFirst(o);
-  }*/
-  /*public void insertLast(Object o) {
-    S.insertLast(o);
-  }*/
-  /*public void insertBefore(Node n, Object o) {
-    S.insertBefore(n, o);
-  }*/
-  /*public void insertAfter(Node n, Object o) {
-    S.insertAfter(n, o);
-  }*/
-  /*public Object remove(Node n) {
-    if (isEmpty())
-      throw new EmptySequenceException("Empty Sequence");
-    return S.remove(n);
-  }*/
-  /*public Object replaceElement(Node n, Object o) {
-    return S.replaceElement(n, o);
-  }*/
-  /*public void swapElements(Node q, Node p) {
-    S.swapElements(q, p);
-  }*/
-  /*public Node findElement(Object o) {
-    return S.findElement(o);
-  }*/
   public void insertAtRank(int r, Object o) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
       throw new InvalidIndexSequenceException("Invalid Index");
-    Node actual = S.getBegin();
+    Node actual = getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     insertBefore(actual, o);
   }
@@ -41,14 +12,14 @@ public class Sequence extends List{
       throw new InvalidIndexSequenceException("Invalid Index");
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
-    Node actual = S.getBegin();
+    Node actual = getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     return remove(actual);
   }
   public Object elementAtRank(int r) {
     if (((r < 0) || (r > size() -1)) && (r != 0))
       throw new InvalidIndexSequenceException("Invalid Index");
-    Node actual = S.getBegin();
+    Node actual = getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     return actual.getElement();
   }
@@ -57,7 +28,7 @@ public class Sequence extends List{
       throw new InvalidIndexSequenceException("Invalid Index");
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
-    Node actual = S.getBegin();
+    Node actual = getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     Object temp = actual.getElement();
     actual.setElement(o);
@@ -68,7 +39,7 @@ public class Sequence extends List{
       throw new InvalidIndexSequenceException("Invalid Index");
     if (isEmpty())
       throw new EmptySequenceException("Empty Sequence");
-     Node actual = S.getBegin();
+     Node actual = getBegin();
     for (int i = 0; i < r; i++) actual = after(actual);
     return actual.getElement();
   } 
@@ -77,7 +48,7 @@ public class Sequence extends List{
       throw new EmptySequenceException("Empty Sequence");
 
     int r = 0;
-    Node actual = S.getBegin();
+    Node actual = getBegin();
     while (actual.getElement() != o) {
       r++;
       actual = actual.getNext();
@@ -87,34 +58,4 @@ public class Sequence extends List{
     
     return r;
   }
-  /*public Object first() {
-    return S.first();
-  }*/
-  /*public Object last() {
-    return S.last();
-  }*/
-  /*public Node before(Node n) {
-    return S.before(n);
-  }*/
-  /*public Node after(Node n) {
-    return S.after(n);
-  }*/
-  /*public int size() {
-    return S.size();
-  }*/
-  /*public boolean isEmpty() {
-    return S.isEmpty();
-  }*/
-  /*public boolean isFirst(Node n) {
-    return S.isFirst(n);
-  }*/
-  /*public boolean isLast(Node n) {
-    return S.isLast(n); 
-  }*/
-  /*public void empty() {
-    S.empty();
-  }*/
-  /*public String toString() {
-    return S.toString();
-  }*/
 }
