@@ -104,9 +104,15 @@ public class testeList {
       l.isLast(l.findElement(99));
       System.out.println("Elemento encontrado");
     } catch (Exception e) {
-      System.out.println("Removendo elemento da List vazia");
-      l.remove(l.findElement(0));
-      System.out.println("Elemento removido");
+      System.out.println(e);
+      try {
+        System.out.println("Removendo elemento da List vazia");
+        l.remove(l.findElement(0));
+        System.out.println("Elemento removido");
+      } catch (Exception f) {
+        System.out.println(f);
+        System.out.println("\nTeste concluído");
+      }
     }    
   }
 }

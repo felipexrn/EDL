@@ -55,9 +55,15 @@ public class testeVector {
       System.out.println("Elemento removido de Vetor vazio");
     }
     catch (Exception e) {
-      System.out.println("inserindo elemento índice inválido");
-      v.insertAtRank(-1, 0); 
-      System.out.println("Elemento inserido em índice inválido");
+      System.out.println(e);
+      try {
+        System.out.println("inserindo elemento índice inválido");
+        v.insertAtRank(-1, 0); 
+        System.out.println("Elemento inserido em índice inválido");
+      } catch (Exception f) {
+        System.out.println(f);
+        System.out.println("\nTeste concluído");
+      }      
     }
 	}
 }
