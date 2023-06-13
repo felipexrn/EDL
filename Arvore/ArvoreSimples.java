@@ -163,38 +163,30 @@ public class ArvoreSimples {
     } // ok
     return s += "}";
   }
-  private String strLayer(No v, String s) {
-    int n = 0;
-    No pai = null;
-    if ((v.parent() != null) && (v.parent().childrenNumber() > 1))
-      pai = v.parent();
-    else 
-      pai = v;
-    n = pai.childrenNumber();
-    if (n > 0) {
-      Iterator layer = children(v.parent());
-      No q = null;
-      for (int i = 0; i < n; i++) {
-        if(layer.hasNext()) q = ((No)layer.next());
-        Iterator ch = children(v);
-        while(ch.hasNext()){
-          s += ((No)ch.next()).element();
-          s += " ";
-          n--;
-        }
-        if (n != 0) s += "-";
-        if (n == 0) s += "\n";
-      }
-    } 
+  private String strLayer(Iterator i, String s, int depth) {
+    if (depth > height()) return "";
+    while(i.hasNext()) {
+      No q = (No) i.next();
+      if (depth(q) == depth) s += q.element();
+      if (q.parent() != null)
+        if (q.parent().childrenNumber() > 0) s += " ";
+    }
+    s += "\n";
+    i = Nos();
+    while(i.hasNext()) {
+      No q = (No) i.next();
+      if (depth(q) == depth) 
+        if (q.childrenNumber() > 0) s += "|";
+      else s += " ";
+      if (q.parent() != null)
+        if (q.parent().childrenNumber() > 0) s += " ";
+    }
+    if (depth < height()) s += "\n";
+    s += strLayer(Nos(), s, depth+1);
     return s;
   }
   public String strStruct() {
-    String s = "" + raiz.element();
-    if (raiz.childrenNumber() > 0) {
-      s += "\n|\n";
-      s = strLayer(raiz, s);
-    } 
-    return s;
+    return strLayer(Nos(), "", depth(raiz));
   }
 }
 
@@ -207,3 +199,4 @@ public class ArvoreSimples {
     |
     7
 */
+
