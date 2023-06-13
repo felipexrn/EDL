@@ -7,116 +7,176 @@ public class ArvoreSimples {
 		// pai do raiz sempre e null
     raiz = new No(null, o);
 		tamanho = 1;
-	}
+	} // ok
 	public No root() {
 		return raiz;
-	}
+	} // ok
 	public No parent(No v) {
 		return (v.parent());
-	}
+	} // ok
 	public Iterator children(No v) {
 		return v.children();
-	}
+	} // ok
 	public boolean isInternal(No v) {
 		return (v.childrenNumber() > 0);
-	}
+	} // ok
 	public boolean isExternal(No v) {
 		return (v.childrenNumber() == 0);
-	}
+	} // ok
 	public boolean isRoot(No v) {
 		return v == raiz;
-	}
+	} // ok
 	public void addChild(No v, Object o) {
 		No novo = new No(v, o);
 		v.addChild(novo);
 		tamanho++;
-	}
-	// Remove um No
-	//  So pode remover Nos externos e que tenham um pai (nao seja raiz)
-	public Object remove(No v) throws InvalidNoException {
+	} // ok
+	public Object remove(No v) {
+    if (v == raiz) throw new InvalidNoException("Invalid No");
 		No pai = v.parent();
 		if (pai != null || isExternal(v))
 			pai.removeChild(v);
-		else
-			throw new InvalidNoException();
 		Object o = v.element();
 		tamanho--;
 		return o;
-	}
+	} // ok
 	public void swapElements(No v, No w) {
-		/* Metodo que serve de exercicio
-		  Este metodo devera fazer com que o objeto
-		  que estava na posicao v fique na posicao w
-		  e fazer com que o objeto que estava na posicao w
-		  fique na posicao v
-		*/  
-	}
+    Object o = v.element();
+    v.setElement(w.element());
+    w.setElement(o);
+	}  // ok
 	public int depth(No v) {
 		int profundidade = profundidade(v);
 		return profundidade;
-	}
+	} // ok
 	private int profundidade(No v) {
-		if (v == raiz)
-			return 0;
-		else
-			return 1 + profundidade(v.parent());
-	}
+		if (v == raiz) return 0;
+		else return 1 + profundidade(v.parent());
+	} // ok
 	public int height() {
-		// Metodo que serve de exercicio
-		int altura = 0;
+		int altura = altura(raiz);
 		return altura;
-	}
-	// Retorna um iterator com os elementos armazenados na arvore
+	} // ok
+  private int altura(No v) {
+    if (isExternal(v)) return 0;
+    else {
+      int h = 0;
+      Iterator filhos = children(v);
+      while(filhos.hasNext()){
+        h = Math.max(h, altura((No)filhos.next()));
+      }
+      return 1 + h;
+    }
+  } // ok
+  private ArrayList<Object> preOrdem(No v, ArrayList<Object> o) {
+    //Iterator c = null;
+    o.add(v);
+    if (v.childrenNumber() > 0) {
+      Iterator c = v.children();
+      while(c.hasNext()) {
+        preOrdem((No)c.next(), o);
+      }
+    }
+    return o;
+  }
 	public Iterator elements() {
-		// Metodo que serve de exercicio
-		return null;
+    ArrayList<Object> o = new ArrayList<Object>();
+    o = preOrdem(raiz, o);
+		return o.iterator();
 	}
-	// Retorna um iterator com as posicoes (Nos) da arvore
 	public Iterator Nos() {
 		// Metodo que serve de exercicio
 		return null;
 	}
-	// Retorna o numero de Nos da arvore
 	public int size() {
-	 // Metodo que serve de exercicio
-		return 0;
-	}
-	// Retorna se a arvore esta vazia. Sempre vai ser falso, pois nao permitimos remover a raiz
+    return tamanho;
+	} // ok
 	public boolean isEmpty() {
 		return false;
-	}
+	} // ok
 	public Object replace(No v, Object o) {
 	 // Metodo que serve de exercicio
-		return null;
-	}
-	public class No {
-		private Object o;
-		private No pai;
-		private ArrayList filhos = new ArrayList();
-		public No(No pai, Object o) {
-			this.pai = pai;
-			this.o = o;
-		}
-		public Object element() {
-			return o;
-		}
-		public No parent() {
-			return pai;
-		}
-		public void setElement(Object o) {
-			this.o = o;
-		}
-		public void addChild(No o) {
-			filhos.add(o);
-		}
-		public void removeChild(No o) {
-			filhos.remove(o);
-		}
-		public int childrenNumber() {
-			return filhos.size();
-		}
-		public Iterator children() {
-			return filhos.iterator();
-		}
-	}
+    Object p = v.element();
+		v.setElement(o);
+    return p;
+	} // ok
+  private No findObject(No v, Object o) {
+    if (isInternal(v)) {
+      Iterator filhos = children(v);
+      while(filhos.hasNext()){
+        No p = (No)filhos.next();
+        if (p.element() == o) {
+          v = p;
+          return v;
+        }
+      }
+      filhos = children(v);
+      while(filhos.hasNext()){
+        v = findObject((No)filhos.next(), o);
+      }
+    } else {
+      if (v.element() == o) return v;
+    }
+    return v;
+  } // ok
+  public No find(Object o) {
+    if (raiz.element() == o) return raiz;
+    No v = findObject(raiz, o);  
+    if(v.element() != o) throw new DoesNotExistNoException("Esto non ecxiste");
+    return v;
+  } // ok
+  public String strChildren(No v) {
+    String s = "{";
+    Iterator c = children(v);
+    int n = v.childrenNumber();
+    while(c.hasNext()) {
+      s += ((No)c.next()).element();
+      n--;
+      if (n > 0) s += ", ";
+    }
+    return s += "}";
+  } // ok
+  private String strLayer(No v, String s) {
+    int n = 0;
+    No pai = null;
+    if ((v.parent() != null) && (v.parent().childrenNumber() > 1))
+      pai = v.parent();
+    else 
+      pai = v;
+    n = pai.childrenNumber();
+    if (n > 0) {
+      Iterator layer = children(v.parent());
+      No q = null;
+      for (int i = 0; i < n; i++) {
+        if(layer.hasNext()) q = ((No)layer.next());
+        Iterator ch = children(v);
+        while(ch.hasNext()){
+          s += ((No)ch.next()).element();
+          s += " ";
+          n--;
+        }
+        if (n != 0) s += "-";
+        if (n == 0) s += "\n";
+      }
+    } 
+    return s;
+  }
+  public String strStruct() {
+    String s = "" + raiz.element();
+    if (raiz.childrenNumber() > 0) {
+      s += "\n|\n";
+      s = strLayer(raiz, s);
+    } 
+    return s;
+  }
 }
+
+/*
+1 
+|
+2 3 4
+  | |   
+  5 6
+    |
+    7
+*/
