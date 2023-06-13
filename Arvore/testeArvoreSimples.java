@@ -15,6 +15,10 @@ public class testeArvoreSimples {
     A.addChild(A.find(6), 7);
 
     System.out.println("os filhos de raiz são " + A.strChildren(A.root()));
+
+    System.out.println("os elementos da árvore são " + A.strElements());
+    System.out.println("os nós da árvore são " + A.strNos());
+    
     String resposta = "";
     if (A.isInternal(A.find(7))) resposta = "não é";
     if (A.isExternal(A.find(7))) resposta = "é";
@@ -42,6 +46,8 @@ public class testeArvoreSimples {
     System.out.println("os filhos de 3 são " + A.strChildren(A.find(3)));
     System.out.println("os filhos de 4 são " + A.strChildren(A.find(4)));
     System.out.println("trocando elemento " + A.replace(A.find(3), 7) + " por 7");
-    System.out.println("os filhos de 7 são " + A.strChildren(A.find(7)));
+    System.out.println("os filhos de 7 são " + A.strChildren(A.find(7)));  
+    System.out.println("os elementos da árvore são " + A.strElements());
+    System.out.println("os nós da árvore são " + A.strNos());
   } 
 }

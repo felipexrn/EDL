@@ -81,12 +81,17 @@ public class ArvoreSimples {
   }
 	public Iterator elements() {
     ArrayList<Object> o = new ArrayList<Object>();
+    ArrayList<Object> p = new ArrayList<Object>();
     o = preOrdem(raiz, o);
-		return o.iterator();
-	}
+    o.forEach((obj) -> p.add(((No)obj).element())); 
+		return p.iterator();
+	} // ok
 	public Iterator Nos() {
-		// Metodo que serve de exercicio
-		return null;
+		ArrayList<Object> o = new ArrayList<Object>();
+    ArrayList<Object> p = new ArrayList<Object>();
+    o = preOrdem(raiz, o);
+    o.forEach((obj) -> p.add(((No)obj))); 
+		return p.iterator();
 	}
 	public int size() {
     return tamanho;
@@ -136,6 +141,28 @@ public class ArvoreSimples {
     }
     return s += "}";
   } // ok
+  public String strElements() {
+    Iterator i = elements();
+    int n = tamanho;
+    String s = "{";
+    while(i.hasNext()) {
+      s += i.next();
+      n--;
+      if (n > 0) s += ", ";
+    }
+    return s += "}";
+  } // ok
+  public String strNos() {
+    String s = "{";
+    Iterator i = Nos();
+    int n = tamanho;
+    while(i.hasNext()) {
+      s += i.next();
+      n--;
+      if (n > 0) s += ", ";
+    } // ok
+    return s += "}";
+  }
   private String strLayer(No v, String s) {
     int n = 0;
     No pai = null;
