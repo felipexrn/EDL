@@ -1,10 +1,10 @@
 import java.util.Iterator;
-
+import java.util.function.Consumer;
 public interface IArvoreBinaria {
 
-	void setComparer(Comparer c);
+	void setComparer(GenericComparator<T> c);
 
-	Comparer getComparer();
+	GenericComparator<T> getComparer();
 
 	Node search(Node n, Object k);
 
@@ -18,7 +18,7 @@ public interface IArvoreBinaria {
 
 	void inOrder(Node n);
 
-	void preOrder(Node n);
+	void preOrder(Node n, Consumer<T> action);
 
 	void postOrder(Node n);
 

@@ -1,30 +1,33 @@
 import java.util.Iterator;
+import java.util.ArrayList;
+import java.util.function.Consumer;
 public class ArvoreBinaria implements IArvoreBinaria {
   private Node root;
   private int size;
-  private Comparer<T> comparator;
+  private GenericComparator<T> comparator;
   public ArvoreBinaria(Comparer<T> c) {
     setComparer(c);
   }
-  public ArvoreBinaria(Object k) {
+  public ArvoreBinaria(Object k, GenericComparator<T> c) {
     root = new Node(null, k);
     size = 1;
+    setComparer(c);
   }
-  public void setComparer(Comparer<T> c) {
+  public void setComparer(GenericComparator<T> c) {
     comparator = c;
   }
-  public Comparer<T> getComparer() {
+  public GenericComparator<T> getComparer() {
     return comparator;
   }
 	public Node search(Node n, Object k) {
-    setComparer
-    if (k < n.getKey()) {
-      if (n.hasLeft()) return search(n.getLeftChild(), k);
+    int r = getComparer().compare(k, n.getKey());
+    if (r < 0) {
+      if (hasLeft(n)) return search(n.getLeftChild(), k);
     }
-    if (k > n.getKey()) {
-      if (n.hasRight()) return search(n.getRightChild(), k);
+    if (r > 0) {
+      if (hasRight(n)) return search(n.getRightChild(), k);
     }
-    if (k == n.getKey()) return n;
+    if (r == 0) return n;
     if (isExternal(n)) return null;
   }
 	public Node include(Object k) {
@@ -39,11 +42,11 @@ public class ArvoreBinaria implements IArvoreBinaria {
 	public Node getRoot() {
     return root;
   }
-	public void setRoot(Node p) { // Como funciona isso?
-    p.setLeftChild(root.getLeftChild());
-    p.setRightChild(root.getRightChild());
-    p.setParent(null);
-    root = p;
+	public void setRoot(Node n) { // Como funciona isso?
+    n.setLeftChild(root.getLeftChild());
+    n.setRightChild(root.getRightChild());
+    n.setParent(null);
+    root = n;
   }
 	public void inOrder(Node n) {
     if (hasLeft(n)) {
@@ -54,24 +57,25 @@ public class ArvoreBinaria implements IArvoreBinaria {
       inOrder(n.getRightChild());
     }
   }
-  private void m() {
-    System.out.println("m");
+  private void m(Object o) {
+    System.out.println(o);
   }
-	public void preOrder(Node n) {
+	public void preOrder(Node n, Consumer<T> action) {
     // visite(n)
+    action.accept(n.getKey());
     if (hasLeft(n)) {
-      inOrder(n.getLeftChild());
+      preOrder(n.getLeftChild(), action);
     }
     if (hasRight(n)) {
-      inOrder(n.getRightChild());
+      preOrder(n.getRightChild(), action);
     }
   }
 	public void postOrder(Node n) {
     if (hasLeft(n)) {
-      inOrder(n.getLeftChild());
+      postOrder(n.getLeftChild());
     }
     if (hasRight(n)) {
-      inOrder(n.getRightChild());
+      postOrder(n.getRightChild());
     }
     //visite(n)
   }
@@ -79,9 +83,9 @@ public class ArvoreBinaria implements IArvoreBinaria {
     if (isExternal(n)) return 0;
     else {
       int h = 0;
-      Iterator c = children(n);
+      Iterator c = n.children();
       while(c.hasNext()){
-        h = Math.max(h, height((No)c.next()));
+        h = Math.max(h, height((Node)c.next()));
       }
       return 1 + h;
     }
@@ -94,12 +98,14 @@ public class ArvoreBinaria implements IArvoreBinaria {
     
   }
 	public Iterator nodes() {
-    Iterator i = new Iterator(); // teste
-    return i;
+    ArrayList<Node> a = new ArrayList<Node>();// teste
+    
+    return a.iterator();
   }
 	public Iterator elements() {
-    Iterator i = new Iterator(); // teste
-    return i;
+    ArrayList<Object> a = new ArrayList<Object>(); // teste
+    
+    return a.iterator();
   }
 	public int size() {
     return size;
