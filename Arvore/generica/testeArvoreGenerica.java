@@ -1,16 +1,19 @@
-public class testeArvoreSimples {
+public class testeArvoreGenerica {
   public static void main(String args[]) {
-    ArvoreSimples A = new ArvoreSimples(1);
+    ArvoreGenerica A = new ArvoreGenerica(1);
     System.out.println("raiz é " + A.root().element());
 
-    System.out.println("inserindo filhos 2, 3 e 4 em raiz");
+    System.out.println("inserindo filho 2, 3 e 4 em raiz");
     A.addChild(A.root(), 2);
     A.addChild(A.root(), 3);
     A.addChild(A.root(), 4);
-    System.out.println("inserindo filho 5 em 3");
+    System.out.println("inserindo filho 5, 8 e 9 em 3");
     A.addChild(A.find(3), 5);
-    System.out.println("inserindo filho 6 em 4");
+    A.addChild(A.find(3), 8);
+    A.addChild(A.find(3), 9);
+    System.out.println("inserindo filho 6 e 0 em 4");
     A.addChild(A.find(4), 6);
+    A.addChild(A.find(4), 0);
     System.out.println("inserindo filho 7 em 6");
     A.addChild(A.find(6), 7);
 
