@@ -48,17 +48,19 @@ public class ArvoreBinaria implements IArvoreBinaria {
     n.setParent(null);
     root = n;
   }
-	public void inOrder(Node n) {
+	public void inOrder(Node n, Consumer<T> action) {
     if (hasLeft(n)) {
-      inOrder(n.getLeftChild());
+      inOrder(n.getLeftChild(), o);
     }
-    //visite(n)
+     //visite(n) o = o.add(n);
+    action.accept(n);
     if (hasRight(n)) {
-      inOrder(n.getRightChild());
+      inOrder(n.getRightChild(), o);
     }
   }
-  private void m(Object o) {
-    System.out.println(o);
+  private ArrayList<Object> addNode(Node o, ArrayList<Object> a) {
+    a.add(o);
+    return a;
   }
 	public void preOrder(Node n, Consumer<T> action) {
     // visite(n)
@@ -98,7 +100,8 @@ public class ArvoreBinaria implements IArvoreBinaria {
     
   }
 	public Iterator nodes() {
-    ArrayList<Node> a = new ArrayList<Node>();// teste
+    ArrayList<Node> a = new ArrayList<Node>(); // teste
+    a = inOrder(root, addNode(root, a));
     
     return a.iterator();
   }

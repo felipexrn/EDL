@@ -6,11 +6,11 @@ public class testeArvoreGenerica {
     System.out.println("inserindo filho 2, 3 e 4 em raiz");
     A.addChild(A.root(), 2);
     A.addChild(A.root(), 3);
-    A.addChild(A.root(), 4);
+    A.addChild(A.root(), 4);  
     System.out.println("inserindo filho 5, 8 e 9 em 3");
     A.addChild(A.find(3), 5);
     A.addChild(A.find(3), 8);
-    A.addChild(A.find(3), 9);
+    A.addChild(A.find(3), 9);  
     System.out.println("inserindo filho 6 e 0 em 4");
     A.addChild(A.find(4), 6);
     A.addChild(A.find(4), 0);
@@ -21,7 +21,6 @@ public class testeArvoreGenerica {
     System.out.println(A.strStruct());
 
     System.out.println("os filhos de raiz são " + A.strChildren(A.root()));
-
     System.out.println("os elementos da árvore são " + A.strElements());
     System.out.println("os nós da árvore são " + A.strNos());
     

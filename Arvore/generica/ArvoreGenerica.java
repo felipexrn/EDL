@@ -77,17 +77,49 @@ public class ArvoreGenerica {
     }
     return o;
   }
+  private ArrayList<Object> emOrdem(No v, ArrayList<Object> o, int n) {
+    int m;
+    Iterator c;
+    No d;
+    m = v.childrenNumber();
+    if (m > 0) {
+      c = v.children();
+      while(c.hasNext()) {      
+        d = (No)c.next();
+        if (n < (m/2 + m%2)) {
+          o = emOrdem(d, o, 1);
+          n++;
+          continue;
+        }
+        if (n == (m/2 + m%2)) {
+          o = emOrdem(d, o, 1);
+          o.add(v);
+          n++;
+          continue;
+        }
+        if (n > (m/2 + m%2)) {
+          o = emOrdem(d, o, 1);
+          n++;
+          continue;
+        }
+      }
+    }
+    else {
+      o.add(v);
+    }
+    return o;
+  }
 	public Iterator elements() {
     ArrayList<Object> o = new ArrayList<Object>();
     ArrayList<Object> p = new ArrayList<Object>();
-    o = preOrdem(raiz, o);
+    o = emOrdem(raiz, o, 1);
     o.forEach((obj) -> p.add(((No)obj).element())); 
 		return p.iterator();
 	}
 	public Iterator Nos() {
 		ArrayList<Object> o = new ArrayList<Object>();
     ArrayList<Object> p = new ArrayList<Object>();
-    o = preOrdem(raiz, o);
+    o = emOrdem(raiz, o, 1);// era preOrdem
     o.forEach((obj) -> p.add(((No)obj))); 
 		return p.iterator();
 	}
@@ -109,7 +141,7 @@ public class ArvoreGenerica {
       v = (No) i.next();
       if (v.element() == o) return v;
     }
-    if(v.element() == null) throw new DoesNotExistNoException("Esto non ecxiste");
+    if(v == null || v.element() == null) throw new DoesNotExistNoException("Esto non ecxiste");
     return v;
   }
   public String strChildren(No v) {
@@ -145,30 +177,44 @@ public class ArvoreGenerica {
     }
     return s += "}";
   }
-  private String strLayer(Iterator i, String s, int d) {
-    if (d > height()) return s;
-    while(i.hasNext()) {
-      No q = (No) i.next();
-      if (depth(q) == d) s += q.element();
-      else s += " ";
-      if (q.parent() != null)
-        if (q.parent().childrenNumber() > 0) s += " ";
-    }
-    if (d < height()) {
-      s += "\n";
+  private String strLayer(int d) {
+    String s = "";
+    Iterator i;
+    while(d <= height()) {
       i = Nos();
       while(i.hasNext()) {
         No q = (No) i.next();
-        if (depth(q) == d) 
-          if (q.childrenNumber() > 0) s += "|";
-          else s += " ";
-        else s += " ";
-        if (q.parent() != null)
-          if (q.parent().childrenNumber() > 0) s += " ";
+        if (depth(q) == d) s += q.element() + " ";
+        else s += "  ";
       }
-    }    
-    if (d < height()) s += "\n";
-    s = strLayer(Nos(), s, d++);
+      if(d <= height()) s += "\n";
+      d++;
+      i = Nos();
+      while(i.hasNext()) {
+        No q = (No) i.next();
+        if (q.parent() != null) {
+          if (depth(q.parent()) >= d-1) s += "__";
+          else if (depth(q) == d-1)
+            if (q.childrenNumber() > 0) s += "|_";
+            else s += "  ";
+          else s += "  ";
+        }  
+        else if (depth(q) == d-1 && q.childrenNumber() > 0) s += "|_";
+        else s += "  "; 
+      }
+      if(d <= height()) s += "\n";
+      i = Nos();
+      if (d <= height()) {
+        while(i.hasNext()) {
+          No q = (No) i.next();
+          if (q.parent() != null)
+            if (depth(q.parent()) == d-1) s += "| ";
+            else s += "  ";  
+          else s += "  ";
+        }
+        s += "\n";
+      }
+    }
     return s;
   }
   private int maxWidth() {
@@ -189,27 +235,20 @@ public class ArvoreGenerica {
     return w;
   }
   public String strStruct() {
-    System.out.println(height());
-    System.out.println(tamanho);
-    System.out.println(maxWidth());
-    return strLayer(Nos(), "", depth(raiz));
+    return strLayer(depth(raiz));
   }
 }
 
 /*
     1
- ___|____ 
-|   |    |
-2   3    4
-   _|_   |
-  | | |  |
-  5 8 9  6
-         |_
-         | |
-         7 0
-raiz é impresso na metade da largura da arvore
-a tabulação dos elementos de cada camada depende da largura da árvore e
-da quantidade de descendentes diretos e indiretos 
-
+____|_______
+|   |      |
+2   3      4
+  __|___   |
+  | | |    |
+  5 8 9    6
+         __|___
+         |   |
+         7   0
 */
 
