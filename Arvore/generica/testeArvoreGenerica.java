@@ -1,3 +1,4 @@
+import java.util.ArrayList;
 public class testeArvoreGenerica {
   public static void main(String args[]) {
     ArvoreGenerica A = new ArvoreGenerica(1);
@@ -19,7 +20,7 @@ public class testeArvoreGenerica {
 
     System.out.println("Estrutura da arvore");
     System.out.println(A.strStruct());
-
+    
     System.out.println("os filhos de raiz são " + A.strChildren(A.root()));
     System.out.println("os elementos da árvore são " + A.strElements());
     System.out.println("os nós da árvore são " + A.strNos());

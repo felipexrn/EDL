@@ -77,28 +77,28 @@ public class ArvoreGenerica {
     }
     return o;
   }
-  private ArrayList<Object> emOrdem(No v, ArrayList<Object> o, int n) {
+  private ArrayList<Object> mediaOrdem(No v, ArrayList<Object> o, int n) {
     int m;
     Iterator c;
     No d;
     m = v.childrenNumber();
     if (m > 0) {
       c = v.children();
-      while(c.hasNext()) {      
+      while(c.hasNext()) {   
         d = (No)c.next();
         if (n < (m/2 + m%2)) {
-          o = emOrdem(d, o, 1);
+          o = mediaOrdem(d, o, 1);
           n++;
           continue;
         }
         if (n == (m/2 + m%2)) {
-          o = emOrdem(d, o, 1);
+          o = mediaOrdem(d, o, 1);
           o.add(v);
           n++;
           continue;
         }
         if (n > (m/2 + m%2)) {
-          o = emOrdem(d, o, 1);
+          o = mediaOrdem(d, o, 1);
           n++;
           continue;
         }
@@ -112,14 +112,14 @@ public class ArvoreGenerica {
 	public Iterator elements() {
     ArrayList<Object> o = new ArrayList<Object>();
     ArrayList<Object> p = new ArrayList<Object>();
-    o = emOrdem(raiz, o, 1);
+    o = mediaOrdem(raiz, o, 1);
     o.forEach((obj) -> p.add(((No)obj).element())); 
 		return p.iterator();
 	}
 	public Iterator Nos() {
 		ArrayList<Object> o = new ArrayList<Object>();
     ArrayList<Object> p = new ArrayList<Object>();
-    o = emOrdem(raiz, o, 1);// era preOrdem
+    o = mediaOrdem(raiz, o, 1);
     o.forEach((obj) -> p.add(((No)obj))); 
 		return p.iterator();
 	}
@@ -225,6 +225,7 @@ public class ArvoreGenerica {
       Iterator i = Nos();
       int l = 0;
       while(i.hasNext()) {
+        System.out.println(i.next());
         No q = (No) i.next();
         if (depth(q) == d) l++;
       }
