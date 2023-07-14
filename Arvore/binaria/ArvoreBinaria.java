@@ -5,6 +5,7 @@ public class ArvoreBinaria implements IArvoreBinaria {
   private Node root;
   private int size;
   private GenericComparator comparator;
+  private ArrayList<Object> nodes;
   public ArvoreBinaria() {
      size = 0;
   }
@@ -18,30 +19,77 @@ public class ArvoreBinaria implements IArvoreBinaria {
   public GenericComparator getComparer() {
     return comparator;
   }
- //  public Node search(Node n, Object k) {
- //    int r = getComparer().compare(k, n.getKey());
- //    if (r < 0) {
- //      if (hasLeft(n)) return search(n.getLeftChild(), k);
- //    }
- //    if (r > 0) {
- //      if (hasRight(n)) return search(n.getRightChild(), k);
- //    }
- //    if (r == 0) return n;
- //    if (isExternal(n)) return null;
- //  }
-	// public Node include(Object k) {
- //    Node n = new Node(null, 0); // teste
- //    size++;
- //    return  n;
- //  }
-	// public Object remove(Object k) {
- //    size--;
- //    return k; // teste
- //  }
+  public Node search(Node n, Object k) {
+    Node m = new Node(null, k);
+    if(comparator.compareTo(m, n) < 0) {
+      if(isInternal(n)) {
+        if (hasLeft(n)) return search(n.getLeftChild(), k);
+        else return n;
+      }  
+    }
+    if(comparator.compareTo(m, n) == 0) return n;
+    if(comparator.compareTo(m, n) > 0) {
+      if(isInternal(n)) {
+        if (hasRight(n)) return search(n.getRightChild(), k);
+        else return n;
+      }  
+    }
+    return n;
+  }
+	public Node include(Object k) {
+    if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
+    if (root == null) {
+      setRoot(new Node(null, k));
+      return root;
+    }
+    Node n = search(root, k);  
+    Node m = new Node(n, k);
+    if(comparator.compareTo(m, n) < 0) n.setLeftChild(m);
+    else n.setRightChild(m);
+    size++;
+    return m;
+  }
+	public Object remove(Object k) {
+    if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
+    Node n = search(root, k);
+    Node m;
+    if (n == root && size == 1) root = null;
+    else if(size > 1) {
+      if (n.getKey() == k) { 
+        if (isExternal(n)) {
+          if (n == n.getParent().getLeftChild()) {
+            n.getParent().setLeftChild(null);
+          }
+          else {
+            n.getParent().setRightChild(null); 
+          }
+        }
+        else if (!hasRight(n)) {
+          n.getLeftChild().setParent(n.getParent());
+          n.getParent().setLeftChild(n.getLeftChild());
+        }
+        else {
+          m = search(n.getRightChild(), k);
+          if (isExternal(m)) {
+            n.setKey(m.getKey());
+            if (m == m.getParent().getLeftChild()) {
+              m.getParent().setLeftChild(null);
+            }
+            else {
+              m.getParent().setRightChild(null);
+            }
+          }
+        }
+      }
+      else throw new DoesNotExistKeyException("Does Not Exist this Key");
+    }
+    size--;
+    return k;
+  }
 	public Node getRoot() {
     return root;
   }
-	public void setRoot(Node n) { // Como funciona isso?
+	public void setRoot(Node n) {
     if (size == 0) {
       root = n;
       size++;
@@ -55,35 +103,33 @@ public class ArvoreBinaria implements IArvoreBinaria {
       root = n; 
     }
   }
-	// public void inOrder(Node n, Consumer<T> action) {
- //    if (hasLeft(n)) {
- //      inOrder(n.getLeftChild(), o);
- //    }
- //     //visite(n) o = o.add(n);
- //    action.accept(n);
- //    if (hasRight(n)) {
- //      inOrder(n.getRightChild(), o);
- //    }
- //  }
-	// public void preOrder(Node n, Consumer<T> action) {
- //    // visite(n)
- //    action.accept(n.getKey());
- //    if (hasLeft(n)) {
- //      preOrder(n.getLeftChild(), action);
- //    }
- //    if (hasRight(n)) {
- //      preOrder(n.getRightChild(), action);
- //    }
- //  }
-	// public void postOrder(Node n) {
- //    if (hasLeft(n)) {
- //      postOrder(n.getLeftChild());
- //    }
- //    if (hasRight(n)) {
- //      postOrder(n.getRightChild());
- //    }
- //    //visite(n)
- //  }
+	public void inOrder(Node n) {
+    if (hasLeft(n)) {
+      inOrder(n.getLeftChild());
+    }
+    nodes.add(n);
+    if (hasRight(n)) {
+      inOrder(n.getRightChild());
+    }
+  }
+	public void preOrder(Node n) {
+    nodes.add(n);
+    if (hasLeft(n)) {
+      preOrder(n.getLeftChild());
+    }
+    if (hasRight(n)) {
+      preOrder(n.getRightChild());
+    }
+  }
+	public void postOrder(Node n) {
+    if (hasLeft(n)) {
+      postOrder(n.getLeftChild());
+    }
+    if (hasRight(n)) {
+      postOrder(n.getRightChild());
+    }
+    nodes.add(n);
+  }
 	public int height(Node n) {
     if (isExternal(n)) return 0;
     else {
@@ -99,23 +145,61 @@ public class ArvoreBinaria implements IArvoreBinaria {
     if (n == root) return 0;
 		else return 1 + depth(n.getParent());
   }
-	// public void show() {
-    
- //  }
-	// public Iterator nodes() {
- //    ArrayList<Node> a = new ArrayList<Node>(); // realize os testes
- //    ArrayList<Node> b = new ArrayList<Node>();
- //    a = inOrder(root, addNode(root, a));
- //    a.forEach((obj) -> b.add((Node)obj));  
- //    return b.iterator();
- //  }
-	// public Iterator elements() {
- //    ArrayList<Node> a = new ArrayList<Node>(); // realize os testes
- //    ArrayList<Node> b = new ArrayList<Node>();
- //    a = inOrder(root, addNode(root, a));
- //    a.forEach((obj) -> b.add(((Node)obj)).getKey());  
- //    return b.iterator();
- //  }
+	public void show() {
+    String s = "";
+    Iterator i;
+    Node n;
+    for (int h = 0; h <= height(root); h++) {
+      i = nodes();
+      while(i.hasNext()) {
+        n = (Node) i.next();
+        if (depth(n) == h) s += n.getKey() + " ";
+        else s += "  ";
+      }
+      s += "\n";
+    }
+    System.out.println(s);
+  }
+	public Iterator nodes() {
+    nodes = new ArrayList<Object>();
+    ArrayList<Object> b = new ArrayList<Object>();
+    inOrder(root);
+    nodes.forEach((obj) -> b.add((Node)obj));  
+    return b.iterator();
+  }
+	public Iterator elements() {
+    nodes = new ArrayList<Object>();
+    ArrayList<Object> b = new ArrayList<Object>();
+    inOrder(root);
+    nodes.forEach((obj) -> b.add(((Node)obj).getKey()));  
+    return b.iterator();
+  }
+  public String strNodes() {
+    String s = "{";
+    Iterator i = nodes();
+    int l = size;
+    while(i.hasNext()) {
+      s += i.next();
+      if (l > 1) {
+        s += ", ";
+        l--;
+      }
+    } 
+    return s += "}";
+  }
+  public String strElements() {
+    String s = "{";
+    Iterator i = elements();
+    int l = size;
+    while(i.hasNext()) {
+      s += i.next();
+      if (l > 1) {
+        s += ", ";
+        l--;
+      }
+    } 
+    return s += "}";
+  }
 	public int size() {
     return size;
   }

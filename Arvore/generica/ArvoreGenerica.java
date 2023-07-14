@@ -239,17 +239,3 @@ public class ArvoreGenerica {
     return strLayer(depth(raiz));
   }
 }
-
-/*
-    1
-____|_______
-|   |      |
-2   3      4
-  __|___   |
-  | | |    |
-  5 8 9    6
-         __|___
-         |   |
-         7   0
-*/
-

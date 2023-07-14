@@ -1,36 +1,36 @@
 import java.util.Iterator;
-import java.util.function.Consumer;
+import java.util.ArrayList;
 public interface IArvoreBinaria {
 
 	void setComparer(GenericComparator c);
 
 	GenericComparator getComparer();
 
-//	Node search(Node n, Object k);
+	Node search(Node n, Object k);
 
-//	Node include(Object k);
+	Node include(Object k);
 
-//	Object remove(Object k);
+	Object remove(Object k);
 
-	Node getRoot(); // ok
+	Node getRoot();
 
-	void setRoot(Node p); // ok
+	void setRoot(Node p);
 
-//	void inOrder(Node n, Consumer<T> action);
+	void inOrder(Node n);
 
-//	void preOrder(Node n, Consumer<T> action);
+	void preOrder(Node n);
 
-//	void postOrder(Node n, Consumer<T> action);
+	void postOrder(Node n);
 
-	int height(Node n); // ok
+	int height(Node n);
 
-	int depth(Node n); // ok
+	int depth(Node n);
 
-//	void show();
+	void show();
 
-//	Iterator nodes();
+	Iterator nodes();
 
-//	Iterator elements();
+	Iterator elements();
 
 	int size();
 
