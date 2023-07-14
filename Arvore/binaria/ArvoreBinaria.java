@@ -1,6 +1,5 @@
 import java.util.Iterator;
 import java.util.ArrayList;
-import java.util.function.Consumer;
 public class ArvoreBinaria implements IArvoreBinaria {
   private Node root;
   private int size;
