@@ -60,4 +60,14 @@ public class pigeonHoleSort {
       pigeonsHole.get((int) pigeons.get(i)-lower).add((int) pigeons.get(i));
     }
   }
+  public int getLower(ArrayList<Object> pigeons) {
+    // achar max e min
+    calculateMaxMin(pigeons);
+    return lower;
+  }
+  public int getHigher(ArrayList<Object> pigeons) {
+    // achar max e min
+    calculateMaxMin(pigeons);
+    return higher;
+  }
 }
