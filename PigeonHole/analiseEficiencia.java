@@ -11,14 +11,16 @@ public class analiseEficiencia {
     int time = 0; // ms
     int tests = 100;
     int range = 1;
+    int tax = 2;
     int k = 0;
     int l = 0;
+    String m = "dados processados " + k + "%";
 
     while (time < limit) {
       
       tempos = new double[tests];
 
-      String m = "dados processados " + k + "%";
+      m = "dados processados " + k + "%";
       for (int i = 0; i < m.length(); i++) System.out.print("\b");  
       System.out.print(m);
       
@@ -37,15 +39,15 @@ public class analiseEficiencia {
         if (k > l) {
           m = "dados processados " + k + "%";
           for (int n = 0; n < m.length(); n++) System.out.print("\b");  
-           System.out.print(m);
+          System.out.print(m);
           l++;
         }
       }
-      System.out.println();
+      for (int n = 0; n < m.length(); n++) System.out.print("\b");
       
       k = 0;
       l = 0;
-      range *= 10;
+      range *= tax;
       
       double total = 0;
       for (int i = 0; i < tests; i++) total += tempos[i];
