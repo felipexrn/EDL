@@ -5,8 +5,8 @@ public class analiseEficiencia {
   public static void main (String[] args) throws IOException, InterruptedException {
     pigeonHoleSort phs = new pigeonHoleSort();
     ArrayList<Object> pigeons = new ArrayList<Object>();
-    double[] tempos;
     Random num = new Random();
+    double[] tempos;
     int limit = 1000; // ms
     int time = 0; // ms
     int tests = 100;
@@ -17,9 +17,10 @@ public class analiseEficiencia {
     while (time < limit) {
       
       tempos = new double[tests];
-      
-      System.out.print("\033[M\033[0J");  
-      System.out.print("dados processados " + k + "%");
+
+      String m = "dados processados " + k + "%";
+      for (int i = 0; i < m.length(); i++) System.out.print("\b");  
+      System.out.print(m);
       
       for (int i = 0; i < tests; i++) {
         
@@ -34,8 +35,9 @@ public class analiseEficiencia {
         k = (int)((i+1) / (double) tempos.length * 100);
         
         if (k > l) {
-          System.out.print("\033[M\033[0J");  
-          System.out.print("dados processados " + k + "%");
+          m = "dados processados " + k + "%";
+          for (int n = 0; n < m.length(); n++) System.out.print("\b");  
+           System.out.print(m);
           l++;
         }
       }
