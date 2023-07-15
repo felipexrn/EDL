@@ -1,24 +1,16 @@
 import java.util.ArrayList;
 public class pigeonHoleSort {
   private ArrayList<ArrayList<Object>> pigeonsHole;
-  public ArrayList<Object> sortPigeons(ArrayList<Object> pigeons) {
-    int higher = (int) pigeons.get(0);
-    int lower = (int) pigeons.get(0);
+  private int higher;
+  private int lower;
+  private int len;
+  public ArrayList<Object> getSortPigeons(ArrayList<Object> pigeons) {
     // achar max e min
-    for (int i = 0; i < pigeons.size(); i ++) {
-      higher = Math.max(higher, (int) pigeons.get(i));
-      lower = Math.min(lower, (int) pigeons.get(i));
-    }
+    calculateMaxMin(pigeons);
     // construir os buracos dos pombos
-    int len = higher - lower + 1;
-    pigeonsHole = new ArrayList<ArrayList<Object>>();
-    for (int i = 0; i < len; i++) {
-      pigeonsHole.add(new ArrayList<Object>());  
-    }
+    createHoles(pigeons);
     // popular buracos dos pombos
-    for (int i = 0; i < pigeons.size(); i++) {
-      pigeonsHole.get((int) pigeons.get(i)-lower).add((int) pigeons.get(i));
-    }
+    populateHoles(pigeons);
     // devolver os pombos ordenados
     int i = 0;
     int k = 0;
@@ -31,41 +23,41 @@ public class pigeonHoleSort {
     }
     return pigeons;
   }
-  public ArrayList<ArrayList<Object>> pigeonsVoidHoles(ArrayList<Object> pigeons) {
-    int higher = (int) pigeons.get(0);
-    int lower = (int) pigeons.get(0);
+  public ArrayList<ArrayList<Object>> getPigeonsVoidHoles(ArrayList<Object> pigeons) {
     // achar max e min
-    for (int i = 0; i < pigeons.size(); i ++) {
-      higher = Math.max(higher, (int) pigeons.get(i));
-      lower = Math.min(lower, (int) pigeons.get(i));
-    }
+    calculateMaxMin(pigeons);
     // construir os buracos dos pombos
-    int len = higher - lower + 1;
-    pigeonsHole = new ArrayList<ArrayList<Object>>();
-    for (int i = 0; i < len; i++) {
-      pigeonsHole.add(new ArrayList<Object>());  
-    }
+    createHoles(pigeons);
     return pigeonsHole;
   }
   
-  public ArrayList<ArrayList<Object>> populatedHoles(ArrayList<Object> pigeons) {
-    int higher = (int) pigeons.get(0);
-    int lower = (int) pigeons.get(0);
+  public ArrayList<ArrayList<Object>> getPopulatedHoles(ArrayList<Object> pigeons) {
     // achar max e min
+    calculateMaxMin(pigeons);
+    // construir os buracos dos pombos
+    createHoles(pigeons);
+    // popular buracos dos pombos
+    populateHoles(pigeons);
+    return pigeonsHole;
+  }
+  private void calculateMaxMin(ArrayList<Object> pigeons) {
+    higher = (int) pigeons.get(0);
+    lower = (int) pigeons.get(0);
     for (int i = 0; i < pigeons.size(); i ++) {
       higher = Math.max(higher, (int) pigeons.get(i));
       lower = Math.min(lower, (int) pigeons.get(i));
-    }
-    // construir os buracos dos pombos
-    int len = higher - lower + 1;
+    }  
+  }
+  private void createHoles(ArrayList<Object> pigeons) {
+    len = higher - lower + 1;
     pigeonsHole = new ArrayList<ArrayList<Object>>();
     for (int i = 0; i < len; i++) {
       pigeonsHole.add(new ArrayList<Object>());  
     }
-    // popular buracos dos pombos
+  }
+  private void populateHoles(ArrayList<Object> pigeons) {
     for (int i = 0; i < pigeons.size(); i++) {
       pigeonsHole.get((int) pigeons.get(i)-lower).add((int) pigeons.get(i));
     }
-    return pigeonsHole;
   }
 }

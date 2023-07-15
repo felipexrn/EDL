@@ -20,7 +20,7 @@ public class testePigeonHoleSort {
     }
     System.out.println("\n");
     
-    pigeonsHoles = phs.pigeonsVoidHoles(pigeons);
+    pigeonsHoles = phs.getPigeonsVoidHoles(pigeons);
     
     System.out.println("Buracos dos Pombos");
     for (int i = 0; i < pigeonsHoles.size(); i++) {
@@ -28,15 +28,15 @@ public class testePigeonHoleSort {
     }
     System.out.println();
 
-    pigeonsHoles = phs.populatedHoles(pigeons);
+    pigeonsHoles = phs.getPopulatedHoles(pigeons);
     System.out.println("Pombos nos Buracos");
     for (int i = 0; i < pigeonsHoles.size(); i++) {
-      System.out.println(pigeonsHoles.get(i) + " ");
+      System.out.println(pigeonsHoles.get(i));
     }
     System.out.println();
 
     // fazer código pra contar o tempo
-    pigeons = phs.sortPigeons(pigeons);
+    pigeons = phs.getSortPigeons(pigeons);
     
     System.out.println("Pombos ordenados");
     for (int i = 0; i < pigeons.size(); i++) {
