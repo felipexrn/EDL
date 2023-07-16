@@ -10,10 +10,10 @@ public class testePhsList {
     int time = 0; // ms
     int tests = 100;
     int range = 1;
-    int tax = 2;
+    int tax = 10;
     int k = 0;
     int l = 0;
-    String m = "dados processados " + k + "% ";
+    String m;
 
     while (time < limit) {
       
@@ -32,11 +32,22 @@ public class testePhsList {
         pigeons = phs.getSortedPigeons();
         long fim = System.currentTimeMillis();
         tempos[i] = fim-inicio;
+
+        String isSorted = "Dados processados";
+        for (int j = 0; j < pigeons.size() -1; j++) {
+          int pigeonI = (int) pigeons.get(j);
+          int pigeonII = (int) pigeons.get(j+1);
+          if (pigeonI > pigeonII) {
+            System.out.println();
+            System.out.println("Dados estão foram processados corretamente. " + pigeonI + " não é menor que " + pigeonII);
+            System.exit(0);
+          }
+        }
         
         k = (int)((i+1) / (double) tempos.length * 100);
         
         if (k > l) {
-          m = "dados processados " + k + "% ";
+          m = isSorted + " " + k + "% ";
           for (int n = 0; n < m.length(); n++) System.out.print("\b");  
           System.out.print(m);
           l++;

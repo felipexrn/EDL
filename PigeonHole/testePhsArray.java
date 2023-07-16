@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Random;
 public class testePhsArray {
   public static void main (String[] args) {
@@ -9,11 +8,11 @@ public class testePhsArray {
     int limit = 1000; // ms
     int time = 0; // ms
     int tests = 100;
-    int range = 10;
-    int tax = 2;
+    int range = 1;
+    int tax = 10;
     int k = 0;
     int l = 0;
-    String m = "dados processados " + k + "% ";
+    String m;
 
     while (time < limit) {
       
@@ -29,16 +28,31 @@ public class testePhsArray {
           p[j] = num.nextInt(range); 
         }
         phs = new phsArray(p);
+        p = null;
   
         long inicio = System.currentTimeMillis();
         p = phs.getSortedPigeons();
         long fim = System.currentTimeMillis();
         tempos[i] = fim-inicio;
+
+        String isSorted = "Dados processados";
+        for (int j = 0; j < p.length -1; j++) {
+          int pI = p[j];
+          int pII = p[j+1];
+          if (pI > pII) {
+            System.out.println();
+            System.out.println("Dados estão foram processados corretamente. " + pI + " não é menor que " + pII);
+            System.exit(0);
+          }
+        }
+
+        p = null;
+        phs = null;
         
         k = (int)((i+1) / (double) tempos.length * 100);
         
         if (k > l) {
-          m = "dados processados " + k + "% ";
+          m = isSorted + " " + k + "% ";
           for (int n = 0; n < m.length(); n++) System.out.print("\b");  
           System.out.print(m);
           l++;

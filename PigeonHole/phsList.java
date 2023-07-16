@@ -19,13 +19,14 @@ public class phsList {
   private void createHoles() {
     length = higher - lower + 1;
     pigeonsHole = new ArrayList<ArrayList<Object>>();
-    for (int i = 0; i < len; i++) {
+    for (int i = 0; i < length; i++) {
       pigeonsHole.add(new ArrayList<Object>());  
     }
   }
   private void populateHoles() {
     for (int i = 0; i < pigeons.size(); i++) {
-      pigeonsHole.get((int) pigeons.get(i)-lower).add((int) pigeons.get(i));
+      int pigeon = (int) pigeons.get(i);
+      pigeonsHole.get(pigeon-lower).add(pigeon);
     }
   }
   public ArrayList<Object> getSortedPigeons() {
@@ -39,8 +40,9 @@ public class phsList {
     int i = 0;
     int k = 0;
     while (k < pigeons.size()) {
-      for (int j = 0; j < pigeonsHole.get(i).size(); j++) {
-        pigeons.set(k, (pigeonsHole.get(i)).get(j));
+      ArrayList<Object> hole = (ArrayList<Object>) pigeonsHole.get(i);
+      for (int j = 0; j < hole.size(); j++) {
+        pigeons.set(k, hole.get(j));
         k++;
       }
       i++;

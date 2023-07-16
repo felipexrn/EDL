@@ -1,7 +1,6 @@
 public class phsArray {
-  private Object[] ph;
+  private int[] ph;
   private int[] p;
-  private int[] h;
   private int higher;
   private int lower;
   private int length;
@@ -18,19 +17,11 @@ public class phsArray {
   }
   private void createHoles() {
     length = higher - lower + 1;
-    ph = new Object[length];
-    //t = new int[2];
-    for (int i = 0; i < length; i++) { 
-      ph[i] = new int[2];
-      ((int[]) ph[i])[0] = 0;
-    }
+    ph = new int[length];
   }
   private void populateHoles() {
     for (int i = 0; i < p.length; i++) {
-      h = (int[]) ph[p[i]-lower];
-      h[1] = p[i];
-      h[0] = h[0] + 1;
-      ph[p[i]-lower] = h;
+      ph[p[i]-lower] = ph[p[i]-lower] +1;
     }
   }
   public int[] getSortedPigeons() {
@@ -43,23 +34,24 @@ public class phsArray {
     // devolver os pombos ordenados
     int j = 0;
     for (int i = 0; i < length; i++) {
-      h = (int[]) ph[i];
-      while (h[0] > 0) {
-        p[j] = h[1];
-        h[0] = h[0] -1;
+      int h = ph[i];
+      while (h > 0) {
+        p[j] = i + lower;
+        h--;
         j++;
       }
     }
+    ph = null;
     return p; 
   }
-  public Object[] getVoidHoles() {
+  public int[] getVoidHoles() {
     // achar max e min
     calculateMaxMin();
     // construir os buracos dos pombos
     createHoles();
     return ph;
   }
-  public Object[] getPopulatedHoles() {
+  public int[] getPopulatedHoles() {
     // achar max e min
     calculateMaxMin();
     // construir os buracos dos pombos
