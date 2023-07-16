@@ -1,9 +1,8 @@
 import java.util.ArrayList;
 import java.util.Random;
-public class testePhsArray {
-  public static void main (String[] args) throws IOException, InterruptedException {
+public class testePhsList {
+  public static void main (String[] args) {
     ArrayList<Object> pigeons;
-    int[] p;
     phsList phs;
     Random num = new Random();
     double[] tempos;

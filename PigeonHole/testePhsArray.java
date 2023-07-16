@@ -1,16 +1,15 @@
 import java.util.ArrayList;
 import java.util.Random;
 public class testePhsArray {
-  public static void main (String[] args) throws IOException, InterruptedException {
-    ArrayList<Object> pigeons;
+  public static void main (String[] args) {
     int[] p;
-    phsList phs;
+    phsArray phs;
     Random num = new Random();
     double[] tempos;
     int limit = 1000; // ms
     int time = 0; // ms
     int tests = 100;
-    int range = 1;
+    int range = 10;
     int tax = 2;
     int k = 0;
     int l = 0;
@@ -25,12 +24,14 @@ public class testePhsArray {
       
       for (int i = 0; i < tests; i++) {
         
-        pigeons = new ArrayList<Object>();
-        for (int j = 0; j < range; j++) pigeons.add(num.nextInt(range));
-        phs = new phsList(pigeons);
+        p = new int[range];
+        for (int j = 0; j < range; j++) {
+          p[j] = num.nextInt(range); 
+        }
+        phs = new phsArray(p);
   
         long inicio = System.currentTimeMillis();
-        pigeons = phs.getSortedPigeons();
+        p = phs.getSortedPigeons();
         long fim = System.currentTimeMillis();
         tempos[i] = fim-inicio;
         
