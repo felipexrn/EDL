@@ -110,32 +110,5 @@ public class testeArvoreBinaria {
     System.out.println(AB.strNodes());
     System.out.println(AB.strElements());
     AB.show();
-    
-
-    // Node newRoot = new Node(null, 0);
-    // ArvoreBinaria newAB = new ArvoreBinaria();
-    // newAB.setComparer(IntComparator);
-    // newAB.include(newRoot.getKey());
-
-    // System.out.println("depth " + newAB.depth(newAB.getRoot()));
-    // System.out.println("height " + newAB.height(newAB.getRoot()));
-    // System.out.println("size " + newAB.size());
-    // System.out.println(newAB.strNodes());
-    // System.out.println(newAB.strElements());
-    // newAB.show();
-
-    // newAB.include(4);
-    // newAB.include(8);
-    // newAB.include(3);
-    // newAB.include(5);
-    // newAB.include(7);
-    // newAB.include(9);
-
-    // System.out.println("depth " + newAB.depth(newAB.getRoot()));
-    // System.out.println("height " + newAB.height(newAB.getRoot()));
-    // System.out.println("size " + newAB.size());
-    // System.out.println(newAB.strNodes());
-    // System.out.println(newAB.strElements());
-    // newAB.show();
   }
 }
