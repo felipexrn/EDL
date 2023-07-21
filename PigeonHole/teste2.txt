@@ -1,0 +1,58 @@
+Processador Core I5
+Sistema Windows 10
+Fator de crescimento 2
+
+Efciencia da implementação com array
+A media do tempo, em 100 testes, para ordenar 2 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 4 pombos, foi de 0.01 ms
+A media do tempo, em 100 testes, para ordenar 8 pombos, foi de 0.01 ms
+A media do tempo, em 100 testes, para ordenar 16 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 32 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 64 pombos, foi de 0.01 ms
+A media do tempo, em 100 testes, para ordenar 128 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 256 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 512 pombos, foi de 0.03 ms
+A media do tempo, em 100 testes, para ordenar 1024 pombos, foi de 0.06 ms
+A media do tempo, em 100 testes, para ordenar 2048 pombos, foi de 0.03 ms
+A media do tempo, em 100 testes, para ordenar 4096 pombos, foi de 0.07 ms
+A media do tempo, em 100 testes, para ordenar 8192 pombos, foi de 0.2 ms
+A media do tempo, em 100 testes, para ordenar 16384 pombos, foi de 0.18 ms
+A media do tempo, em 100 testes, para ordenar 32768 pombos, foi de 0.22 ms
+A media do tempo, em 100 testes, para ordenar 65536 pombos, foi de 0.46 ms
+A media do tempo, em 100 testes, para ordenar 131072 pombos, foi de 0.85 ms
+A media do tempo, em 100 testes, para ordenar 262144 pombos, foi de 1.77 ms
+A media do tempo, em 100 testes, para ordenar 524288 pombos, foi de 3.58 ms
+A media do tempo, em 100 testes, para ordenar 1048576 pombos, foi de 7.58 ms
+A media do tempo, em 100 testes, para ordenar 2097152 pombos, foi de 19.37 ms
+A media do tempo, em 100 testes, para ordenar 4194304 pombos, foi de 42.7 ms
+A media do tempo, em 100 testes, para ordenar 8388608 pombos, foi de 94.59 ms
+A media do tempo, em 100 testes, para ordenar 16777216 pombos, foi de 200.75 ms
+A media do tempo, em 100 testes, para ordenar 33554432 pombos, foi de 422.43 ms
+A media do tempo, em 100 testes, para ordenar 67108864 pombos, foi de 907.98 ms
+A media do tempo, em 100 testes, para ordenar 134217728 pombos, foi de 1903.41 ms
+Tempo para maior entrada comum: 42,7 milisegundos
+
+Eficiência da implementação com lista
+A media do tempo, em 100 testes, para ordenar 2 pombos, foi de 0.04 ms
+A media do tempo, em 100 testes, para ordenar 4 pombos, foi de 0.02 ms
+A media do tempo, em 100 testes, para ordenar 8 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 16 pombos, foi de 0.01 ms
+A media do tempo, em 100 testes, para ordenar 32 pombos, foi de 0.01 ms
+A media do tempo, em 100 testes, para ordenar 64 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 128 pombos, foi de 0.07 ms
+A media do tempo, em 100 testes, para ordenar 256 pombos, foi de 0.08 ms
+A media do tempo, em 100 testes, para ordenar 512 pombos, foi de 0.15 ms
+A media do tempo, em 100 testes, para ordenar 1024 pombos, foi de 0.22 ms
+A media do tempo, em 100 testes, para ordenar 2048 pombos, foi de 0.41 ms
+A media do tempo, em 100 testes, para ordenar 4096 pombos, foi de 0.41 ms
+A media do tempo, em 100 testes, para ordenar 8192 pombos, foi de 0.61 ms
+A media do tempo, em 100 testes, para ordenar 16384 pombos, foi de 1.04 ms
+A media do tempo, em 100 testes, para ordenar 32768 pombos, foi de 1.67 ms
+A media do tempo, em 100 testes, para ordenar 65536 pombos, foi de 4.32 ms
+A media do tempo, em 100 testes, para ordenar 131072 pombos, foi de 8.53 ms
+A media do tempo, em 100 testes, para ordenar 262144 pombos, foi de 36.51 ms
+A media do tempo, em 100 testes, para ordenar 524288 pombos, foi de 83.23 ms
+A media do tempo, em 100 testes, para ordenar 1048576 pombos, foi de 198.82 ms
+A media do tempo, em 100 testes, para ordenar 2097152 pombos, foi de 491.87 ms
+A media do tempo, em 100 testes, para ordenar 4194304 pombos, foi de 1282.37 ms
+Tempo para maior entrada comum: 1282 milisegundos (1,2 segundos)

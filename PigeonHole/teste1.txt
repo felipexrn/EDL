@@ -1,0 +1,26 @@
+Processador Core I5
+Sistema Windows 10
+Fator de crescimento 10
+
+Efciencia da implementação com array
+A media do tempo, em 100 testes, para ordenar 10 pombos, foi de 0.01 ms
+A media do tempo, em 100 testes, para ordenar 100 pombos, foi de 0.0 ms
+A media do tempo, em 100 testes, para ordenar 1000 pombos, foi de 0.02 ms
+A media do tempo, em 100 testes, para ordenar 10000 pombos, foi de 0.03 ms
+A media do tempo, em 100 testes, para ordenar 100000 pombos, foi de 0.13 ms
+A media do tempo, em 100 testes, para ordenar 1000000 pombos, foi de 1.3 ms
+A media do tempo, em 100 testes, para ordenar 10000000 pombos, foi de 24.03 ms
+A media do tempo, em 100 testes, para ordenar 100000000 pombos, foi de 300.89 ms
+A media do tempo, em 100 testes, para ordenar 1000000000 pombos, foi de 3074.49 ms
+Tempo para maior entrada comum: 0,3 segundos
+
+Eficiência da implementação com lista
+A media do tempo, em 100 testes, para ordenar 10 pombos, foi de 0.04 ms
+A media do tempo, em 100 testes, para ordenar 100 pombos, foi de 0.01 ms
+A media do tempo, em 100 testes, para ordenar 1000 pombos, foi de 0.06 ms
+A media do tempo, em 100 testes, para ordenar 10000 pombos, foi de 0.19 ms
+A media do tempo, em 100 testes, para ordenar 100000 pombos, foi de 0.96 ms
+A media do tempo, em 100 testes, para ordenar 1000000 pombos, foi de 13.8 ms
+A media do tempo, em 100 testes, para ordenar 10000000 pombos, foi de 407.15 ms
+A media do tempo, em 100 testes, para ordenar 100000000 pombos, foi de 9590.77 ms
+Tempo para maior entrada comum: 9,5 segundos

@@ -9,7 +9,7 @@ public class testePhsArray {
     int time = 0; // ms
     int tests = 100;
     int range = 1;
-    int tax = 10;
+    int tax = 2;
     int k = 0;
     int l = 0;
     String m;
