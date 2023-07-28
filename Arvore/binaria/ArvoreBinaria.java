@@ -67,6 +67,10 @@ public class ArvoreBinaria implements IArvoreBinaria {
           n.getLeftChild().setParent(n.getParent());
           n.getParent().setLeftChild(n.getLeftChild());
         }
+        else if (!hasLeft(n)) {
+          n.getRightChild().setParent(n.getParent());
+          n.getParent().setRightChild(n.getRightChild());
+        }
         else {
           m = search(n.getRightChild(), k);
           if (isExternal(m)) {
