@@ -194,15 +194,27 @@ public class ArvoreBinaria implements IArvoreBinaria {
   }
 	public void show() {
     String s = "";
+    String l = "";
     Iterator i;
     Node n;
-    for (int h = 0; h <= height(root); h++) {
+    int treeHeight = height(root);
+    for (int h = 0; h <= treeHeight; h++) {
       i = nodes();
       while(i.hasNext()) {
         n = (Node) i.next();
-        if (depth(n) == h) s += n.getKey() + " ";
-        else s += "  ";
+        if (depth(n) == h) {
+          s += n.getKey() + " ";
+          if (hasLeft(n)) l += "/"; else l += " ";
+          if (hasRight(n)) l += "\\"; else l += " ";
+        }
+        else {
+          s += "  ";
+          l += "  ";
+        }
       }
+      s += "\n";
+      s += l;
+      l = "";
       s += "\n";
     }
     System.out.println(s);
