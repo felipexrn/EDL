@@ -2,17 +2,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class testeArvoreBinaria1000 {
+public class testeArvoreBinariaAleatoria {
     public static void main(String[] args) {
         // Comparador de inteiros e arvore instanciados
         GenericComparator IntComparator = new GenericComparator(0); // 0=inteiros
         ArvoreBinaria AB = new ArvoreBinaria();
+        System.out.println("Arvore binária de busca instanciada");
 
         // Configurar comparador na árvore
         AB.setComparer(IntComparator);
         GenericComparator GC = AB.getComparer();
         System.out.println("Tipo: " + GC.getType() + ", comparador de " + GC.getStrType());
-        System.out.println();
 
         // Ler entradas do arquivo e inserir na árvore
         int inseridos = 0;
@@ -20,7 +20,8 @@ public class testeArvoreBinaria1000 {
             Scanner scanner = new Scanner(new File("insercao.txt"));
             while (scanner.hasNextInt()) {
                 int value = scanner.nextInt();
-                AB.include(value);                
+                AB.include(value);
+                inseridos++;                
             }
             scanner.close();
         } catch (FileNotFoundException e) {

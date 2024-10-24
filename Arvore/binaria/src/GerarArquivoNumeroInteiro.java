@@ -8,8 +8,9 @@ public class GerarArquivoNumeroInteiro {
         // Gera 1000 números inteiros aleatórios e únicos
         ArrayList<Integer> numerosUnicos = new ArrayList<>();
         Random random = new Random();
-        while (numerosUnicos.size() < 1000) {
-            int numero = random.nextInt(1000); // Gera número entre 0 e 1000
+        int tamanho = 10;
+        while (numerosUnicos.size() < tamanho) {
+            int numero = random.nextInt(tamanho * tamanho);
             if (!numerosUnicos.contains(numero))
                 numerosUnicos.add(numero);
         }

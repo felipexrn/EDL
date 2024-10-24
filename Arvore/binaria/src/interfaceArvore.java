@@ -14,7 +14,7 @@ public class interfaceArvore {
 
     while (true) {
       listaMetodos(metodos);
-      selecionado = selecionaMetodo();
+      selecionado = selecionaMetodo(ler);
       
       for (int i = 0 ; i < metodos.size(); i++) {
         if (selecionado == i) {
@@ -27,10 +27,10 @@ public class interfaceArvore {
   }
   public static void listaMetodos(ArrayList<String> metodos) {
     for (int i = 0; i < metodos.size(); i++) {
-      System.out.println(i, metodos.get(i));
+      System.out.println(i + ": " + metodos.get(i));
     }
   }
-  public static int selecionaMetodo() {
+  public static int selecionaMetodo(Scanner ler) {
     try {
       return ler.nextInt();
     }
