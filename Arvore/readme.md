@@ -3,8 +3,8 @@
 A estrutura dos diretórios do projeto segue esse padrão: 
 
 ```
-Projeto/
-└── App/
+Arvore/
+└── binaria/
     ├── src/
     │   ├── Classe.java
     │   └── OutraClasse.java
@@ -22,12 +22,12 @@ Nesse caso:
 
 1. **Para compilar**:
    ```bash
-   javac -d Projeto/App/bin src/*.java
+   javac -d Arvore/binaria/bin Arvore/binaria/src/*.java
    ```
 
 2. **Para executar** (supondo que `MinhaClasse` tenha o método `main`):
    ```bash
-   java -cp Projeto/App/bin MinhaClasse
+   java -cp Arvore/binaria/bin MinhaClasse
    ```
 
 ### Compilação e execução específica (gera arquivos class no local da execução)

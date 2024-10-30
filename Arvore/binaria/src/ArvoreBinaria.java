@@ -50,9 +50,16 @@ public class ArvoreBinaria implements IArvoreBinaria {
     // busca o node com chave maior ou igual a k a partir do raiz
     Node n = search(root, k);  
     Node m = new Node(n, k);
-    // se m é menor que n adiciona k à esquerda, caso contrário insere k à direita
+    // se m é menor que n adiciona k à esquerda
     if(comparator.compareTo(m, n) < 0) n.setLeftChild(m);
-    else n.setRightChild(m);
+    // se m é menor que n adiciona k à direita
+    else if(comparator.compareTo(m, n) > 0) n.setRightChild(m);
+    // se não atualiza chave de n para k e m recebe n e compensa tamanho da árvore 
+    else {
+      n.setKey(k);
+      m = n; 
+      size--;
+    }
     size++;
     // retorno padrão
     return m;

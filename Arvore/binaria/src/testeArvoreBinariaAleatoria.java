@@ -17,7 +17,7 @@ public class testeArvoreBinariaAleatoria {
         // Ler entradas do arquivo e inserir na árvore
         int inseridos = 0;
         try {
-            Scanner scanner = new Scanner(new File("insercao.txt"));
+            Scanner scanner = new Scanner(new File(args[0]));
             while (scanner.hasNextInt()) {
                 int value = scanner.nextInt();
                 AB.include(value);
