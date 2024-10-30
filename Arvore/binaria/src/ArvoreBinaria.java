@@ -94,12 +94,12 @@ public class ArvoreBinaria implements IArvoreBinaria {
           n.getLeftChild().setParent(n.getParent());
           n.getParent().setLeftChild(n.getLeftChild());
         }
-        // se não tem filho esquerdo
+        /*// se não tem filho esquerdo
         else if (!hasLeft(n)) {
           // o avô recebe o neto direito como filho direito
           n.getRightChild().setParent(n.getParent());
           n.getParent().setRightChild(n.getRightChild());
-        }
+        }*/
         // se tem dois filhos
         else {
           // busca à direita o nó com menor chave maior ou igual a k
