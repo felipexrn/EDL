@@ -27,7 +27,7 @@ Nesse caso:
 
 2. **Para executar** (supondo que `MinhaClasse` tenha o método `main`):
    ```bash
-   java -cp Arvore/binaria/bin MinhaClasse
+   java -cp Arvore/binaria/bin MinhaClasse [argumentos se houverem]
    ```
 
 ### Compilação e execução específica (gera arquivos class no local da execução)
@@ -43,6 +43,8 @@ Nesse caso:
 
 1. Entre no diretório da estrutura desejada.
 
-2. Rode comando `javac @compile` no terminal. (coloque o nome das classes.java no arquivo compile)
+2. Crie um arquivo de texto e coloque nele os nomes das classes.java separados por espaço `MinhaClasse.java OutraClasse.java`)
 
-3. Execute a estrutura com o comando `java Classe` no terminal.
+3. Rode comando `javac @<nome do arquivo>` no terminal. 
+
+4. Execute a estrutura com o comando `java Classe` no terminal.
