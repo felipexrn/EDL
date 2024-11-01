@@ -76,6 +76,7 @@ public class ArvoreBinaria implements IArvoreBinaria {
     else if(size > 1) {
       // se a chave k existe na árvore
       if (n.getKey() == k) { 
+
         // se externo
         if (isExternal(n)) {
           // filho esquerdo
@@ -87,40 +88,67 @@ public class ArvoreBinaria implements IArvoreBinaria {
             n.getParent().setRightChild(null); 
           }
         }
+
         // se interno
-        // se não tem filho direito
+        // se não tem filho direito (tem somente esquerdo)
         else if (!hasRight(n)) {
-          // o avô recebe o neto esquerdo como filho esquerdo
+          // o filho esquerdo de n recebe o avo como pai
           n.getLeftChild().setParent(n.getParent());
-          n.getParent().setLeftChild(n.getLeftChild());
+          
+          if (n != root) { 
+
+            // n é filho esquerdo do pai
+            if (n == n.getParent().getLeftChild())
+              n.getParent().setLeftChild(n.getLeftChild());
+            // n é filho direito do pai
+            else
+              n.getParent().setRightChild(n.getLeftChild());
+          } else {
+            root =  n.getLeftChild();
+          }
         }
-        /*// se não tem filho esquerdo
-        else if (!hasLeft(n)) {
-          // o avô recebe o neto direito como filho direito
-          n.getRightChild().setParent(n.getParent());
-          n.getParent().setRightChild(n.getRightChild());
-        }*/
-        // se tem dois filhos
-        else {
+
+        // se tem filo direito ou dois filhos
+        if (hasRight(n)) {
+        
           // busca à direita o nó com menor chave maior ou igual a k
           m = search(n.getRightChild(), k);
+          n.setKey(m.getKey());
+
           // se externo
           if (isExternal(m)) {
-            n.setKey(m.getKey());
+            // filho esquerdo
             if (m == m.getParent().getLeftChild()) {
               m.getParent().setLeftChild(null);
             }
+            // filho direito
             else {
-              m.getParent().setRightChild(null);
+              m.getParent().setRightChild(null); 
             }
           }
-          // se interno
-          else {
-            n.setKey(m.getKey());
-            // tem filho direito
+          // se m é interno  
+          else{                    
+            // m tem filho direito
             if (hasRight(m)) {
-              m.getRightChild().setParent(m.getParent());
-              m.getParent().setLeftChild(m.getRightChild());
+              // o filho direito de m recebe o avo como pai
+              m.getRightChild().setParent(m.getParent());  
+                            
+              // m é filho esquerdo do pai
+              if (m == m.getParent().getLeftChild())
+                m.getParent().setLeftChild(m.getRightChild());
+              else
+                m.getParent().setRightChild(m.getRightChild());
+            }
+            // m tem filho esquerdo
+            else {
+              // o filho esquerdo de m recebe o avo como pai
+              m.getLeftChild().setParent(m.getParent());
+
+              // m é filho direito do pai
+              if (m == m.getParent().getRightChild())
+                m.getParent().setRightChild(m.getLeftChild());
+              else
+                m.getParent().setLeftChild(m.getLeftChild());                      
             }
           }
         }
@@ -204,27 +232,32 @@ public class ArvoreBinaria implements IArvoreBinaria {
     String l = "";
     Iterator i;
     Node n;
-    int treeHeight = height(root);
-    for (int h = 0; h <= treeHeight; h++) {
-      i = nodes();
-      while(i.hasNext()) {
-        n = (Node) i.next();
-        if (depth(n) == h) {
-          s += n.getKey() + " ";
-          if (hasLeft(n)) l += "/"; else l += " ";
-          if (hasRight(n)) l += "\\"; else l += " ";
+    if (size != 0){
+      int treeHeight = height(root);
+      for (int h = 0; h <= treeHeight; h++) {
+        i = nodes();
+        while(i.hasNext()) {
+          n = (Node) i.next();
+          if (depth(n) == h) {
+            s += n.getKey() + "";
+            if (hasLeft(n)) l += "/"; else l += " ";
+            if (hasRight(n)) l += "\\"; else l += " ";
+          }
+          else {
+            s += "  ";
+            l += "  ";
+          }
         }
-        else {
-          s += "  ";
-          l += "  ";
-        }
+        if (l.indexOf("\\") + l.indexOf("/") != -2) 
+          l = "\n" + l + "\n";
+        s += l;
+        l = "";
       }
-      s += "\n";
-      s += l;
-      l = "";
-      s += "\n";
     }
-    System.out.println(s);
+    else {
+      s = "";
+    }
+    System.out.println(s + "\n");
   }
 	public Iterator nodes() {
     nodes = new ArrayList<Object>();
@@ -278,6 +311,19 @@ public class ArvoreBinaria implements IArvoreBinaria {
       }
     } 
     return s += "}";
+  }
+  public void status() {
+    String s = "";
+    if (!isEmpty()) {
+      s += "Height: " + height(root) + "\n";
+      s += "Size: " + size() + "\n";
+      s += "Nodes: " + strNodes() + "\n";
+      s += "Keys: " + strElements() + "\n";
+      s += "Depths: " + strDepths();
+    }
+    else
+      s = "Árvore vazia";
+    System.out.println(s);
   }
 	public int size() {
     return size;

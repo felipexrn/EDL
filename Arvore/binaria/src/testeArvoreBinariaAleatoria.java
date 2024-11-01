@@ -12,7 +12,10 @@ public class testeArvoreBinariaAleatoria {
         // Configurar comparador na árvore
         AB.setComparer(IntComparator);
         GenericComparator GC = AB.getComparer();
-        System.out.println("Tipo: " + GC.getType() + ", comparador de " + GC.getStrType());
+        System.out.println("Configurado comparador de tipo: " + GC.getStrType());
+
+        // teste de inserção
+        System.out.println("TESTE DE INSERÇÃO");
 
         // Ler entradas do arquivo e inserir na árvore
         int inseridos = 0;
@@ -20,26 +23,50 @@ public class testeArvoreBinariaAleatoria {
             Scanner scanner = new Scanner(new File(args[0]));
             while (scanner.hasNextInt()) {
                 int value = scanner.nextInt();
-                AB.include(value);
-                inseridos++;                
+                try {
+                    AB.include(value);
+                    inseridos++;                   
+                    System.out.println("Inserido o nó: " + value);
+                }
+                catch (Exception ex) {
+                    System.out.println("Não foi possível inserir: "+ value +"\n"+ ex.getMessage()); 
+                }
+                // Mostrar status da árvore
+                statusArvore(AB);    
             }
             scanner.close();
         } catch (FileNotFoundException e) {
             System.out.println("Arquivo não encontrado: " + e.getMessage());
-        }
+        }          
 
-        System.out.println("Inseridos: " + inseridos + " nós");
+        // teste de remoção
+        System.out.println("TESTE DE REMOÇÃO");
 
-        // Mostrar status da árvore
-        statusArvore(AB);      
+        // Ler entradas do arquivo e remover na árvore
+        int removidos = 0;
+        try {
+            Scanner scanner = new Scanner(new File(args[1]));
+            while (scanner.hasNextInt()) {
+                int value = scanner.nextInt();
+                try {
+                    AB.remove(value);
+                    removidos++;                   
+                    System.out.println("Removido o nó: " + value);
+                }
+                catch (Exception ex) {
+                    System.out.println("Não foi possível remover: "+ value +"\n"+ ex.getMessage());    
+                }
+                // Mostrar status da árvore
+                statusArvore(AB);    
+            }
+            scanner.close();
+        } catch (FileNotFoundException e) {
+            System.out.println("Arquivo não encontrado: " + e.getMessage());
+        }          
     }
 
     public static void statusArvore(ArvoreBinaria AB) {
-        System.out.println("Height: " + AB.height(AB.getRoot()));
-        System.out.println("Size: " + AB.size());
-        System.out.println("Nodes: " + AB.strNodes());
-        System.out.println("Keys: " + AB.strElements());
-        System.out.println("Depths: " + AB.strDepths());
+        //AB.status();
         AB.show();
     }
 }
