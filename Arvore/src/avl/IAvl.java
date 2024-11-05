@@ -1,6 +1,7 @@
 package Arvore.scr.avl;
 import java.util.Iterator;
 import java.util.ArrayList;
+import Arvore.src.binaria.*;
 public interface IAvl<T extends Comparable<T>> {
   // Iterator nodesAvl();
   // void inOrderAvl(NodeAvl n);

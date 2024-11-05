@@ -2,9 +2,9 @@ import java.util.*;
 import Arvore.src.avl.*;
 public class testeAvl {
   public static void main (String[] args) {
-    GenericComparator GC = new GenericComparator(0); 
-    GC.setType(0); // 0=inteiro
-    Avl<NodeAvl<T>> A = new Avl<>(GC);
+    //GenericComparator GC = new GenericComparator(0); 
+    //GC.setType(0); // 0=inteiro
+    Avl A = new Avl(0);
     // NodeAvl n = new NodeAvl(null, 1);
     // NodeAvl m = new NodeAvl(n, 2);
     // System.out.println(m.getParent().getKey());

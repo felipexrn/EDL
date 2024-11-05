@@ -4,13 +4,16 @@ A estrutura dos diretórios do projeto segue esse padrão:
 
 ```
 Arvore/
-└── binaria/
-    ├── src/
-    │   ├── Classe.java
-    │   └── OutraClasse.java
-    └── bin/
-        ├── Classe.class
-        └── OutraClasse.class
+├── src/
+|   ├── binaria/
+|   │   ├── Classe.java
+│   │   └── OutraClasse.java
+│   └── avl/
+│       ├── Classe.java
+│       └── OutraClasse.java
+└── bin/
+    ├── Classe.class
+    └── OutraClasse.class
 ```
 
 Nesse caso:
@@ -22,13 +25,11 @@ Nesse caso:
 
 1. **Para compilar**:
    ```bash
-   javac -d Arvore/binaria/bin Arvore/binaria/src/*.java
    javac -d Arvore/bin Arvore/src/binaria/*.java
    ```
 
 2. **Para executar** (supondo que `MinhaClasse` tenha o método `main`):
    ```bash
-   java -cp Arvore/binaria/bin MinhaClasse [argumentos se houverem]
    java -cp Arvore/bin MinhaClasse [argumentos se houverem]
    ```
 

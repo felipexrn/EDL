@@ -8,7 +8,7 @@ import Arvore.src.binaria.*;
 public class testeArvoreBinariaAleatoria {
     public static void main(String[] args) {
         // Gera numeros Aleatórios a inserir
-        GerarArquivoNumeroInteiro.main(new String[] {"Arvore/src/binaria/insercao.txt"});
+        GerarArquivoNumeroInteiro.main(new String[] {"Arvore/src/binaria/insercao.txt", args[0]});
         
         // Sorteia numeros a remover
         ArrayList<Integer> numerosUnicos = new ArrayList<>();
@@ -29,7 +29,7 @@ public class testeArvoreBinariaAleatoria {
         // Ler entradas do arquivo e inserir na árvore
         int inseridos = 0;
         try {
-            Scanner scanner = new Scanner(new File(args[0]));
+            Scanner scanner = new Scanner(new File("Arvore/src/binaria/insercao.txt"));
             while (scanner.hasNextInt()) {
                 int value = scanner.nextInt();
                 try {

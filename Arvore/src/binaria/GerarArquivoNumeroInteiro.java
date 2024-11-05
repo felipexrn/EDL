@@ -7,10 +7,10 @@ import java.util.Random;
 
 public class GerarArquivoNumeroInteiro {
     public static void main(String[] args) {
-        // Gera 1000 números inteiros aleatórios e únicos
+        // Gera N números inteiros aleatórios e únicos
         ArrayList<Integer> numerosUnicos = new ArrayList<>();
         Random random = new Random();
-        int tamanho = 10;
+        int tamanho = Integer.parseInt(args[1]);
         while (numerosUnicos.size() < tamanho) {
             int numero = random.nextInt(tamanho * tamanho);
             if (!numerosUnicos.contains(numero))
