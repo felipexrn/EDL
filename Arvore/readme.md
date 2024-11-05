@@ -23,11 +23,13 @@ Nesse caso:
 1. **Para compilar**:
    ```bash
    javac -d Arvore/binaria/bin Arvore/binaria/src/*.java
+   javac -d Arvore/bin Arvore/src/binaria/*.java
    ```
 
 2. **Para executar** (supondo que `MinhaClasse` tenha o método `main`):
    ```bash
    java -cp Arvore/binaria/bin MinhaClasse [argumentos se houverem]
+   java -cp Arvore/bin MinhaClasse [argumentos se houverem]
    ```
 
 ### Compilação e execução específica (gera arquivos class no local da execução)
