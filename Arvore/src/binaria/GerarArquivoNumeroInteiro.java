@@ -1,3 +1,5 @@
+package Arvore.src.binaria;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -16,12 +18,12 @@ public class GerarArquivoNumeroInteiro {
         }
 
         // Escreve os números no arquivo
-        String nome = "insercao.txt";
+        String nome = args[0];
         try (FileWriter writer = new FileWriter(nome)) {
             for (Integer numero : numerosUnicos) {
                 writer.write(numero + "\n");
             }
-            System.out.println("Arquivo de entrada " + nome + " gerado com sucesso!");
+            System.out.println("Arquivo " + nome + " gerado com sucesso!");
         } catch (IOException e) {
             System.out.println("Ocorreu um erro ao gerar o arquivo: " + nome + "\n" + e.getMessage());
         }

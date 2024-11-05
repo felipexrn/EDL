@@ -6,12 +6,24 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
   private int size;
   private GenericComparator<T> comparator;
   private ArrayList<Node<T>> nodes;
-  public ArvoreBinaria() {
+  public ArvoreBinaria(int type) {
      this.size = 0;
      this.nodes = new ArrayList<>();
+     this.comparator = createComparator(type); // Chama o método para criar o comparador    
+  }
+  // Método que cria o comparador adequado
+  private GenericComparator<T> createComparator(int type) {
+    // Instanciando um comparador padrão para os tipos suportados    
+    switch (type) {
+      case 0: return new GenericComparator<>(0); // 0 para Integer
+      case 1: return new GenericComparator<>(1); // 1 para String
+      case 2: return new GenericComparator<>(2); // 2 para Double
+      default: throw new IllegalArgumentException("Tipo não suportado!");
+    }
   }
   public ArvoreBinaria(GenericComparator<T> c) {
     this.size = 0;
+    this.nodes = new ArrayList<>();
     setComparer(c);
   }
   public void setComparer(GenericComparator<T> c) {

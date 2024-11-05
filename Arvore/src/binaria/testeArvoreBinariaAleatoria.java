@@ -1,17 +1,25 @@
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
+import java.util.Collections;
+import java.util.ArrayList;
 import Arvore.src.binaria.*;
 
 public class testeArvoreBinariaAleatoria {
     public static void main(String[] args) {
+        // Gera numeros Aleatórios a inserir
+        GerarArquivoNumeroInteiro.main(new String[] {"Arvore/src/binaria/insercao.txt"});
+        
+        // Sorteia numeros a remover
+        ArrayList<Integer> numerosUnicos = new ArrayList<>();
+
         // Comparador de inteiros e arvore instanciados
-        GenericComparator<Integer> IntComparator = new GenericComparator<>(0); // 0=inteiros
-        ArvoreBinaria AB = new ArvoreBinaria();
+        //GenericComparator<Integer> IntComparator = new GenericComparator<>(0); // 0=inteiros
+        ArvoreBinaria AB = new ArvoreBinaria(0);
         System.out.println("Arvore binária de busca instanciada");
 
         // Configurar comparador na árvore
-        AB.setComparer(IntComparator);
+        //AB.setComparer(IntComparator);
         GenericComparator GC = AB.getComparer();
         System.out.println("Configurado comparador de tipo: " + GC.getStrType());
 
@@ -28,6 +36,7 @@ public class testeArvoreBinariaAleatoria {
                     AB.include(value);
                     inseridos++;                   
                     System.out.println("Inserido o nó: " + value);
+                    numerosUnicos.add(value);
                 }
                 catch (Exception ex) {
                     System.out.println("Não foi possível inserir: "+ value +"\n"+ ex.getMessage()); 
@@ -43,12 +52,13 @@ public class testeArvoreBinariaAleatoria {
         // teste de remoção
         System.out.println("TESTE DE REMOÇÃO");
 
+        // Embaralha (sorteia) a lista de números
+        Collections.shuffle(numerosUnicos);
+
         // Ler entradas do arquivo e remover na árvore
         int removidos = 0;
         try {
-            Scanner scanner = new Scanner(new File(args[1]));
-            while (scanner.hasNextInt()) {
-                int value = scanner.nextInt();
+            for (Integer value : numerosUnicos) {
                 try {
                     AB.remove(value);
                     removidos++;                   
@@ -60,9 +70,8 @@ public class testeArvoreBinariaAleatoria {
                 // Mostrar status da árvore
                 statusArvore(AB);    
             }
-            scanner.close();
-        } catch (FileNotFoundException e) {
-            System.out.println("Arquivo não encontrado: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Erro ao remover itens da árvore:\n" + e.getMessage());
         }          
     }
 

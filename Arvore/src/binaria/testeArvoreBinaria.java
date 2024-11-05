@@ -4,11 +4,11 @@ public class testeArvoreBinaria {
   public static void main(String[] args) {
     try {
       // Comparador de inteiros e arvore instanciados
-      GenericComparator IntComparator = new GenericComparator(0); // 0=inteiros
-      ArvoreBinaria AB = new ArvoreBinaria();
+      //GenericComparator IntComparator = new GenericComparator(0); // 0=inteiros
+      ArvoreBinaria AB = new ArvoreBinaria(0);
 
       // comparador configurado na arvore 
-      AB.setComparer(IntComparator);
+      //AB.setComparer(IntComparator);
       GenericComparator GC = AB.getComparer();
       System.out.println("tipo: " + GC.getType() + ", comparador de " +  GC.getStrType());
       System.out.println();

@@ -10,7 +10,7 @@ import Arvore.src.rn.NodeRn;
 public class GenericComparator<T extends Comparable<T>> {
   private String[] types = {"int", "String", "Double"};
   private int type;
-  private T nodeType;
+  private Node<T> nodeType;
   public GenericComparator(int type) {
     setType(type);
   }
@@ -175,10 +175,16 @@ public class GenericComparator<T extends Comparable<T>> {
       }
     }
   }*/
-  /*public int getNodeType(Object o) {
-    if (o instanceof Node) return 0;
-    if (o instanceof NodeAvl) return 1;
-    if (o instanceof NodeRn) return 2;
+  public int getNodeType() {
+    if (nodeType instanceof Node) return 0;
+    if (nodeType instanceof NodeAvl) return 1;
+    if (nodeType instanceof NodeRn) return 2;
     return -1; // Retorno padrão para casos inválidos
-  }*/
+  }
+  public String getStrNodeType() {
+    if (nodeType instanceof Node) return "Node";
+    if (nodeType instanceof NodeAvl) return "NodeAvl";
+    if (nodeType instanceof NodeRn) return "NodeRn";
+    return "Tipo de Node não conhecido"; // Retorno padrão para casos inválidos
+  }
 }

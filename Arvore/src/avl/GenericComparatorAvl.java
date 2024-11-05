@@ -4,11 +4,11 @@ import java.util.function.Consumer;
 // Use t=0 para comparar inteiros
 // Use t=1 para comparar strings
 // Use t=2 para comparar floats
-public class GenericComparator<T> {
+public class GenericComparatorAvl<T> {
   private String[] types = {"int", "String", "Double"};
   private int type;
   private T nodeType;
-  public GenericComparator(T n) {
+  public GenericComparatorAvl(T n) {
     nodeType = n;
   }
   public String setType(int t) {
