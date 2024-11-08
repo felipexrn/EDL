@@ -1,34 +1,52 @@
 package Arvore.src.binaria;
 import java.util.Iterator;
 import java.util.ArrayList;
-public class Node<T> implements INode<T> {
+public abstract class Node<T extends Comparable<T>, N extends Node<T, N>> implements INode<T, N> {
   private T key;
-  private Node<T> parent;
-  private Node<T> rightChild;
-  private Node<T> leftChild;
-  public Node(Node<T> p, T k) {
+  private N parent;
+  private N rightChild;
+  private N leftChild;
+  private GenericComparator<T,N> comparator;
+  public Node(N p, T k) {
     parent = p;
     key = k;
+    this.comparator = createComparator(k); // Chama o método para criar o comparador 
   }
-  public Node<T> getRightChild() {
+  private GenericComparator<T,N> createComparator(T type) {
+    // Instanciando um comparador padrão para os tipos suportados    
+    if (type instanceof Integer) 
+      return new GenericComparator<>(0); // 0 para Integer
+    else if (type instanceof String)
+      return new GenericComparator<>(1); // 1 para String
+    else if (type instanceof Double)
+      return new GenericComparator<>(2); // 2 para Double
+    else throw new IllegalArgumentException("Tipo não suportado!");
+  }
+  public void setComparer(GenericComparator<T,N> c) {
+    this.comparator = c;
+  }
+  public GenericComparator<T,N> getComparer() {
+    return this.comparator;
+  }
+  public N getRightChild() {
     return rightChild;
   }
-  public Node<T> getLeftChild() {
+  public N getLeftChild() {
     return leftChild;
   }
-  public Node<T> getParent() {
+  public N getParent() {
     return parent;
   }
   public T getKey() {
     return key;
   }
-  public void setRightChild(Node<T> n) {
+  public void setRightChild(N n) {
     rightChild = n;
   }
-  public void setLeftChild(Node<T> n) {
+  public void setLeftChild(N n) {
     leftChild = n;
   }
-  public void setParent(Node<T> p) {
+  public void setParent(N p) {
     parent = p;
   }
   public void setKey(T k) {
@@ -41,8 +59,8 @@ public class Node<T> implements INode<T> {
     if (leftChild != null) n++;
     return n;
   }
-  public Iterator<Node<T>> children() {
-    ArrayList<Node<T>> c = new ArrayList<>();
+  public Iterator<N> children() {
+    ArrayList<N> c = new ArrayList<>();
     if (rightChild != null) c.add(rightChild);
     if (leftChild != null) c.add(leftChild);
     return c.iterator();

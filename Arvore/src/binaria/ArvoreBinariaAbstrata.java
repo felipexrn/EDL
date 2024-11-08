@@ -1,18 +1,23 @@
 package Arvore.src.binaria;
 import java.util.Iterator;
 import java.util.ArrayList;
-public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T> {
-  private Node<T> root;
+public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends Node<T,N>> implements IArvoreBinaria<T,N> {
+  private N root;
   private int size;
-  private GenericComparator<T> comparator;
-  private ArrayList<Node<T>> nodes;
-  public ArvoreBinaria(int type) {
+  private GenericComparator<T,N> comparator;
+  private ArrayList<N> nodes;
+  public ArvoreBinariaAbstrata(int type) {
      this.size = 0;
      this.nodes = new ArrayList<>();
      this.comparator = createComparator(type); // Chama o método para criar o comparador    
   }
+  public ArvoreBinariaAbstrata(GenericComparator<T,N> c) {
+    this.size = 0;
+    this.nodes = new ArrayList<>();
+    setComparer(c);
+  }
   // Método que cria o comparador adequado
-  private GenericComparator<T> createComparator(int type) {
+  private GenericComparator<T,N> createComparator(int type) {
     // Instanciando um comparador padrão para os tipos suportados    
     switch (type) {
       case 0: return new GenericComparator<>(0); // 0 para Integer
@@ -21,19 +26,15 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
       default: throw new IllegalArgumentException("Tipo não suportado!");
     }
   }
-  public ArvoreBinaria(GenericComparator<T> c) {
-    this.size = 0;
-    this.nodes = new ArrayList<>();
-    setComparer(c);
-  }
-  public void setComparer(GenericComparator<T> c) {
+  public void setComparer(GenericComparator<T,N> c) {
     this.comparator = c;
   }
-  public GenericComparator<T> getComparer() {
+  public GenericComparator<T,N> getComparer() {
     return this.comparator;
   }
-  public Node<T> search(Node<T> n, T k) {
-    Node<T> m = new Node(null, k);
+  protected abstract N createNode(N p, T k);
+  public N search(N n, T k) {
+    N m = createNode(null, k);
     // Se m menor que n busque na esquerda
     if(comparator.compareTo(m, n) < 0) {
       if(isInternal(n)) {
@@ -53,17 +54,18 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     // retorno padrão
     return n;
   }
-	public Node<T> include(T k) {
+	public N include(T k) {   
     // verifica se foi configurado um comparador
     if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
     // se a árvore está vazia insere k em root
     if (root == null) {
-      setRoot(new Node(null, k));
+      // Cria o node usando padrão factory
+      setRoot(createNode(null, k));
       return root;
     }
     // busca o node com chave maior ou igual a k a partir do raiz
-    Node<T> n = search(root, k);  
-    Node<T> m = new Node(n, k);
+    N n = search(root, k);  
+    N m = createNode(n, k);
     // se m é menor que n adiciona k à esquerda
     if(comparator.compareTo(m, n) < 0) n.setLeftChild(m);
     // se m é menor que n adiciona k à direita
@@ -82,8 +84,8 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     // verifica se foi configurado um comparador
     if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
     // busca o node com chave maior ou igual a k a partir do raiz
-    Node<T> n = search(root, k);
-    Node<T> m;
+    N n = search(root, k);
+    N m;
     // se o node é o raiz e só e existe ele na àrvore ele é removido
     if (n == root && size == 1) root = null;
     // se a árvore contém mais de um node 
@@ -174,11 +176,11 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     // retorno padrão
     return k;
   }
-	public Node<T> getRoot() {
+	public N getRoot() {
     return root;
   }
   // esse método pode quebrar a árvore!
-	public void setRoot(Node<T> n) {
+	public void setRoot(N n) {
     // se a árvore está vazia
     if (size == 0) {
       root = n;
@@ -197,7 +199,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
       root = n; 
     }
   }
-	public void inOrder(Node<T> n) {
+	public void inOrder(N n) {
     if (hasLeft(n)) {
       inOrder(n.getLeftChild());
     }
@@ -207,7 +209,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     }
   }
   // não utilizado
-	public void preOrder(Node<T> n) {
+	public void preOrder(N n) {
     nodes.add(n);
     if (hasLeft(n)) {
       preOrder(n.getLeftChild());
@@ -217,7 +219,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     }
   }
   // não uitlizado
-	public void postOrder(Node<T> n) {
+	public void postOrder(N n) {
     if (hasLeft(n)) {
       postOrder(n.getLeftChild());
     }
@@ -226,18 +228,18 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     }
     nodes.add(n);
   }
-	public int height(Node<T> n) {
+	public int height(N n) {
     if (isExternal(n)) return 0;
     else {
       int h = 0;
       Iterator c = n.children();
       while(c.hasNext()){
-        h = Math.max(h, height((Node<T>)c.next()));
+        h = Math.max(h, height((N)c.next()));
       }
       return 1 + h;
     }
   }
-	public int depth(Node<T> n) {
+	public int depth(N n) {
     if (n == root) return 0;
 		else return 1 + depth(n.getParent());
   }
@@ -245,13 +247,13 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     String s = "";
     String l = "";
     Iterator i;
-    Node<T> n;
+    N n;
     if (size != 0){
       int treeHeight = height(root);
       for (int h = 0; h <= treeHeight; h++) {
         i = nodes();
         while(i.hasNext()) {
-          n = (Node<T>) i.next();
+          n = (N) i.next();
           if (depth(n) == h) {
             s += n.getKey() + "";
             if (hasLeft(n)) l += "/"; else l += " ";
@@ -273,15 +275,15 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     }
     System.out.println(s + "\n");
   }
-	public Iterator nodes() {
-    nodes = new ArrayList<Node<T>>();
-    ArrayList<Node<T>> b = new ArrayList<>();
+	public Iterator<N> nodes() {
+    nodes = new ArrayList<N>();
+    ArrayList<N> b = new ArrayList<>();
     inOrder(root);
     nodes.forEach(b::add);  
     return b.iterator();
   }
-	public Iterator elements() {
-    nodes = new ArrayList<Node<T>>();
+	public Iterator<T> elements() {
+    nodes = new ArrayList<N>();
     ArrayList<T> b = new ArrayList<>();
     inOrder(root);
     nodes.forEach(node -> b.add(node.getKey())); 
@@ -318,7 +320,7 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
     Iterator i = nodes();
     int l = size;
     while(i.hasNext()) {
-      s += depth((Node<T>) i.next());
+      s += depth((N) i.next());
       if (l > 1) {
         s += ", ";
         l--;
@@ -345,16 +347,16 @@ public class ArvoreBinaria<T extends Comparable<T>> implements IArvoreBinaria<T>
   public boolean isEmpty() {
     return root == null;
   }
-  public boolean hasLeft(Node<T> n) {
+  public boolean hasLeft(N n) {
     return n.getLeftChild() != null;
   }
-  public boolean hasRight(Node<T> n) {
+  public boolean hasRight(N n) {
     return n.getRightChild() != null;
   }
-  public boolean isInternal(Node<T> n) {
+  public boolean isInternal(N n) {
     return hasLeft(n) || hasRight(n);
   } 
-  public boolean isExternal(Node<T> n) {
+  public boolean isExternal(N n) {
     return !isInternal(n);
   }
 }

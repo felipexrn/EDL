@@ -7,10 +7,10 @@ import Arvore.src.rn.NodeRn;
 // Use t=0 para comparar inteiros
 // Use t=1 para comparar strings
 // Use t=2 para comparar doubles
-public class GenericComparator<T extends Comparable<T>> {
+public class GenericComparator<T extends Comparable<T>, N extends Node<T,N>> {
   private String[] types = {"int", "String", "Double"};
   private int type;
-  private Node<T> nodeType;
+  private N nodeType;
   public GenericComparator(int type) {
     setType(type);
   }
@@ -24,7 +24,7 @@ public class GenericComparator<T extends Comparable<T>> {
       return types[type];
     }
   }
-  public int compareTo(Node<T> n1, Node<T> n2) {
+  public int compareTo(N n1, N n2) {
     switch (type) {
         case 0: return IntCompare(n1, n2); 
         case 1: return StrCompare(n1, n2);
@@ -58,15 +58,15 @@ public class GenericComparator<T extends Comparable<T>> {
   }*/
 
 
-  private int IntCompare(Node<T> n1, Node<T> n2) {
+  private int IntCompare(N n1, N n2) {
     return Integer.compare((Integer) n1.getKey(), (Integer) n2.getKey());
   }
 
-  private int StrCompare(Node<T> n1, Node<T> n2) {
+  private int StrCompare(N n1, N n2) {
       return ((String) n1.getKey()).compareTo((String) n2.getKey());
   }
 
-  private int DoubleCompare(Node<T> n1, Node<T> n2) {
+  private int DoubleCompare(N n1, N n2) {
       return Double.compare((Double) n1.getKey(), (Double) n2.getKey());
   }
 
@@ -176,13 +176,13 @@ public class GenericComparator<T extends Comparable<T>> {
     }
   }*/
   public int getNodeType() {
-    if (nodeType instanceof Node) return 0;
+    if (nodeType instanceof NodeBinariaBusca) return 0;
     if (nodeType instanceof NodeAvl) return 1;
     if (nodeType instanceof NodeRn) return 2;
     return -1; // Retorno padrão para casos inválidos
   }
   public String getStrNodeType() {
-    if (nodeType instanceof Node) return "Node";
+    if (nodeType instanceof NodeBinariaBusca) return "Node";
     if (nodeType instanceof NodeAvl) return "NodeAvl";
     if (nodeType instanceof NodeRn) return "NodeRn";
     return "Tipo de Node não conhecido"; // Retorno padrão para casos inválidos

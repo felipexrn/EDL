@@ -1,21 +1,21 @@
 package Arvore.src.binaria;
 import java.util.Iterator;
 import java.util.ArrayList;
-public interface IArvoreBinaria<T extends Comparable<T>> {
-	void setComparer(GenericComparator<T> c);
-	GenericComparator<T> getComparer();
-	Node<T> search(Node<T> n, T k);
-	Node<T> include(T k);
+public interface IArvoreBinaria<T extends Comparable<T>, N extends Node<T,N>> {
+	void setComparer(GenericComparator<T,N> c);
+	GenericComparator<T,N> getComparer();
+	N search(N n, T k);
+	N include(T k);
 	T remove(T k);
-	Node<T> getRoot();
-	void setRoot(Node<T> p);
-	void inOrder(Node<T> n);
-	void preOrder(Node<T> n);
-	void postOrder(Node<T> n);
-	int height(Node<T> n);
-	int depth(Node<T> n);
+	N getRoot();
+	void setRoot(N p);
+	void inOrder(N n);
+	void preOrder(N n);
+	void postOrder(N n);
+	int height(N n);
+	int depth(N n);
 	void show();
-	Iterator<Node<T>> nodes();
+	Iterator<N> nodes();
 	Iterator<T> elements();
 	int size();
 	boolean isEmpty();

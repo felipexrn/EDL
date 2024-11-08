@@ -14,7 +14,10 @@ public class testeArvoreBinariaDinamico {
     Scanner ler = new Scanner(System.in);
     ArrayList<String> metodos = new ArrayList<String>();
     GenericComparator GC = new GenericComparator<>(0);
-    ArvoreBinaria AB = new ArvoreBinaria(0);
+    ArvoreBinariaBusca AB = null;
+    ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>> ABI = new ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>>(0);
+    ArvoreBinariaBusca<String,NodeBinariaBusca<String>> ABS = new ArvoreBinariaBusca<String,NodeBinariaBusca<String>>(1);
+    ArvoreBinariaBusca<Double,NodeBinariaBusca<Double>> ABD = new ArvoreBinariaBusca<Double,NodeBinariaBusca<Double>>(2);
       // lista de métodos utilizáveis
       metodos.add("sair");                                 // 0: fechar programa
       metodos.add("criar arvore binaria de tipo inteiro"); // 1: cria árvore binária de tipo inteiro
@@ -47,7 +50,7 @@ public class testeArvoreBinariaDinamico {
             // 1: cria árvore binária de tipo inteiro
             case 1:
               clear();
-              AB = new ArvoreBinaria(0); // Arvore Binaria de pesquisa vazia
+              AB = new ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>>(0); // Arvore Binaria de pesquisa vazia
               GC = AB.getComparer();
               //GC.setType(0); // 0=inteiro 
               //AB.setComparer(GC);
@@ -58,7 +61,7 @@ public class testeArvoreBinariaDinamico {
             // 2: cria árvore binária de tipo String
             case 2:
               clear();
-              AB = new ArvoreBinaria(1); // Arvore Binaria de pesquisa vazia do tipo String
+              AB = new ArvoreBinariaBusca<String,NodeBinariaBusca<String>>(1); // Arvore Binaria de pesquisa vazia do tipo String
               GC = AB.getComparer();
               //GC.setType(1); // 1=String 
               //AB.setComparer(GC);
@@ -69,7 +72,7 @@ public class testeArvoreBinariaDinamico {
             // 3: cria árvore binária de tipo Double
             case 3:
               clear();
-              AB = new ArvoreBinaria(2); // Arvore Binaria de pesquisa vazia do tipo Double
+              AB = new ArvoreBinariaBusca<Double,NodeBinariaBusca<Double>>(2); // Arvore Binaria de pesquisa vazia do tipo Double
               GC = AB.getComparer();
               //GC.setType(2); // 2=Souble 
               //AB.setComparer(GC);
@@ -224,7 +227,7 @@ public class testeArvoreBinariaDinamico {
             // 9: reiniciar arvore 
             case 9: 
               clear();
-              AB = new ArvoreBinaria(GC.getType());
+              AB = new ArvoreBinariaBusca(GC.getType());
               System.out.println("Arvore do tipo " + GC.getStrType() + " reiniciada.");
             break;
 

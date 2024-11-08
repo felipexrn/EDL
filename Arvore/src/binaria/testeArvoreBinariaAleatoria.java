@@ -15,7 +15,7 @@ public class testeArvoreBinariaAleatoria {
 
         // Comparador de inteiros e arvore instanciados
         //GenericComparator<Integer> IntComparator = new GenericComparator<>(0); // 0=inteiros
-        ArvoreBinaria AB = new ArvoreBinaria(0);
+        ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>> AB = new ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>>(0);
         System.out.println("Arvore binária de busca instanciada");
 
         // Configurar comparador na árvore
@@ -75,7 +75,7 @@ public class testeArvoreBinariaAleatoria {
         }          
     }
 
-    public static void statusArvore(ArvoreBinaria AB) {
+    public static void statusArvore(ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>> AB) {
         //AB.status();
         AB.show();
     }

@@ -1,13 +1,13 @@
 package Arvore.src.binaria;
 import java.util.Iterator;
-public interface INode<T> {
-	Node<T> getRightChild();
-	Node<T> getLeftChild();
-	Node<T> getParent();
+public interface INode<T extends Comparable<T>, N extends INode<T, N>> {
+	N getRightChild();
+	N getLeftChild();
+	N getParent();
 	T getKey();
-  Iterator<Node<T>> children();
-	void setRightChild(Node<T> r);
-	void setLeftChild(Node<T> l);
-	void setParent(Node<T> p);
+	Iterator<N> children();
+	void setRightChild(N r);
+	void setLeftChild(N l);
+	void setParent(N p);
 	void setKey(T k);
 }

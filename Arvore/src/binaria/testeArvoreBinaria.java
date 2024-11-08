@@ -5,14 +5,14 @@ public class testeArvoreBinaria {
     try {
       // Comparador de inteiros e arvore instanciados
       //GenericComparator IntComparator = new GenericComparator(0); // 0=inteiros
-      ArvoreBinaria AB = new ArvoreBinaria(0);
+      ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>> AB = new ArvoreBinariaBusca<Integer,NodeBinariaBusca<Integer>>(0);
 
       // comparador configurado na arvore 
       //AB.setComparer(IntComparator);
       GenericComparator GC = AB.getComparer();
       System.out.println("tipo: " + GC.getType() + ", comparador de " +  GC.getStrType());
       System.out.println();
-      Node r = new Node(null, 6);
+      NodeBinariaBusca<Integer> r = new NodeBinariaBusca(null, 6);
       
       AB.setRoot(r);
       AB.include(4);
@@ -81,12 +81,8 @@ public class testeArvoreBinaria {
       System.err.println("Erro durante o teste!\n" + e.getMessage());
     }
   }
-  public static void statusArvore(ArvoreBinaria AB) {
-    System.out.println("height " + AB.height(AB.getRoot()));
-    System.out.println("size " + AB.size());
-    System.out.println("nodes: " + AB.strNodes());
-    System.out.println("keys: " + AB.strElements());
-    System.out.println("depths: " + AB.strDepths());
+  public static void statusArvore(ArvoreBinariaBusca<Integer, NodeBinariaBusca<Integer>> AB) {
+    AB.status();
     AB.show();
   }
 }
