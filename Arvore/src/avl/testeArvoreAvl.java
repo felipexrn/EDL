@@ -1,11 +1,11 @@
 import java.util.*;
 import Arvore.src.avl.*;
-public class testeAvl {
+public class testeArvoreAvl {
   public static void main (String[] args) {
     try {
       //GenericComparator GC = new GenericComparator(0); 
       //GC.setType(0); // 0=inteiro    
-      Avl A = new Avl(0);
+      ArvoreAvl A = new ArvoreAvl(0);
       System.out.println("instanciada Arvore Avl do tipo: " + A.getComparer().getStrType());
       A.setDebug(true);
       if(A.getDebug()) System.out.println("Debug ligado.");

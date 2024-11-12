@@ -2,11 +2,11 @@ package Arvore.src.avl;
 import java.util.Iterator;
 import Arvore.src.binaria.*;
 
-public class Avl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,NodeAvl<T>>  implements IArvoreBinaria<T, NodeAvl<T>>, IAvl<T> {
-  public Avl(int type) {
+public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,NodeAvl<T>>  implements IArvoreBinaria<T, NodeAvl<T>>, IAvl<T> {
+  public ArvoreAvl(int type) {
     super(type);
   }
-  public Avl(GenericComparator<T, NodeAvl<T>> c) {
+  public ArvoreAvl(GenericComparator<T, NodeAvl<T>> c) {
     super(c);
   }
   public NodeAvl<T> createNode(NodeAvl<T> p, T k) {
@@ -19,14 +19,17 @@ public class Avl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,Nod
   public NodeAvl<T> include(T k){ 
     NodeAvl<T> n = super.include(k);   
     rebalance(n.getParent(), k, true);
+
     if (super.getDebug()) System.out.println("include");
+
     return n;
   }
-	public NodeAvl<T> remove(T k){
-    if (super.getDebug()) System.out.println("remove entrada");    
+	public NodeAvl<T> remove(T k){ 
     NodeAvl<T> m = super.remove(k);
     rebalance(m.getParent(), k, false);
-    if (super.getDebug()) System.out.println("remove return");
+
+    if (super.getDebug()) System.out.println("remove");
+
     return m;
   }
   public void show() {
@@ -42,8 +45,8 @@ public class Avl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,Nod
           n = (NodeAvl<T>) i.next();
           if (depth(n) == h) {
             s += n.getKey() + "(" + n.getStrFB() + ")" + "";
-            if (hasLeft(n)) l += "/"; else l += "    ";
-            if (hasRight(n)) l += "\\"; else l += "    ";
+            if (hasLeft(n)) l += "/"; else l += "   ";
+            if (hasRight(n)) l += "\\"; else l += "  ";
           }
           else {
             s += "     ";

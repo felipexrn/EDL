@@ -54,7 +54,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     }
     // retorno padrão
     return n;
-  }
+  }  
 	public N include(T k) {   
     // verifica se foi configurado um comparador
     if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
@@ -81,6 +81,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     // retorno padrão
     return m;
   }
+  // retorna o Node removido
 	public N remove(T k) {
     // verifica se foi configurado um comparador
     if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
@@ -170,7 +171,6 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
                 m.getParent().setLeftChild(m.getLeftChild());                      
             }
           }
-          m = n;
         }
       }
       // se não existe a chave k na árvore
@@ -178,7 +178,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     }
     size--;
     // retorno padrão
-    return m;
+    return n;
   }
 	public N getRoot() {
     return root;
