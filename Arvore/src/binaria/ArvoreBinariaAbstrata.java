@@ -6,6 +6,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
   private int size;
   private GenericComparator<T,N> comparator;
   private ArrayList<N> nodes;
+  private Boolean debug = false;
   public ArvoreBinariaAbstrata(int type) {
      this.size = 0;
      this.nodes = new ArrayList<>();
@@ -80,12 +81,12 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     // retorno padrão
     return m;
   }
-	public T remove(T k) {
+	public N remove(T k) {
     // verifica se foi configurado um comparador
     if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
     // busca o node com chave maior ou igual a k a partir do raiz
     N n = search(root, k);
-    N m;
+    N m = null;
     // se o node é o raiz e só e existe ele na àrvore ele é removido
     if (n == root && size == 1) root = null;
     // se a árvore contém mais de um node 
@@ -98,10 +99,12 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
           // filho esquerdo
           if (n == n.getParent().getLeftChild()) {
             n.getParent().setLeftChild(null);
+            m = null;
           }
           // filho direito
           else {
             n.getParent().setRightChild(null); 
+            m = null;
           }
         }
 
@@ -109,35 +112,35 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
         // se não tem filho direito (tem somente esquerdo)
         else if (!hasRight(n)) {
           // o filho esquerdo de n recebe o avo como pai
-          n.getLeftChild().setParent(n.getParent());
-          
+          n.getLeftChild().setParent(n.getParent());                    
           if (n != root) { 
-
             // n é filho esquerdo do pai
             if (n == n.getParent().getLeftChild())
               n.getParent().setLeftChild(n.getLeftChild());
             // n é filho direito do pai
             else
               n.getParent().setRightChild(n.getLeftChild());
+            m = n.getLeftChild(); 
           } else {
-            root =  n.getLeftChild();
+            root = n.getLeftChild();
+            m = root;
           }
         }
 
-        // se tem filo direito ou dois filhos
+        // se tem filho direito ou dois filhos
         if (hasRight(n)) {
         
           // busca à direita o nó com menor chave maior ou igual a k
           m = search(n.getRightChild(), k);
-          n.setKey(m.getKey());
+          n.setKey(m.getKey());          
 
           // se externo
           if (isExternal(m)) {
-            // filho esquerdo
+            // m filho esquerdo
             if (m == m.getParent().getLeftChild()) {
               m.getParent().setLeftChild(null);
             }
-            // filho direito
+            // m filho direito
             else {
               m.getParent().setRightChild(null); 
             }
@@ -167,6 +170,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
                 m.getParent().setLeftChild(m.getLeftChild());                      
             }
           }
+          m = n;
         }
       }
       // se não existe a chave k na árvore
@@ -174,7 +178,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     }
     size--;
     // retorno padrão
-    return k;
+    return m;
   }
 	public N getRoot() {
     return root;
@@ -188,14 +192,6 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     }
     // se a árvore contém root 
     else {
-      // n recebe filhos e pai do root
-      n.setLeftChild(root.getLeftChild());
-      n.setRightChild(root.getRightChild());
-      n.setParent(null);
-      // configura n como pai dos filhos de root
-      if (root.getLeftChild() != null) root.getLeftChild().setParent(n);
-      if (root.getRightChild() != null) root.getRightChild().setParent(n);
-      // por fim root recebe n
       root = n; 
     }
   }
@@ -358,5 +354,11 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
   } 
   public boolean isExternal(N n) {
     return !isInternal(n);
+  }
+  public void setDebug(Boolean isOn){
+    this.debug = isOn;
+  }
+  public Boolean getDebug(){
+    return this.debug;
   }
 }

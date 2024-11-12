@@ -1,9 +1,10 @@
 package Arvore.src.avl;
 import Arvore.src.binaria.*;
 public interface IAvl<T extends Comparable<T>> {
-  void rebalance();
-  void rightSimpleRotation(Node<T> n1, Node<T> n2);
-  void leftSimpleRotation(Node<T> n1, Node<T> n2);
-  void rightDoubleRotation(Node<T> n1, Node<T> n2);
-  void leftDoubleRotation(Node<T> n1, Node<T> n2);
+  NodeAvl<T> rebalance(NodeAvl<T> b, T k, Boolean isInsert);
+  NodeAvl<T> rightSimpleRotation(NodeAvl<T> b);
+  NodeAvl<T> leftSimpleRotation(NodeAvl<T> b);
+  NodeAvl<T> rightDoubleRotation(NodeAvl<T> b);
+  NodeAvl<T> leftDoubleRotation(NodeAvl<T> b);
+  void recalculateFB(NodeAvl<T> a, NodeAvl<T> b, Boolean isRightRotation);
 }

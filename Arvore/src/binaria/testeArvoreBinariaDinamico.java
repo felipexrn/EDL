@@ -118,21 +118,31 @@ public class testeArvoreBinariaDinamico {
               switch(GC.getType()) {
                 // remove chave k do tipo inteiro
                 case 0:
-                  k = ler.nextInt();
-                  buscado = AB.search(AB.getRoot(), k);
+                  k = ler.nextInt(); 
+                  buscado = null;                 
+                  try {
+                    buscado = AB.search(AB.getRoot(), k);
+                  } catch (Exception e) {
+                    System.out.println("chave k " + k + " não encontrada");
+                  }  
                   if (buscado.getKey() != null) {
                     if (k == (int) buscado.getKey()) {
                       AB.remove(k);
                       System.out.println("chave k " + k + " removida");
                     }
-                    else System.out.println("chave k não encontrda");
+                    else System.out.println("chave k " + k + " não encontrda");
                   }
                 break;
                   
                 // remove chave k do tipo String
                 case 1:
                   s = ler.next();
-                  buscado = AB.search(AB.getRoot(), s);
+                  buscado = null;
+                  try {
+                    buscado = AB.search(AB.getRoot(), s);
+                  } catch (Exception e) {
+                    System.out.println("chave k " + s + "não encontrada");
+                  }                    
                   if (buscado.getKey() != null) {
                     if (s.equals((String) buscado.getKey())) {
                       AB.remove(s);
@@ -145,7 +155,12 @@ public class testeArvoreBinariaDinamico {
                 // remove chave k do tipo Double
                 case 2:
                   d = ler.nextDouble();
-                  buscado = AB.search(AB.getRoot(), d);
+                  buscado = null;
+                  try {
+                    buscado = AB.search(AB.getRoot(), d);
+                  } catch (Exception e) {
+                    System.out.println("chave k " + d + " não encontrada");
+                  }  
                   if (buscado.getKey() != null) {
                     if (d.equals((Double) buscado.getKey())) {
                       AB.remove(d);

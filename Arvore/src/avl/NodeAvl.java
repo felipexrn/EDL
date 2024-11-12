@@ -16,7 +16,10 @@ public class NodeAvl<T extends Comparable<T>> extends Node<T, NodeAvl<T>> implem
   public int getFB() {
     return FB;
   }
+  public void setFB(int newFB) {
+    this.FB = newFB;
+  }
   public String getStrFB() {
-    return String.format("[%s]",FB);
+    return String.format("%s",FB);
   }
 }

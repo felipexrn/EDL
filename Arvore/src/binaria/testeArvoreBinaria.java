@@ -38,20 +38,25 @@ public class testeArvoreBinaria {
       System.out.println("inseridos 5, 5, 7");
       statusArvore(AB);
 
-      System.out.println("removido " + AB.remove(3));
+      AB.remove(3);
+      System.out.println("removido 3");
       statusArvore(AB);
 
-      System.out.println("removido " + AB.remove(5));
+      AB.remove(5);
+      System.out.println("removido 5");
       statusArvore(AB);
 
-      System.out.println("removido " + AB.remove(4));
+      AB.remove(4);
+      System.out.println("removido 4");
       statusArvore(AB);
       
-      System.out.println("removido " + AB.remove(9));
+      AB.remove(9);
+      System.out.println("removido 9");
       statusArvore(AB);
 
       try {
-        System.out.println("removido " + AB.remove(5));
+        AB.remove(5);
+        System.out.println("removido 5");
         statusArvore(AB);
       }
       catch (Exception e) {
@@ -63,7 +68,8 @@ public class testeArvoreBinaria {
       System.out.println("inseridos 5, 4");
       statusArvore(AB);
 
-      System.out.println("removido " + AB.remove(6));
+      AB.remove(6);
+      System.out.println("removido 6");
       statusArvore(AB);
 
       AB.include(17);
@@ -72,7 +78,8 @@ public class testeArvoreBinaria {
       System.out.println("inseridos 17, 13 e 14");
       statusArvore(AB);
 
-      System.out.println("removido " + AB.remove(11));
+      AB.remove(11);
+      System.out.println("removido 11");
       statusArvore(AB);
 
       System.out.println("Testes bem sucedidos");

@@ -6,7 +6,7 @@ public interface IArvoreBinaria<T extends Comparable<T>, N extends Node<T,N>> {
 	GenericComparator<T,N> getComparer();
 	N search(N n, T k);
 	N include(T k);
-	T remove(T k);
+	N remove(T k);
 	N getRoot();
 	void setRoot(N p);
 	void inOrder(N n);
