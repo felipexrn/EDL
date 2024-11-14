@@ -65,4 +65,15 @@ public abstract class Node<T extends Comparable<T>, N extends Node<T, N>> implem
     if (leftChild != null) c.add(leftChild);
     return c.iterator();
   }
+  public void showLinks() {
+    try {
+      System.out.println("ligações do Node: " + this.toString());
+      System.out.println("   Key: " + key);    
+      System.out.println("   parent: " + (parent != null ? parent.getKey() : "null"));
+      System.out.println("   leftChild: " + (leftChild != null ? leftChild.getKey() : "null"));
+      System.out.println("   rightChild: " + (rightChild != null ? rightChild.getKey() : "null"));
+    } catch (Exception e) {
+      throw new RuntimeException("Erro ao mostrar ligações do Node: " + this.toString() + "\n" + e.getMessage());
+    }
+  }
 }

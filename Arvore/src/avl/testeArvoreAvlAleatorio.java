@@ -43,9 +43,9 @@ public class testeArvoreAvlAleatorio {
                 while (scanner.hasNextInt()) {
                     int value = scanner.nextInt();
                     try {
+                        System.out.println("Inserindo o nó: " + value);
                         AAvl.include(value);
                         inseridos++;                   
-                        System.out.println("Inserido o nó: " + value);
                         numerosUnicos.add(value);
                     }
                     catch (Exception ex) {
@@ -72,9 +72,9 @@ public class testeArvoreAvlAleatorio {
             try {
                 for (Integer value : numerosUnicos) {
                     try {
+                        System.out.println("Removendo o nó: " + value);
                         AAvl.remove(value);
                         removidos++;                   
-                        System.out.println("Removido o nó: " + value);
                     }
                     catch (Exception ex) {
                         throw new Exception("Não foi possível remover: "+ value +"\n"+ ex.getMessage()+"\n");    
@@ -95,5 +95,6 @@ public class testeArvoreAvlAleatorio {
     public static void statusArvore(ArvoreAvl<Integer> AAvl) {
         //AAvl.status();
         AAvl.show();
+        System.out.println();
     }
 }

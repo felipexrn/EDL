@@ -55,31 +55,35 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     // retorno padrão
     return n;
   }  
-	public N include(T k) {   
-    // verifica se foi configurado um comparador
-    if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
-    // se a árvore está vazia insere k em root
-    if (root == null) {
-      // Cria o node usando padrão factory
-      setRoot(createNode(null, k));
-      return root;
+	public N include(T k) {
+    try {   
+      // verifica se foi configurado um comparador
+      if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
+      // se a árvore está vazia insere k em root
+      if (root == null) {
+        // Cria o node usando padrão factory
+        setRoot(createNode(null, k));
+        return root;
+      }
+      // busca o node com chave maior ou igual a k a partir do raiz
+      N n = search(root, k);  
+      N m = createNode(n, k);
+      // se m é menor que n adiciona k à esquerda
+      if(comparator.compareTo(m, n) < 0) n.setLeftChild(m);
+      // se m é menor que n adiciona k à direita
+      else if(comparator.compareTo(m, n) > 0) n.setRightChild(m);
+      // se não atualiza chave de n para k e m recebe n e compensa tamanho da árvore 
+      else {
+        n.setKey(k);
+        m = n; 
+        size--;
+      }
+      size++;
+      // retorno padrão
+      return m;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro ao inserir Node:\n" + e.getMessage());
     }
-    // busca o node com chave maior ou igual a k a partir do raiz
-    N n = search(root, k);  
-    N m = createNode(n, k);
-    // se m é menor que n adiciona k à esquerda
-    if(comparator.compareTo(m, n) < 0) n.setLeftChild(m);
-    // se m é menor que n adiciona k à direita
-    else if(comparator.compareTo(m, n) > 0) n.setRightChild(m);
-    // se não atualiza chave de n para k e m recebe n e compensa tamanho da árvore 
-    else {
-      n.setKey(k);
-      m = n; 
-      size--;
-    }
-    size++;
-    // retorno padrão
-    return m;
   }
   // retorna o Node removido
 	public N remove(T k) {
@@ -98,15 +102,12 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
         // se externo
         if (isExternal(n)) {
           // filho esquerdo
-          if (n == n.getParent().getLeftChild()) {
+          if (n == n.getParent().getLeftChild())
             n.getParent().setLeftChild(null);
-            m = null;
-          }
           // filho direito
-          else {
+          else
             n.getParent().setRightChild(null); 
-            m = null;
-          }
+          m = null;
         }
 
         // se interno
@@ -133,7 +134,11 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
         
           // busca à direita o nó com menor chave maior ou igual a k
           m = search(n.getRightChild(), k);
-          n.setKey(m.getKey());          
+          
+          // Troca as chaves dos nós
+          T temp = m.getKey();
+          m.setKey(n.getKey());
+          n.setKey(temp);
 
           // se externo
           if (isExternal(m)) {
@@ -180,8 +185,25 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     // retorno padrão
     return n;
   }
+  public N getNextNodeBeforeRemove(T k) {
+    N n = search(root, k);
+    if (isExternal(n)) n = null;
+    else if (!hasRight(n)) n = n.getLeftChild();
+    else n = search(n.getRightChild(), n.getKey());
+    return n;
+  }
+  public Boolean isRightChild(N n) {
+    if ((n != null) &&
+        (n.getParent() != null) &&
+        (n.getParent().getRightChild() != null))
+      return n.getParent().getRightChild() == n;
+    return false;
+  }
+  public Boolean isLeftChild(N n) {
+    return (!isRightChild(n)) && (getRoot() != n);
+  }
 	public N getRoot() {
-    return root;
+    return this.root;
   }
   // esse método pode quebrar a árvore!
 	public void setRoot(N n) {
@@ -242,6 +264,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
 	public void show() {
     String s = "";
     String l = "";
+    String e = "";
     Iterator i;
     N n;
     if (size != 0){
@@ -250,15 +273,23 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
         i = nodes();
         while(i.hasNext()) {
           n = (N) i.next();
+
+          // calcula espaço padrão para coluna atual
+          e = "";
+          int sizeE = n.getKey().toString().length();          
+          for (int j = 0; j < sizeE; j ++) e += " ";
+
           if (depth(n) == h) {
             s += n.getKey() + "";
-            if (hasLeft(n)) l += "/"; else l += " ";
-            if (hasRight(n)) l += "\\"; else l += " ";
+            if (hasLeft(n)) l += "/";
+            if (hasRight(n)) l += "\\";
           }
           else {
-            s += "  ";
-            l += "  ";
+            // insere espaço se não houver valor na coluna
+            s += e;
           }
+          // insere espaço na linha de ligação
+          l += e;
         }
         if (l.indexOf("\\") + l.indexOf("/") != -2) 
           l = "\n" + l + "\n";

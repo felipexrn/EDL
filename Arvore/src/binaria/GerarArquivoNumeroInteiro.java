@@ -12,7 +12,7 @@ public class GerarArquivoNumeroInteiro {
         Random random = new Random();
         int tamanho = Integer.parseInt(args[1]);
         while (numerosUnicos.size() < tamanho) {
-            int numero = random.nextInt(tamanho * tamanho);
+            int numero = random.nextInt(tamanho * 10);
             if (!numerosUnicos.contains(numero))
                 numerosUnicos.add(numero);
         }

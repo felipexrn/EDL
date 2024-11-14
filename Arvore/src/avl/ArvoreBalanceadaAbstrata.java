@@ -8,6 +8,7 @@ public abstract class ArvoreBalanceadaAbstrata<T extends Comparable<T>, N extend
         super(c);
     }
     public N rightSimpleRotation(N b) {        
+        if (super.getDebug()) System.out.println("rightSimpleRotationAbstract");        
         // troca ligações entre a e b
         N a = b.getLeftChild();
         b.setLeftChild(a.getRightChild());
@@ -15,18 +16,18 @@ public abstract class ArvoreBalanceadaAbstrata<T extends Comparable<T>, N extend
         a.setParent(b.getParent());
         b.setParent(a);
         // troca ligações do pai de b e do filho de a
-        if (b.getRightChild() != null) b.getLeftChild().setParent(b);
+        if (b.getLeftChild() != null) b.getLeftChild().setParent(b);
         if (a.getParent() != null) {
-            if (a.getParent().getRightChild() == a)
-                a.getParent().setRightChild(a);
-            else 
+            if (a.getParent().getLeftChild() == b)
                 a.getParent().setLeftChild(a);
-        } 
+            else 
+                a.getParent().setRightChild(a);
+        }
         if (super.getRoot() == b) super.setRoot(a);
-        if (super.getDebug()) System.out.println("rightSimpleRotationAbstract");        
         return a;
     }
     public N leftSimpleRotation(N b) {             
+        if (super.getDebug()) System.out.println("leftSimpleRotationAbstract");
         // troca ligações entre a e b
         N a = b.getRightChild();
         b.setRightChild(a.getLeftChild());
@@ -36,23 +37,24 @@ public abstract class ArvoreBalanceadaAbstrata<T extends Comparable<T>, N extend
         // troca ligações do pai de b e do filho de a
         if (b.getRightChild() != null) b.getRightChild().setParent(b);
         if (a.getParent() != null) {
-            if (a.getParent().getLeftChild() == a)
+            if (a.getParent().getLeftChild() == b)
                 a.getParent().setLeftChild(a);
             else 
                 a.getParent().setRightChild(a);
-        } 
+        }
         if (super.getRoot() == b) super.setRoot(a);
-        if (super.getDebug()) System.out.println("leftSimpleRotationAbstract");
         return a;
     }
     public N rightDoubleRotation(N b) {
+        if (super.getDebug()) System.out.println("rightDoubleRotationAbsrtact"); 
         N a = leftSimpleRotation(b.getLeftChild());
-        b = rightSimpleRotation(a.getParent());
-        return b;
+        a = rightSimpleRotation(a.getParent());
+        return a;
     }
     public N leftDoubleRotation(N b) {
+        if (super.getDebug()) System.out.println("leftDoubleRotationAbsrtact"); 
         N a = rightSimpleRotation(b.getRightChild());
-        b = leftSimpleRotation(a.getParent());
-        return b;
+        a = leftSimpleRotation(a.getParent());
+        return a;
     }
 }

@@ -9,7 +9,7 @@ public class testeArvoreBinariaAleatorio {
     public static void main(String[] args) {
         try {
             // Arquivo para inserção de números aleatórios
-            String arquivo = "Arvore/src/binaria/insercao.txt";
+            String arquivo = "Arvore/src/avl/insercao.txt";
 
             // Gera numeros Aleatórios a inserir
             GerarArquivoNumeroInteiro.main(new String[] {arquivo, args[0]});
@@ -42,7 +42,7 @@ public class testeArvoreBinariaAleatorio {
                         System.out.println("Inserido o nó: " + value);
                         numerosUnicos.add(value);
                     }
-                    catch (Exception ex) {
+                    catch (Exception ex) {                        
                         System.out.println("Não foi possível inserir: "+ value +"\n"+ ex.getMessage()); 
                     }
                     // Mostrar status da árvore

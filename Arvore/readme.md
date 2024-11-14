@@ -28,9 +28,9 @@ Nesse caso:
    javac -d Arvore/bin Arvore/src/binaria/*.java
    ```
 
-2. **Para executar** (supondo que `MinhaClasse` tenha o método `main`):
+2. **Para executar** (supondo que `MinhaClasse` tenha o método `main`). `Argumentos e saída para log de erro`:
    ```bash
-   java -cp Arvore/bin MinhaClasse [argumentos se houverem]
+   java -cp Arvore/bin MinhaClasse [argumentos se houverem] [2> erros.log]
    ```
 
 ### Compilação e execução específica (gera arquivos class no local da execução)
