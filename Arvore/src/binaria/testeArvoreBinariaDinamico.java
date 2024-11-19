@@ -29,6 +29,8 @@ public class testeArvoreBinariaDinamico {
       metodos.add("mostrar arvore");                       // 7: mostra arvore 
       metodos.add("mostrar status da arvore");             // 8: mostra status da arvore 
       metodos.add("reiniciar arvore");                     // 9: reiniciar arvore
+      metodos.add("Configura Debug");                      // 10: configura Debug
+
 
     while (true) {
       listaMetodos(metodos);
@@ -123,14 +125,14 @@ public class testeArvoreBinariaDinamico {
                   try {
                     buscado = AB.search(AB.getRoot(), k);
                   } catch (Exception e) {
-                    System.out.println("chave k " + k + " não encontrada");
+                    System.out.println("chave k: " + k + " não encontrada");
                   }  
                   if (buscado.getKey() != null) {
                     if (k == (int) buscado.getKey()) {
                       AB.remove(k);
-                      System.out.println("chave k " + k + " removida");
+                      System.out.println("chave k: " + k + " removida");
                     }
-                    else System.out.println("chave k " + k + " não encontrda");
+                    else System.out.println("chave k: " + k + " não encontrsda");
                   }
                 break;
                   
@@ -141,14 +143,14 @@ public class testeArvoreBinariaDinamico {
                   try {
                     buscado = AB.search(AB.getRoot(), s);
                   } catch (Exception e) {
-                    System.out.println("chave k " + s + "não encontrada");
+                    System.out.println("chave k: " + s + "não encontrada");
                   }                    
                   if (buscado.getKey() != null) {
                     if (s.equals(buscado.getKey())) {
                       AB.remove(s);
-                      System.out.println("chave k " + s + " removida");
+                      System.out.println("chave k: " + s + " removida");
                     }
-                    else System.out.println("chave k não encontrada");
+                    else System.out.println("chave k: " + s + " não encontrada");
                   }
                 break;
 
@@ -159,15 +161,15 @@ public class testeArvoreBinariaDinamico {
                   try {
                     buscado = AB.search(AB.getRoot(), d);
                   } catch (Exception e) {
-                    System.out.println("chave k " + d + " não encontrada");
+                    System.out.println("chave k: " + d + " não encontrada");
                   }  
                   if ((buscado != null) && (buscado.getKey() != null)) {
                     if (d.equals(buscado.getKey())) {
                       System.out.println(d.getClass() + " " + buscado.getKey().getClass());
                       AB.remove(d);
-                      System.out.println("chave k " + d + " removida");
+                      System.out.println("chave k: " + d + " removida");
                     }
-                    else System.out.println("chave k " + d + " não encontrada");
+                    else System.out.println("chave k: " + d + " não encontrada");
                   }
                 break;
               } 
@@ -188,7 +190,7 @@ public class testeArvoreBinariaDinamico {
                   buscado = AB.search(AB.getRoot(),k);
                   if (buscado.getKey() != null) {
                     if ((int) buscado.getKey() == k) System.out.println("chave k encontrada: " + buscado.getKey()); 
-                    else System.out.println("chave " + k + " não encontrada");
+                    else System.out.println("chave k: " + k + " não encontrada");
                   }
                 break;
                   
@@ -199,7 +201,7 @@ public class testeArvoreBinariaDinamico {
                   if (buscado != null && s.equals(buscado.getKey()))
                     System.out.println("chave k encontrada: " + buscado.getKey());                   
                   else
-                    System.out.println("chave " + s + " não encontrada");
+                    System.out.println("chave k: " + s + " não encontrada");
                 break;
 
                 // busca chave k do tipo Double
@@ -209,7 +211,7 @@ public class testeArvoreBinariaDinamico {
                   if (buscado != null && d.equals(buscado.getKey()))
                     System.out.println("chave k encontrada: " + buscado.getKey()); 
                   else
-                    System.out.println("chave " + d + " não encontrada");
+                    System.out.println("chave k: " + d + " não encontrada");
                 break;
               } 
             break;
@@ -245,6 +247,22 @@ public class testeArvoreBinariaDinamico {
               clear();
               AB = new ArvoreBinariaBusca(GC.getType());
               System.out.println("Arvore do tipo " + GC.getStrType() + " reiniciada.");
+            break;
+
+            // 10: configura debug 
+            case 10: 
+              clear();              
+              System.out.println("Selecione 1 para ligar Debug. Selecione 0 para desligar Debug.");              
+              try {
+                int opcao = ler.nextInt();
+                if ((opcao != 0) && (opcao != 1)) System.out.println("Valor inválido: " + opcao + "\nSelecione 1 para ligar Debug. Selecione 0 para desligar Debug.");
+                if (opcao == 1) AB.setDebug(true);
+                if (opcao == 0) AB.setDebug(false);
+                if (AB.getDebug()) System.out.println("Debug ligado.");
+                else  System.out.println("Debug desligado.");
+              } catch (Exception e) {
+                System.out.println("Erro ao configrar Debug. Utilize 0 ou 1 para configurar corretamente.\n" + e.getMessage());
+              }
             break;
 
             default: 
