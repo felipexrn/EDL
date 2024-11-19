@@ -8,7 +8,8 @@ import Arvore.src.binaria.*;
 public class testeArvoreAvlDinamico {
   public static void main(String[] args) {
     boolean existeArvore = false;
-    int selecionado, k;
+    int selecionado;
+    Integer k;
     String s;
     Double d;
     Node buscado;
@@ -120,7 +121,7 @@ public class testeArvoreAvlDinamico {
               switch(GC.getType()) {
                 // remove chave k do tipo inteiro
                 case 0:
-                  k = ler.nextInt(); 
+                  k = (Integer) ler.nextInt(); 
                   buscado = null;                 
                   try {
                     buscado = AAvl.search(AAvl.getRoot(), k);
@@ -128,7 +129,7 @@ public class testeArvoreAvlDinamico {
                     System.out.println("chave k " + k + " não encontrada");
                   }  
                   if (buscado.getKey() != null) {
-                    if (k == (int) buscado.getKey()) {
+                    if (k == (Integer) buscado.getKey()) {
                       removido = AAvl.remove(k);
                       System.out.println("chave k " + removido.getKey() + " removida");
                     }
@@ -138,7 +139,7 @@ public class testeArvoreAvlDinamico {
                   
                 // remove chave k do tipo String
                 case 1:
-                  s = ler.next();
+                  s = (String) ler.next();
                   buscado = null;
                   try {
                     buscado = AAvl.search(AAvl.getRoot(), s);
@@ -156,7 +157,7 @@ public class testeArvoreAvlDinamico {
 
                 // remove chave k do tipo Double
                 case 2:
-                  d = ler.nextDouble();
+                  d = (Double) ler.nextDouble();
                   buscado = null;
                   try {
                     buscado = AAvl.search(AAvl.getRoot(), d);
@@ -185,10 +186,10 @@ public class testeArvoreAvlDinamico {
               switch(GC.getType()) {
                 // busca chave k do tipo inteiro
                 case 0:
-                  k = ler.nextInt();
+                  k = (Integer) ler.nextInt();
                   buscado = AAvl.search(AAvl.getRoot(),k);
                   if (buscado.getKey() != null) {
-                    if ((int) buscado.getKey() == k) System.out.println("chave k encontrada: " + buscado.getKey()); 
+                    if ((Integer) buscado.getKey() == k) System.out.println("chave k encontrada: " + buscado.getKey()); 
                     else System.out.println("chave " + k + " não encontrada");
                   }
                 break;
