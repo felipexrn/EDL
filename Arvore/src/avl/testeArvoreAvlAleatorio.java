@@ -29,7 +29,7 @@ public class testeArvoreAvlAleatorio {
             ArvoreAvl<Integer> AAvl = new ArvoreAvl<Integer>(0);
             System.out.println("Arvore binária de busca instanciada");
 
-            AAvl.setDebug(true);
+            AAvl.setDebug(false);
             if (AAvl.getDebug()) System.out.println("debug ligado");
             else System.out.println("debug desligado");
 
