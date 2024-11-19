@@ -91,6 +91,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     if (comparator == null) throw new DoesNotExistComparatorException("Does Not Exist Comparator");
     // busca o node com chave maior ou igual a k a partir do raiz
     N n = search(root, k);    
+    N n = search(root, k);    
     N m = null;
     N o = null;
     // se o node é o raiz e só e existe ele na àrvore ele é removido
@@ -109,6 +110,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
           else
             n.getParent().setRightChild(null); 
           o = null;
+          o = null;
         }
 
         // se interno
@@ -124,8 +126,10 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
             else
               n.getParent().setRightChild(n.getLeftChild());
             o = n.getLeftChild(); 
+            o = n.getLeftChild(); 
           } else {
             root = n.getLeftChild();
+            o = root;
             o = root;
           }
         }
@@ -181,6 +185,8 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
             }
           }
         }
+        System.out.println("acerto");
+        n.showLinks();
       }
       // se não existe a chave k na árvore      
       else {        
