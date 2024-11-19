@@ -9,7 +9,7 @@ public class testeArvoreBinariaAleatorio {
     public static void main(String[] args) {
         try {
             // Arquivo para inserção de números aleatórios
-            String arquivo = "Arvore/src/avl/insercao.txt";
+            String arquivo = "Arvore/src/binaria/insercao.txt";
 
             // Gera numeros Aleatórios a inserir
             GerarArquivoNumeroInteiro.main(new String[] {arquivo, args[0]});
@@ -35,7 +35,7 @@ public class testeArvoreBinariaAleatorio {
             try {
                 Scanner scanner = new Scanner(new File(arquivo));
                 while (scanner.hasNextInt()) {
-                    int value = scanner.nextInt();
+                    Integer value = scanner.nextInt();
                     try {
                         AB.include(value);
                         inseridos++;                   

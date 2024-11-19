@@ -10,6 +10,11 @@ import Arvore.src.binaria.GenericComparator;
 public class testeArvoreAvlAleatorio {
     public static void main(String[] args) {
         try {
+            // Cores para destaque na impressão
+            String corVermelho = "\033[31m";
+            String corVerde = "\033[32m";
+            String corPadrao = "\033[0m";
+
             // Arquivo para inserção de números aleatórios
             String arquivo = "Arvore/src/avl/insercao.txt";
 
@@ -41,9 +46,9 @@ public class testeArvoreAvlAleatorio {
             try {
                 Scanner scanner = new Scanner(new File(arquivo));
                 while (scanner.hasNextInt()) {
-                    int value = scanner.nextInt();
+                    Integer value = scanner.nextInt();
                     try {
-                        System.out.println("Inserindo o nó: " + value);
+                        System.out.println(corVerde + "Inserindo o nó: " + value + corPadrao);
                         AAvl.include(value);
                         inseridos++;                   
                         numerosUnicos.add(value);
@@ -52,13 +57,14 @@ public class testeArvoreAvlAleatorio {
                         System.out.println("Não foi possível inserir: "+ value +"\n"+ ex.getMessage()); 
                     }
                     // Mostrar status da árvore
-                    statusArvore(AAvl);    
+                    statusArvore(AAvl);
+                    AAvl.verifyFB();  
                 }
-                scanner.close();
+                scanner.close();                
             } catch (FileNotFoundException e) {
-                throw new FileNotFoundException("Arquivo '" + arquivo + "' não encontrado! " + e.getMessage()+"\n");
+                throw new FileNotFoundException("Arquivo '" + arquivo + "' não encontrado!\n" + e.getMessage());
             } catch (Exception e) {
-                throw new Exception("Erro ao inserir itens na árvore!" + e.getMessage()+"\n");
+                throw new Exception("Erro ao inserir itens na árvore!\n" + e.getMessage());
             }         
 
             // teste de remoção
@@ -72,23 +78,24 @@ public class testeArvoreAvlAleatorio {
             try {
                 for (Integer value : numerosUnicos) {
                     try {
-                        System.out.println("Removendo o nó: " + value);
+                        System.out.println(corVermelho + "Removendo o nó: " + value + corPadrao);
                         AAvl.remove(value);
                         removidos++;                   
                     }
                     catch (Exception ex) {
-                        throw new Exception("Não foi possível remover: "+ value +"\n"+ ex.getMessage()+"\n");    
+                        throw new Exception("Não foi possível remover: "+ value +"\n"+ ex.getMessage());    
                     }
                     // Mostrar status da árvore
-                    statusArvore(AAvl);    
+                    statusArvore(AAvl); 
+                    AAvl.verifyFB();   
                 }
             } catch (Exception e) {
-                throw new Exception("Erro ao remover itens da árvore!\n" + e.getMessage()+"\n");
+                throw new Exception("Erro ao remover itens da árvore!\n" + e.getMessage());
             }  
             System.out.println("Teste bem sucedido");
         }
         catch (Exception e) {
-            System.out.println("Erro durante o teste!\n"+e.getMessage());
+            System.out.println("Erro durante o teste!\n" + e.getMessage());
         }        
     }
 

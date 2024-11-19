@@ -92,6 +92,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     // busca o node com chave maior ou igual a k a partir do raiz
     N n = search(root, k);
     N m = null;
+    N o = null;
     // se o node é o raiz e só e existe ele na àrvore ele é removido
     if (n == root && size == 1) root = null;
     // se a árvore contém mais de um node 
@@ -135,10 +136,13 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
           // busca à direita o nó com menor chave maior ou igual a k
           m = search(n.getRightChild(), k);
           
-          // Troca as chaves dos nós
-          T temp = m.getKey();
-          m.setKey(n.getKey());
-          n.setKey(temp);
+          // Troca a chave do Node
+          T temp = n.getKey();
+          n.setKey(m.getKey());
+          o = createNode(m.getParent(), temp);
+          o.setLeftChild(n.getLeftChild());
+          o.setRightChild(n.getRightChild());
+          n = o;
 
           // se externo
           if (isExternal(m)) {
@@ -178,19 +182,24 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
           }
         }
       }
-      // se não existe a chave k na árvore
-      else throw new DoesNotExistKeyException("Does Not Exist this Key");
+      // se não existe a chave k na árvore      
+      else {
+        throw new DoesNotExistKeyException("Does Not Exist this Key");
+      }
     }
     size--;
     // retorno padrão
     return n;
   }
-  public N getNextNodeBeforeRemove(T k) {
+  public N getSucessor(T k) {
     N n = search(root, k);
     if (isExternal(n)) n = null;
-    else if (!hasRight(n)) n = n.getLeftChild();
+    else if (!hasRight(n)) n = null;
     else n = search(n.getRightChild(), n.getKey());
     return n;
+  }
+  public Boolean isSucessorCase(N n) {
+    return (isInternal(n) && hasRight(n));
   }
   public Boolean isRightChild(N n) {
     if ((n != null) &&
