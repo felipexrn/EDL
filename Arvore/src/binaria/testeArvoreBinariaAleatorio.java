@@ -26,6 +26,9 @@ public class testeArvoreBinariaAleatorio {
             //AB.setComparer(IntComparator);
             GenericComparator GC = AB.getComparer();
             System.out.println("Configurado comparador de tipo: " + GC.getStrType());
+
+            // Configura debug da árvore
+            AB.setDebug(true);
             
             // teste de inserção
             System.out.println("TESTE DE INSERÇÃO");

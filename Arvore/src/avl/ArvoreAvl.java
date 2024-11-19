@@ -36,26 +36,26 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
       if (m != null) {
         isFromRight = isRightChild(m);
         if (m != getRoot()) m = m.getParent();
-        if (getDebug()) {
+        /*if (getDebug()) {
           System.out.println("m!=null");
           m.showLinks();
-        }
+        }*/
       } else {
         m = super.search(getRoot(), k);
         isFromRight = isRightChild(m);
         if (m != getRoot()) m = m.getParent();
-        if (getDebug()) {
+        /*if (getDebug()) {
           System.out.println("m==null");
           m.showLinks();
-        }
+        }*/
       }
       // remove k
       NodeAvl<T> n = super.remove(k);
 
-      if (getDebug()) {
+      /*if (getDebug()) {
         System.out.println("n:");
         n.showLinks();
-      }
+      }*/
 
       /*if ((super.size() > 0) && (n.getParent() != null) && (!isSucessorCase(n)) && (m != n.getParent())) {
         if (getDebug()) {
