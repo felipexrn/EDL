@@ -98,8 +98,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     // se a árvore contém mais de um node 
     else if(size > 1) {
       // se a chave k existe na árvore
-      if (n.getKey() == k) { 
-
+      if (n.getKey().equals(k)) { 
         // se externo
         if (isExternal(n)) {
           // filho esquerdo

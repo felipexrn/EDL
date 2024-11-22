@@ -1,19 +1,21 @@
 package Arvore.src.rn;
 import Arvore.src.binaria.*;
 public class NodeRn<T extends Comparable<T>> extends Node<T,NodeRn<T>> implements INode<T, NodeRn<T>>, INodeRn {
-  public String color;
+  private String color;
+  private String red = "R";
+  private String black = "B";
   public NodeRn(NodeRn<T> p, T k) {
     super(p, k);
-    color = "V";
+    color = red;
   }
   public String getColor(){
     return this.color;
   }
   public void setColor(String c) {
-    if ((c != "R") && (c != "B")) throw new RuntimeException("Cor inválida! Utilize 'R' ou 'B'.");
+    if (!(c.equals(red)) && (!c.equals(black))) throw new RuntimeException("Cor inválida! Utilize 'R' ou 'B'.");
     this.color = c;
   }
   public String getStrColor() {
-    return this.color == "R" ? "Red" : "Black";
+    return this.color.equals(red) ? "Red" : "Black";
   }
 }

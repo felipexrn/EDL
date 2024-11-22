@@ -32,6 +32,7 @@ public class testeArvoreAvlDinamico {
       metodos.add("mostrar arvore");                       // 7: mostra arvore 
       metodos.add("mostrar status da arvore");             // 8: mostra status da arvore 
       metodos.add("reiniciar arvore");                     // 9: reiniciar arvore
+      metodos.add("Configura Debug");                      // 10: configura Debug
 
     while (true) {
       listaMetodos(metodos);
@@ -189,7 +190,7 @@ public class testeArvoreAvlDinamico {
                   k = (Integer) ler.nextInt();
                   buscado = AAvl.search(AAvl.getRoot(),k);
                   if (buscado.getKey() != null) {
-                    if ((Integer) buscado.getKey() == k) System.out.println("chave k encontrada: " + buscado.getKey()); 
+                    if (buscado.getKey().equals(k)) System.out.println("chave k encontrada: " + buscado.getKey()); 
                     else System.out.println("chave " + k + " não encontrada");
                   }
                 break;
@@ -247,6 +248,22 @@ public class testeArvoreAvlDinamico {
               clear();
               AAvl = new ArvoreAvl(GC.getType());
               System.out.println("Arvore do tipo " + GC.getStrType() + " reiniciada.");
+            break;
+
+            // 10: configura debug 
+            case 10: 
+              clear();              
+              System.out.println("Selecione 1 para ligar Debug. Selecione 0 para desligar Debug.");              
+              try {
+                int opcao = ler.nextInt();
+                if ((opcao != 0) && (opcao != 1)) System.out.println("Valor inválido: " + opcao + "\nSelecione 1 para ligar Debug. Selecione 0 para desligar Debug.");
+                if (opcao == 1) AAvl.setDebug(true);
+                if (opcao == 0) AAvl.setDebug(false);
+                if (AAvl.getDebug()) System.out.println("Debug ligado.");
+                else  System.out.println("Debug desligado.");
+              } catch (Exception e) {
+                System.out.println("Erro ao configrar Debug. Utilize 0 ou 1 para configurar corretamente.\n" + e.getMessage());
+              }
             break;
 
             default: 

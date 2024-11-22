@@ -165,7 +165,6 @@ public class testeArvoreBinariaDinamico {
                   }  
                   if ((buscado != null) && (buscado.getKey() != null)) {
                     if (d.equals(buscado.getKey())) {
-                      System.out.println(d.getClass() + " " + buscado.getKey().getClass());
                       AB.remove(d);
                       System.out.println("chave k: " + d + " removida");
                     }
@@ -189,7 +188,7 @@ public class testeArvoreBinariaDinamico {
                   k = ler.nextInt();
                   buscado = AB.search(AB.getRoot(),k);
                   if (buscado.getKey() != null) {
-                    if ((int) buscado.getKey() == k) System.out.println("chave k encontrada: " + buscado.getKey()); 
+                    if (buscado.getKey().equals(k)) System.out.println("chave k encontrada: " + buscado.getKey()); 
                     else System.out.println("chave k: " + k + " não encontrada");
                   }
                 break;
