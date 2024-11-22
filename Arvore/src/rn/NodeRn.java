@@ -18,4 +18,7 @@ public class NodeRn<T extends Comparable<T>> extends Node<T,NodeRn<T>> implement
   public String getStrColor() {
     return this.color.equals(red) ? "Red" : "Black";
   }
+  public Boolean isRed() {
+    return this.color.equals(red);
+  }
 }

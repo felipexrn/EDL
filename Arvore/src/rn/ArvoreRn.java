@@ -1,37 +1,40 @@
-package Arvore.src.avl;
+package Arvore.src.rn;
 import java.util.Iterator;
 import Arvore.src.binaria.*;
 
-public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,NodeAvl<T>>  implements IArvoreBinaria<T, NodeAvl<T>>, IArvoreAvl<T> {
-  public ArvoreAvl(int type) {
+public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,NodeRn<T>>  implements IArvoreBinaria<T, NodeRn<T>>, IArvoreRn<T> {
+  private String colorBlack = "\033[34m"; // Azul
+  private String colorRed = "\033[31m"; 
+  private String colorReset = "\033[0m";
+  public ArvoreRn(int type) {
     super(type);
   }
-  public ArvoreAvl(GenericComparator<T, NodeAvl<T>> c) {
+  public ArvoreRn(GenericComparator<T, NodeRn<T>> c) {
     super(c);
   }
-  public NodeAvl<T> createNode(NodeAvl<T> p, T k) {
-    if ((p instanceof NodeAvl) || (p == null)) {
-      return new NodeAvl<T>(p, k);
+  public NodeRn<T> createNode(NodeRn<T> p, T k) {
+    if ((p instanceof NodeRn) || (p == null)) {
+      return new NodeRn<T>(p, k);
     } else {
       throw new IllegalArgumentException("Tipo incompatível de nó: " + p.getClass().getName());
     }
   }
-  public NodeAvl<T> include(T k){ 
+  public NodeRn<T> include(T k){ 
     try {
       //if (super.getDebug()) System.out.println("include");
-      NodeAvl<T> n = super.include(k);   
+      NodeRn<T> n = super.include(k);   
       rebalance(n.getParent(), isRightChild(n), true);
       return n;
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.include(T k)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.include(T k)\n" + e.getMessage());
     }
   }
-	public NodeAvl<T> remove(T k){ 
+	public NodeRn<T> remove(T k){ 
     try {
       //if (super.getDebug()) System.out.println("remove");
       
       // Guarda o sucessor de k para rebalancear a arvore
-      NodeAvl<T> m = super.getSucessor(k);    
+      NodeRn<T> m = super.getSucessor(k);    
       Boolean isFromRight = false;
       if (m != null) {
         isFromRight = isRightChild(m);
@@ -50,7 +53,7 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
         }*/
       }
       // remove k
-      NodeAvl<T> n = super.remove(k);
+      NodeRn<T> n = super.remove(k);
 
       /*if (getDebug()) {
         System.out.println("n:");
@@ -65,22 +68,19 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
       }*/
 
       // Rebalanceia a árvore
-      if (super.size() > 0) rebalance(m, isFromRight, false);
+      if (super.size() > 0) rebalance(m, false);
       return n;
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.remove(T k)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.remove(T k)\n" + e.getMessage());
     }
   }  
-  public NodeAvl<T> rebalance(NodeAvl<T> n, Boolean isFromRight, Boolean inInsert) {
+  public NodeRn<T> rebalance(NodeRn<T> n, Boolean inInsert) {
     try {  
       if (super.getDebug()) System.out.println("rebalance");
       
       // Condição de parada se for raiz
       if (n == null) return null;
       //if (super.getDebug()) System.out.println("rebalance parada raiz");  
-      
-      // ajusta fator de balanceamento
-      refreshFB(n, isFromRight, inInsert); 
       
       // verifica necessidade de rotações 
       n = verifyRotate(n);              
@@ -94,29 +94,12 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
       //if (super.getDebug()) System.out.println("rebalance parada remocao");
 
       // chama recursivamente
-      return rebalance(n.getParent(), isRightChild(n), inInsert);
+      return rebalance(n.getParent(), inInsert);
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.rebalance(NodeAvl<T> n, Boolean isFromRight, Boolean inInsert)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.rebalance(NodeRn<T> n, Boolean isFromRight, Boolean inInsert)\n" + e.getMessage());
     }
   }
-  public void refreshFB(NodeAvl<T> n, Boolean isFromRight, Boolean inInsert) {
-    try {
-      if (super.getDebug()) System.out.println("atualizando FB");
-      
-      if (inInsert) {
-        if (isFromRight) n.downFB();
-        else n.upFB();
-      }
-      else {
-        if (isFromRight) n.upFB();
-        else n.downFB();
-      }
-      if (super.getDebug()) System.out.println("n: " + n.getKey() + ", newFBB: " + n.getFB() +  ", isFromRight: " + isFromRight);
-    } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.refreshFB(NodeAvl<T> n, Boolean isFromRight, Boolean inInsert)\n" + e.getMessage());
-    }
-  }
-  public NodeAvl<T> verifyRotate(NodeAvl<T> n) {
+  public NodeRn<T> verifyRotate(NodeRn<T> n) {
     try {
       if (n.getFB() == 2) {
         if (n.getLeftChild().getFB() >= 0) n = rightSimpleRotation(n);
@@ -128,80 +111,59 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
       }   
       return n;
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.verifyRotate(NodeAvl<T> n)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.verifyRotate(NodeRn<T> n)\n" + e.getMessage());
     }
   }
-  public NodeAvl<T> rightSimpleRotation(NodeAvl<T> b) {  
+  public NodeRn<T> rightSimpleRotation(NodeRn<T> b) {  
     try {
       if (super.getDebug()) show();
-      NodeAvl<T> a = super.rightSimpleRotation(b);
+      NodeRn<T> a = super.rightSimpleRotation(b);
       if (super.getDebug()) show();
       /*if (super.getDebug()) {
         a.showLinks();
         b.showLinks();
       }*/
       //if (super.getDebug()) System.out.println("rightSimpleRotation");
-      recalculateFB(a, b, true);
+
       return a;
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.rightSimpleRotation(NodeAvl<T> b)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.rightSimpleRotation(NodeRn<T> b)\n" + e.getMessage());
     }
   }
-  public NodeAvl<T> leftSimpleRotation(NodeAvl<T> b) {    
+  public NodeRn<T> leftSimpleRotation(NodeRn<T> b) {    
     try {
       if (super.getDebug()) show();
-      NodeAvl<T> a = super.leftSimpleRotation(b);
+      NodeRn<T> a = super.leftSimpleRotation(b);
       if (super.getDebug()) show();
       /*if (super.getDebug()) {
         a.showLinks();
         b.showLinks();
       }*/
       //if (super.getDebug()) System.out.println("leftSimpleRotation");
-      recalculateFB(a, b, false);
+
       return a;
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.leftSimpleRotation(NodeAvl<T> b)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.leftSimpleRotation(NodeRn<T> b)\n" + e.getMessage());
     }
   }
-  public NodeAvl<T> rightDoubleRotation(NodeAvl<T> b) {
+  public NodeRn<T> rightDoubleRotation(NodeRn<T> b) {
     try {
       //if (super.getDebug()) System.out.println("rightDoubleRotation");    
-      //NodeAvl<T> a = leftSimpleRotation(b.getLeftChild());
+      //NodeRn<T> a = leftSimpleRotation(b.getLeftChild());
       //b = rightSimpleRotation(b);
       return super.rightDoubleRotation(b);
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.rightDoubleRotation(NodeAvl<T> b)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.rightDoubleRotation(NodeRn<T> b)\n" + e.getMessage());
     }
   }
-  public NodeAvl<T> leftDoubleRotation(NodeAvl<T> b) {
+  public NodeRn<T> leftDoubleRotation(NodeRn<T> b) {
     try {
       //if (super.getDebug()) System.out.println("leftDoubleRotation");
-      //NodeAvl<T> a = rightSimpleRotation(b.getRightChild());
+      //NodeRn<T> a = rightSimpleRotation(b.getRightChild());
       //b = leftSimpleRotation(b);
       return super.leftDoubleRotation(b);
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.leftSimpleRotation(NodeAvl<T> b)\n" + e.getMessage());
-    }
-  }
-  public void recalculateFB(NodeAvl<T> a, NodeAvl<T> b, Boolean isRightRotation){
-    try {
-      int newFBA, newFBB; 
-      if (isRightRotation) {
-        newFBB = b.getFB() - 1 - Math.max(a.getFB(), 0);
-        newFBA = a.getFB() - 1 + Math.min(newFBB, 0);  
-      }
-      else {      
-        newFBB = b.getFB() + 1 - Math.min(a.getFB(), 0);
-        newFBA = a.getFB() + 1 + Math.max(newFBB, 0);
-      }  
-      a.setFB(newFBA);
-      b.setFB(newFBB);
-
-      if (super.getDebug()) System.out.println("recalulateFB");
-      if (super.getDebug()) System.out.println("a: " + a.getKey() + ", newFBA: " + a.getFB());
-      if (super.getDebug()) System.out.println("b: " + b.getKey() + ", newFBB: " + b.getFB());
-    } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.recalculateFB(NodeAvl<T> a, NodeAvl<T> b, Boolean isRightRotation)\n" + e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.leftSimpleRotation(NodeRn<T> b)\n" + e.getMessage());
     }
   }
   public void show() {
@@ -210,22 +172,22 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
       String l = "";
       String e = "";
       Iterator i;
-      NodeAvl<T> n;
+      NodeRn<T> n;
       if (super.size() != 0){
         int treeHeight = height(super.getRoot());
         for (int h = 0; h <= treeHeight; h++) {
           i = nodes();
           while(i.hasNext()) {
             // recupera Node atual
-            n = (NodeAvl<T>) i.next();
+            n = (NodeRn<T>) i.next();
             // calcula espaço padrão para coluna atual
             e = "";
-            int sizeE = n.getStrFB().length() + n.getKey().toString().length() + 2;          
+            int sizeE = n.getKey().toString().length() + 2;          
             for (int j = 0; j < sizeE; j ++) e += " ";
             // impressão 
             if (depth(n) == h) {
               // linha para value
-              s += n.getKey() + "(" + n.getStrFB() + ")" + "";            
+              s += (n.isred() ? colorRed : colorBlack) + n.getKey() + colorReset + "";            
               // linha para ligação
               if (hasLeft(n)) l += "/"; 
               if (hasRight(n)) l += "\\";
@@ -253,32 +215,7 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
       }
       System.out.println(s);
     } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreAvl.show()\n"+ e.getMessage());
-    }
-  }
-  public Boolean verifyFB() {
-    try {
-      if (super.size() == 0) return true;
-      Iterator i = nodes();
-      int hL;
-      int hR;
-      NodeAvl<T> n;
-      while(i.hasNext()) {
-        n = (NodeAvl<T>) i.next();
-        NodeAvl<T> nL = n.getLeftChild();
-        NodeAvl<T> nR = n.getRightChild();
-        if (nL == null) hL = 0;
-        else hL = height(n.getLeftChild()) + 1;
-        if (nR == null) hR = 0;
-        else hR = height(n.getRightChild()) + 1;
-        if (n.getFB() != (hL - hR)) {
-          if (super.getDebug()) n.showLinks();
-          throw new RuntimeException("hL: " + hL + "- hR: " + hR + " = " + (hL - hR) + " <> nFB: " + n.getFB());
-        }
-      }
-      return true;
-    } catch (Exception e) {
-      throw new RuntimeException("Erro em: AvoreAvl.verifyFB()\n"+ e.getMessage());
+      throw new RuntimeException("Erro em: ArvoreRn.show()\n"+ e.getMessage());
     }
   }
 } 

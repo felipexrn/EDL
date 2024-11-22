@@ -1,6 +1,6 @@
 package Arvore.src.avl;
 import Arvore.src.binaria.*;
-public interface IAvl<T extends Comparable<T>> {
+public interface IArvoreAvl<T extends Comparable<T>> {
   NodeAvl<T> rebalance(NodeAvl<T> b, Boolean isFromRight, Boolean isInsert);
   NodeAvl<T> rightSimpleRotation(NodeAvl<T> b);
   NodeAvl<T> leftSimpleRotation(NodeAvl<T> b);
