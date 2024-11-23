@@ -6,4 +6,6 @@ public interface IArvoreRn<T extends Comparable<T>> {
   NodeRn<T> leftSimpleRotation(NodeRn<T> b);
   NodeRn<T> rightDoubleRotation(NodeRn<T> b);
   NodeRn<T> leftDoubleRotation(NodeRn<T> b);
+  int blackHeight(NodeRn<T> v);
+  Boolean verifyRn();
 }

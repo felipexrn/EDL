@@ -1,6 +1,7 @@
 package Arvore.src.rn;
 import java.util.Iterator;
 import Arvore.src.binaria.*;
+import Arvore.src.avl.*;
 
 public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,NodeRn<T>>  implements IArvoreBinaria<T, NodeRn<T>>, IArvoreRn<T> {
   private String colorBlack = "\033[34m"; // Azul
@@ -23,7 +24,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
     try {
       //if (super.getDebug()) System.out.println("include");
       NodeRn<T> n = super.include(k);   
-      rebalance(n.getParent(), isRightChild(n), true);
+      rebalance(n.getParent(), true);
       return n;
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.include(T k)\n" + e.getMessage());
@@ -86,11 +87,11 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       n = verifyRotate(n);              
       
       // condição de parada inserção
-      if (inInsert && (n.getFB() == 0)) return null;
+      //if (inInsert && (n.getFB() == 0)) return null;
       //if (super.getDebug()) System.out.println("rebalance parada insercao");
 
       // condição de parada remoção
-      if (!inInsert && (n.getFB() != 0)) return null;    
+      //if (!inInsert && (n.getFB() != 0)) return null;    
       //if (super.getDebug()) System.out.println("rebalance parada remocao");
 
       // chama recursivamente
@@ -101,14 +102,14 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   }
   public NodeRn<T> verifyRotate(NodeRn<T> n) {
     try {
-      if (n.getFB() == 2) {
+      /*if (n.getFB() == 2) {
         if (n.getLeftChild().getFB() >= 0) n = rightSimpleRotation(n);
         else n = rightDoubleRotation(n);
       }
       if (n.getFB() == -2) {
         if (n.getRightChild().getFB() <= 0) n = leftSimpleRotation(n);
         else n = leftDoubleRotation(n);
-      }   
+      }*/   
       return n;
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.verifyRotate(NodeRn<T> n)\n" + e.getMessage());
@@ -166,6 +167,18 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       throw new RuntimeException("Erro em: ArvoreRn.leftSimpleRotation(NodeRn<T> b)\n" + e.getMessage());
     }
   }
+  public int blackHeight(NodeRn<T> v) {
+    if (v == null) return 0;
+    else {
+      int h = 0;
+      Iterator c = v.children();
+      while(c.hasNext()){
+        NodeRn<T> vChild = (NodeRn<T>) c.next();
+        h = Math.max(h, blackHeight(vChild));
+      }
+      return h + (v.isRed() ? 0 : 1);
+    }
+  }
   public void show() {
     try {
       String s = "";
@@ -187,7 +200,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
             // impressão 
             if (depth(n) == h) {
               // linha para value
-              s += (n.isred() ? colorRed : colorBlack) + n.getKey() + colorReset + "";            
+              s += (n.isRed() ? colorRed : colorBlack) + n.getKey() + colorReset + "";            
               // linha para ligação
               if (hasLeft(n)) l += "/"; 
               if (hasRight(n)) l += "\\";
@@ -216,6 +229,38 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       System.out.println(s);
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.show()\n"+ e.getMessage());
+    }
+  }
+  public Boolean verifyRn() {
+    try {
+      Boolean isRn = true;
+      // condição 1: não precisa ser testada, pois todos os nós folhas são sempre negros
+      if (super.size() == 0) return isRn;
+      // condição 2: o Node root deve ser negro
+      if (getRoot().isRed()) throw new RuntimeException("Condição 2 não atendida: NodeRn<T> root tem cor 'R'.");
+      Iterator i;
+      NodeRn<T> v;
+      i = nodes();
+      while(i.hasNext()) {
+        v = (NodeRn<T>) i.next();
+        // condição 3: Se v é rubro, seus filhos devem ser negros
+        if (v.isRed()) {
+          if (!isExternal(v)) {
+            if (v.getLeftChild() != null)
+              if (v.getLeftChild().isRed())
+                throw new RuntimeException("Condição 3 não atendida: NodeRn<T> v tem cor 'R' e seu filno esquerdo tem cor 'R'.");            
+            if (v.getRightChild() != null)
+              if (v.getRightChild().isRed())
+                throw new RuntimeException("Condição 3 não atendida: NodeRn<T> v tem cor 'R' e seu filno direito tem cor 'R'.");            
+          }
+        }
+        // condição 4: Os caminhos de v para seus nós descendentes externos possuem idêntico número de nós negros
+        if (blackHeight(v.getLeftChild()) != blackHeight(v.getRightChild()))
+          throw new RuntimeException("Condição 4 não atendida: altura negra dos filhos de NodeRn<T> v são diferentes.");            
+      }
+      return isRn;
+    } catch (Exception e) {
+      throw new RuntimeException("Arvore não é rubro-negra!\n" + e.getMessage());
     }
   }
 } 
