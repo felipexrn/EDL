@@ -11,14 +11,19 @@ public class NodeRn<T extends Comparable<T>> extends Node<T,NodeRn<T>> implement
   public String getColor(){
     return this.color;
   }
-  public void setColor(String c) {
-    if (!(c.equals(red)) && (!c.equals(black))) throw new RuntimeException("Cor inválida! Utilize 'R' ou 'B'.");
-    this.color = c;
+  public void setRed() {
+    this.color = red;
+  }
+  public void setBlack() {
+    this.color = black;
   }
   public String getStrColor() {
     return this.color.equals(red) ? "Red" : "Black";
   }
   public Boolean isRed() {
     return this.color.equals(red);
+  }
+  public Boolean isBlack() {
+    return this.color.equals(black);
   }
 }

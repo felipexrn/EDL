@@ -29,13 +29,54 @@ public abstract class Node<T extends Comparable<T>, N extends Node<T, N>> implem
     return this.comparator;
   }
   public N getRightChild() {
+    // child = filho
     return rightChild;
   }
   public N getLeftChild() {
+    // child = filho
     return leftChild;
   }
   public N getParent() {
+    // Parent = pai
     return parent;
+  }
+  public N getBrother() {
+    // brother = irmão
+    if (getParent() == null) return null;
+    if (getParent().getLeftChild() == this) return getParent().getRightChild();
+    return getParent().getLeftChild(); 
+  }
+  public N getUncle() {
+    // uncle = tio
+    if (getParent() == null) return null;
+    return getParent().getBrother(); 
+  }
+  public N getGrandfather() {
+    // Grandfather = avô
+    if (getParent() == null) return null;
+    return getParent().getParent(); 
+  }
+  public N getLeftCousin() {
+    // cousin = primo
+    if (getParent() == null) return null;
+    if (getParent().getBrother() == null) return null;
+    return getParent().getBrother().getLeftChild(); 
+  }
+  public N getRightCousin() {
+    // cousin = primo
+    if (getParent() == null) return null;
+    if (getParent().getBrother() == null) return null;
+    return getParent().getBrother().getRightChild(); 
+  }
+  public N getLeftNephew() {
+    // nephew = sobrinho
+    if (getBrother() == null) return null;
+    return getBrother().getLeftChild(); 
+  }
+  public N getRightNephew() {
+    // nephew = sobrinho
+    if (getBrother() == null) return null;
+    return getBrother().getRightChild(); 
   }
   public T getKey() {
     return key;

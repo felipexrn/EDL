@@ -1,6 +1,7 @@
 package Arvore.src.rn;
 public interface INodeRn {  
   String getColor();
-  void setColor(String c);
+  void setRed();
+  void setBlack();
   String getStrColor();
 }

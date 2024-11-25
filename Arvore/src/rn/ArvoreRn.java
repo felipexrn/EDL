@@ -75,16 +75,15 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       throw new RuntimeException("Erro em: ArvoreRn.remove(T k)\n" + e.getMessage());
     }
   }  
-  public NodeRn<T> rebalance(NodeRn<T> n, Boolean inInsert) {
+  public NodeRn<T> rebalance(NodeRn<T> v, Boolean inInsert) {
     try {  
       if (super.getDebug()) System.out.println("rebalance");
       
       // Condição de parada se for raiz
-      if (n == null) return null;
+      if (v == null) return null;
       //if (super.getDebug()) System.out.println("rebalance parada raiz");  
-      
-      // verifica necessidade de rotações 
-      n = verifyRotate(n);              
+
+                   
       
       // condição de parada inserção
       //if (inInsert && (n.getFB() == 0)) return null;
@@ -95,24 +94,9 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       //if (super.getDebug()) System.out.println("rebalance parada remocao");
 
       // chama recursivamente
-      return rebalance(n.getParent(), inInsert);
+      return rebalance(v.getParent(), inInsert);
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.rebalance(NodeRn<T> n, Boolean isFromRight, Boolean inInsert)\n" + e.getMessage());
-    }
-  }
-  public NodeRn<T> verifyRotate(NodeRn<T> n) {
-    try {
-      /*if (n.getFB() == 2) {
-        if (n.getLeftChild().getFB() >= 0) n = rightSimpleRotation(n);
-        else n = rightDoubleRotation(n);
-      }
-      if (n.getFB() == -2) {
-        if (n.getRightChild().getFB() <= 0) n = leftSimpleRotation(n);
-        else n = leftDoubleRotation(n);
-      }*/   
-      return n;
-    } catch (Exception e) {
-      throw new RuntimeException("Erro em: ArvoreRn.verifyRotate(NodeRn<T> n)\n" + e.getMessage());
     }
   }
   public NodeRn<T> rightSimpleRotation(NodeRn<T> b) {  
@@ -179,6 +163,187 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       return h + (v.isRed() ? 0 : 1);
     }
   }
+  public Boolean isCase1Insertion(NodeRn<T> v) {
+    try {
+      /* 
+      Caso 1 da inserção:
+      se w, o pai de v, é negro, nada mais precisa ser feito já que o critério 4 foi mantido.
+      */
+      Boolean r = false;
+      r = v.getParent().isBlack();
+      return r;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante isCase1Insertion!\n" + e.getMessage());
+    }
+  }
+  public Boolean isCase2Insertion(NodeRn<T> v) {
+    try {
+      /*
+      Caso 2 da inserção:
+      Suponha w(pai de v) rubro e t, o pai de w(avó de v) é negro.
+      Se u, o irmão de w (tio de v) é rubro, ainda é possível manter o
+      critério 4 apenas fazendo a re-coloração de t(Rubro),u(Negro) e w(Negro).
+      Se o pai de t for rubro o processo deverá ser repetido fazendo v=t.
+      */
+      Boolean r = false;
+      NodeRn<T> w = v.getParent();
+      NodeRn<T> t = v.getGrandfather();
+      NodeRn<T> u = v.getUncle();
+      if (
+        ((w != null) && w.isRed()) &&
+        ((t != null) && t.isBlack()) &&
+        ((u != null) && u.isRed())      
+        ) {
+          //t.setRed();
+          //u.setBlack();
+          //w.setBlack();
+          r = true;
+        }
+        return r;
+      } catch (Exception e) {
+        throw new RuntimeException("Erro durante isCase2Insertion!\n" + e.getMessage());
+      }
+    }
+    public void resolveCase2Insertion(NodeRn<T> v) {
+      try {
+        // Se o pai de t for rubro o processo deverá ser repetido fazendo v=t.
+      NodeRn<T> w = v.getParent();
+      NodeRn<T> t = v.getGrandfather();
+      NodeRn<T> u = v.getUncle();
+      t.setRed();
+      u.setBlack();
+      w.setBlack();
+      
+      // critério 2: o Node root deve ser negro
+      if (t.getParent() == null) t.setBlack();
+      
+      if ((t.getParent() != null) && t.getParent().isRed())
+      if (isCase2Insertion(t))
+      resolveCase2Insertion(t);      
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante resolveCase2Insertion!\n" + e.getMessage());
+    }
+  }
+  public Boolean isCase3Insertion(NodeRn<T> v) {
+    try {
+      /*
+      Caso 3: suponha w(pai de v) rubro, t(avô de v) é negro e seu irmão u(tio de v) é negro.
+      Neste caso, para manter o critério 3 é necessário fazer rotações com w, v, t e u.
+      Existe 4 subcasos que correspondem às 4 rotações possíveis.
+      */
+      Boolean r = false;
+      NodeRn<T> w = v.getParent();
+      NodeRn<T> t = v.getGrandfather();
+      NodeRn<T> u = v.getUncle();
+      if (
+        ((w != null) && w.isRed()) &&
+        ((t != null) && t.isBlack()) &&
+        ((u == null) || u.isBlack())      
+      ) {
+        // subcaso 3a - rotação simples à direita
+        // subcaso 3b - rotação simples à esquerda
+        // subcaso 3c - rotação dupla à esquerda
+        // subcaso 3d - rotação dupla à direita
+        r = true;
+      }
+      return r;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante isCase3Insertion!\n" + e.getMessage());
+    }
+  }
+  public NodeRn<T> resolveCase3Insertion(NodeRn<T> v) {
+    try {
+      if (isCase3Insertion(v)) {
+        if (isSubcase3aInsertion(v)) v = rightSimpleRotation(v.getGrandfather());
+        else if (isSubcase3bInsertion(v)) v = leftSimpleRotation(v.getGrandfather());
+        else if (isSubcase3cInsertion(v)) v = leftDoubleRotation(v.getGrandfather());
+        else if (isSubcase3dInsertion(v)) v = rightDoubleRotation(v.getGrandfather());
+      }
+      return v;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro em: ArvoreRn.resolveCase3Insertion(NodeRn<T> n)\n" + e.getMessage());
+    }
+  }
+  public Boolean isSubcase3aInsertion(NodeRn<T> v) {
+    try {
+      /*
+      subcaso 3a - rotação simples à direita:
+      v é filho esquerdo de w
+      w é filho esquerdo de t
+      */
+      Boolean r = false;
+      NodeRn<T> w = v.getParent();
+      if (
+        super.isLeftChild(v) &&
+        super.isLeftChild(w)
+      ) {
+        r = true;
+      }      
+      return r;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante isSubcase3aInsertion!\n" + e.getMessage());
+    }
+  }
+  public Boolean isSubcase3bInsertion(NodeRn<T> v) {
+    try {
+      /*
+      subcaso 3b - rotação simples à esquerda:
+      v é filho direito de w
+      w é filho direito de t
+      */
+      Boolean r = false;
+      NodeRn<T> w = v.getParent();
+      if (
+        super.isRightChild(v) &&
+        super.isRightChild(w)
+      ) {
+        r = true;
+      }
+      return r;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante isSubcase3bInsertion!\n" + e.getMessage());
+    }
+  }
+  public Boolean isSubcase3cInsertion(NodeRn<T> v) {
+    try {
+      /*
+      subcaso 3c - rotação dupla à esquerda:
+      v é filho esquerdo de w
+      w é filho direito de t
+      */
+      Boolean r = false;
+      NodeRn<T> w = v.getParent();
+      if (
+        super.isLeftChild(v) &&
+        super.isRightChild(w)
+      ) {
+        r = true;
+      }
+      return r;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante isSubcase3cInsertion!\n" + e.getMessage());
+    }
+  }
+  public Boolean isSubcase3dInsertion(NodeRn<T> v) {
+    try {
+      /*
+      subcaso 3d - rotação dupla à direita:
+      v é filho direito de w
+      w é filho esquerdo de t
+      */
+      Boolean r = false;
+      NodeRn<T> w = v.getParent();
+      if (
+        super.isRightChild(v) &&
+        super.isLeftChild(w)
+      ) {
+        r = true;
+      }      
+      return r;
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante isSubcase3dInsertion!\n" + e.getMessage());
+    }
+  }
   public void show() {
     try {
       String s = "";
@@ -234,16 +399,16 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   public Boolean verifyRn() {
     try {
       Boolean isRn = true;
-      // condição 1: não precisa ser testada, pois todos os nós folhas são sempre negros
+      // critério 1: não precisa ser testada, pois todos os nós folhas são sempre negros
       if (super.size() == 0) return isRn;
-      // condição 2: o Node root deve ser negro
+      // critério 2: o Node root deve ser negro
       if (getRoot().isRed()) throw new RuntimeException("Condição 2 não atendida: NodeRn<T> root tem cor 'R'.");
       Iterator i;
       NodeRn<T> v;
       i = nodes();
       while(i.hasNext()) {
         v = (NodeRn<T>) i.next();
-        // condição 3: Se v é rubro, seus filhos devem ser negros
+        // critério 3: Se v é rubro, seus filhos devem ser negros
         if (v.isRed()) {
           if (!isExternal(v)) {
             if (v.getLeftChild() != null)
@@ -254,7 +419,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
                 throw new RuntimeException("Condição 3 não atendida: NodeRn<T> v tem cor 'R' e seu filno direito tem cor 'R'.");            
           }
         }
-        // condição 4: Os caminhos de v para seus nós descendentes externos possuem idêntico número de nós negros
+        // critério 4: Os caminhos de v para seus nós descendentes externos possuem idêntico número de nós negros
         if (blackHeight(v.getLeftChild()) != blackHeight(v.getRightChild()))
           throw new RuntimeException("Condição 4 não atendida: altura negra dos filhos de NodeRn<T> v são diferentes.");            
       }
