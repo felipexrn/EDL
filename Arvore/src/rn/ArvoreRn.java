@@ -476,7 +476,10 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Situação 3 – v é negro e x é negro.
       */
       // caso 1
-      if ()
+      if (isCase1Remove(v, x)) {
+        resolveCase1Remove(v, x);
+        resolveCase2bRemove(v, x);
+      }
       // caso 2a
       // caso 2b
       // caso 3
@@ -517,6 +520,26 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       return r;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante isCase1Remove!\n" + e.getMessage());
+    }
+  }
+  public void resolveCase1Remove(NodeRn<T> v, NodeRn<T> x) {
+    try {
+      if (super.getDebug()) System.out.println("resolveCase1Remove");
+      /*
+      Caso 1: se x é negro e x tem irmão w rubro e t(pai de x) é negro.
+      Marque ele com um duplo negro e faça o seguinte:
+      • Faça uma rotação simples esquerda em w
+      • Pinte w de negro
+      • Pinte pai de x de rubro
+      • Chame o caso 2b
+      */
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      super.leftSimpleRotation(w);
+      w.setBlack();
+      t.setRed();
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante resolveCase1Remove!\n" + e.getMessage());
     }
   }
   public Boolean isCase2aRemove(NodeRn<T> v, NodeRn<T> x) {
