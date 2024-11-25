@@ -505,7 +505,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       NodeRn<T> t = x.getParent();
       if (
           (x != null) &&
-          (r != null) &&
+          (w != null) &&
           (t != null)
         ) {
           if (
@@ -562,18 +562,52 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   public Boolean isCase2bRemove(NodeRn<T> v, NodeRn<T> x) {
     try {
       /*
-      Caso 2b: se x é negro, tem irmão w negro com filhos negros e pai rubro. 
+      Caso 2b: se x é negro, tem w(irmão de x) negro com filhos negros e t(pai de x) rubro. 
       faça o seguinte:
-      • Pinte o irmão w de rubro e o pai de x de negro
+      • Pinte w(irmão de x) de rubro e o t(pai de x) de negro
       */
       Boolean r = false;
-      if (true) {
-        if (super.getDebug()) System.out.println("isCase2bRemove");
-        r = true;
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      NodeRn<T> wLN = x.getLeftNephew();
+      NodeRn<T> wRN = x.getRightNephew();
+      if (
+          (x != null) &&
+          (w != null) &&
+          (t != null)
+        ) {
+          if (
+            x.isBlack() && 
+            w.isBlack() &&
+            (
+              ((wLN == null) || wLN.isBlack()) &&
+              ((wRN == null) || wRN.isBlack())
+            ) &&
+            t.isRed()
+          ) {
+          if (super.getDebug()) System.out.println("isCase2bRemove");
+          r = true;
+        }
       }
       return r;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante isCase2bRemove!\n" + e.getMessage());
+    }
+  }
+  public void resolveCase2bRemove(NodeRn<T> v, NodeRn<T> x) {
+    try {
+      if (super.getDebug()) System.out.println("resolveCase2bRemove");
+      /*
+      Caso 2b: se x é negro, tem w (irmão de x) negro com filhos negros e t(pai de w) é rubro. 
+      faça o seguinte:
+      • Pinte w(irmão de x) de rubro e t(pai de x) de negro
+      */
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      w.setRed();
+      t.setBlack();
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante resolveCase2bRemove!\n" + e.getMessage());
     }
   }
   public Boolean isCase3Remove(NodeRn<T> v, NodeRn<T> x) {
