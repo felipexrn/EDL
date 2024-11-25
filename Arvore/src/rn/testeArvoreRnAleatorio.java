@@ -3,11 +3,11 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.Collections;
 import java.util.ArrayList;
-import Arvore.src.avl.*;
+import Arvore.src.rn.*;
 import Arvore.src.binaria.GerarArquivoNumeroInteiro;
 import Arvore.src.binaria.GenericComparator;
 
-public class testeArvoreAvlAleatorio {
+public class testeArvoreRnAleatorio {
     public static void main(String[] args) {
         try {
             // Cores para destaque na impressão
@@ -16,7 +16,7 @@ public class testeArvoreAvlAleatorio {
             String corPadrao = "\033[0m";
 
             // Arquivo para inserção de números aleatórios
-            String arquivo = "Arvore/src/avl/insercao.txt";
+            String arquivo = "Arvore/src/rn/insercao.txt";
 
             // Gera numeros Aleatórios a inserir
             GerarArquivoNumeroInteiro.main(new String[] {arquivo, args[0]});
@@ -26,16 +26,16 @@ public class testeArvoreAvlAleatorio {
 
             // Comparador de inteiros e arvore instanciados
             //GenericComparator<Integer> IntComparator = new GenericComparator<>(0); // 0=inteiros
-            ArvoreAvl<Integer> AAvl = new ArvoreAvl<Integer>(0);
-            System.out.println("Arvore Avl instanciada");
+            ArvoreRn<Integer> ARn = new ArvoreRn<Integer>(0);
+            System.out.println("Arvore Rubro negra instanciada");
 
-            AAvl.setDebug(false);
-            if (AAvl.getDebug()) System.out.println("debug ligado");
+            ARn.setDebug(true);
+            if (ARn.getDebug()) System.out.println("debug ligado");
             else System.out.println("debug desligado");
 
             // Configurar comparador na árvore
-            //AAvl.setComparer(IntComparator);
-            GenericComparator GC = AAvl.getComparer();
+            //ARn.setComparer(IntComparator);
+            GenericComparator GC = ARn.getComparer();
             System.out.println("Configurado comparador de tipo: " + GC.getStrType());
             
             // teste de inserção
@@ -49,7 +49,7 @@ public class testeArvoreAvlAleatorio {
                     Integer value = scanner.nextInt();
                     try {
                         System.out.println(corVerde + "Inserindo o nó: " + value + corPadrao);
-                        AAvl.include(value);
+                        ARn.include(value);
                         inseridos++;                   
                         numerosUnicos.add(value);
                     }
@@ -57,8 +57,8 @@ public class testeArvoreAvlAleatorio {
                         System.out.println("Não foi possível inserir: "+ value +"\n"+ ex.getMessage()); 
                     }
                     // Mostrar status da árvore
-                    statusArvore(AAvl);
-                    AAvl.verifyFB();  
+                    statusArvore(ARn);
+                    ARn.verifyRn();  
                 }
                 scanner.close();                
             } catch (FileNotFoundException e) {
@@ -79,15 +79,15 @@ public class testeArvoreAvlAleatorio {
                 for (Integer value : numerosUnicos) {
                     try {
                         System.out.println(corVermelho + "Removendo o nó: " + value + corPadrao);
-                        AAvl.remove(value);
+                        ARn.remove(value);
                         removidos++;                   
                     }
                     catch (Exception ex) {
                         throw new Exception("Não foi possível remover: "+ value +"\n"+ ex.getMessage());    
                     }
                     // Mostrar status da árvore
-                    statusArvore(AAvl); 
-                    AAvl.verifyFB();   
+                    statusArvore(ARn); 
+                    ARn.verifyRn();   
                 }
             } catch (Exception e) {
                 throw new Exception("Erro ao remover itens da árvore!\n" + e.getMessage());
@@ -99,9 +99,9 @@ public class testeArvoreAvlAleatorio {
         }        
     }
 
-    public static void statusArvore(ArvoreAvl<Integer> AAvl) {
-        //AAvl.status();
-        AAvl.show();
+    public static void statusArvore(ArvoreRn<Integer> ARn) {
+        //ARn.status();
+        ARn.show();
         System.out.println();
     }
 }

@@ -23,9 +23,9 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   public NodeRn<T> include(T k){ 
     try {
       //if (super.getDebug()) System.out.println("include");
-      NodeRn<T> n = super.include(k);   
-      rebalance(n.getParent(), true);
-      return n;
+      NodeRn<T> v = super.include(k);   
+      rebalance(v, true);
+      return v;
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.include(T k)\n" + e.getMessage());
     }
@@ -81,29 +81,49 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       
       // Condição de parada se for raiz
       if (v == null) return null;
-      //if (super.getDebug()) System.out.println("rebalance parada raiz");  
+      //if (super.getDebug()) System.out.println("parada raiz");  
+                         
+      //if (super.getDebug()) System.out.println("isInsert: " + isInsert.ToString());
+      // se inserção
+      if (inInsert) {
+        // critério 2: o Node root deve ser negro
+        if (v.getParent() == null)
+          v.setBlack();
+        
+        if (isCase2Insertion(v)) {
+          v = resolveCase2Insertion(v);
+          return rebalance(v, inInsert);
+        }
+        else if (isCase3Insertion(v)) {
+          v = resolveCase3Insertion(v);
+        }
+        else if (isCase1Insertion(v)) {          
+          return null;
+        }
+        } 
+      // se remoção
+      /*else {
 
-                   
-      
-      // condição de parada inserção
-      //if (inInsert && (n.getFB() == 0)) return null;
-      //if (super.getDebug()) System.out.println("rebalance parada insercao");
-
-      // condição de parada remoção
-      //if (!inInsert && (n.getFB() != 0)) return null;    
-      //if (super.getDebug()) System.out.println("rebalance parada remocao");
+      }*/
 
       // chama recursivamente
-      return rebalance(v.getParent(), inInsert);
+      // return rebalance(v.getParent(), inInsert);
+      return null;
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.rebalance(NodeRn<T> n, Boolean isFromRight, Boolean inInsert)\n" + e.getMessage());
     }
   }
   public NodeRn<T> rightSimpleRotation(NodeRn<T> b) {  
     try {
-      if (super.getDebug()) show();
+      if (super.getDebug()) {
+        System.out.println("After rotate:");
+        show();
+      }
       NodeRn<T> a = super.rightSimpleRotation(b);
-      if (super.getDebug()) show();
+      if (super.getDebug()) {
+        System.out.println("Before rotate:");
+        show();
+      }
       /*if (super.getDebug()) {
         a.showLinks();
         b.showLinks();
@@ -117,9 +137,15 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   }
   public NodeRn<T> leftSimpleRotation(NodeRn<T> b) {    
     try {
-      if (super.getDebug()) show();
+      if (super.getDebug()) {
+        System.out.println("After rotate:");
+        show();
+      }
       NodeRn<T> a = super.leftSimpleRotation(b);
-      if (super.getDebug()) show();
+      if (super.getDebug()) {
+        System.out.println("Before rotate:");
+        show();
+      }
       /*if (super.getDebug()) {
         a.showLinks();
         b.showLinks();
@@ -170,7 +196,10 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       se w, o pai de v, é negro, nada mais precisa ser feito já que o critério 4 foi mantido.
       */
       Boolean r = false;
-      r = v.getParent().isBlack();
+      if (v.getParent() == null || v.getParent().isBlack()) {        
+        if (super.getDebug()) System.out.println("isCase1Insertion");
+        r = true; 
+      }
       return r;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante isCase1Insertion!\n" + e.getMessage());
@@ -190,23 +219,25 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       NodeRn<T> t = v.getGrandfather();
       NodeRn<T> u = v.getUncle();
       if (
-        ((w != null) && w.isRed()) &&
-        ((t != null) && t.isBlack()) &&
-        ((u != null) && u.isRed())      
+          ((w != null) && w.isRed()) &&
+          ((t != null) && t.isBlack()) &&
+          ((u != null) && u.isRed())      
         ) {
-          //t.setRed();
-          //u.setBlack();
-          //w.setBlack();
+          if (super.getDebug()) System.out.println("isCase2Insertion");
+          // t.setRed();
+          // u.setBlack();
+          // w.setBlack();
           r = true;
-        }
+      }
         return r;
       } catch (Exception e) {
         throw new RuntimeException("Erro durante isCase2Insertion!\n" + e.getMessage());
       }
     }
-    public void resolveCase2Insertion(NodeRn<T> v) {
+    public NodeRn<T> resolveCase2Insertion(NodeRn<T> v) {
       try {
-        // Se o pai de t for rubro o processo deverá ser repetido fazendo v=t.
+      if (super.getDebug()) System.out.println("resolveCase2Insertion");
+      // Se o pai de t for rubro o processo deverá ser repetido fazendo v=t.
       NodeRn<T> w = v.getParent();
       NodeRn<T> t = v.getGrandfather();
       NodeRn<T> u = v.getUncle();
@@ -218,8 +249,9 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       if (t.getParent() == null) t.setBlack();
       
       if ((t.getParent() != null) && t.getParent().isRed())
-      if (isCase2Insertion(t))
-      resolveCase2Insertion(t);      
+        return t; 
+      
+      return v;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante resolveCase2Insertion!\n" + e.getMessage());
     }
@@ -236,10 +268,11 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       NodeRn<T> t = v.getGrandfather();
       NodeRn<T> u = v.getUncle();
       if (
-        ((w != null) && w.isRed()) &&
-        ((t != null) && t.isBlack()) &&
-        ((u == null) || u.isBlack())      
-      ) {
+          ((w != null) && w.isRed()) &&
+          ((t != null) && t.isBlack()) &&
+          ((u == null) || u.isBlack())      
+        ) {
+        if (super.getDebug()) System.out.println("isCase3Insertion");
         // subcaso 3a - rotação simples à direita
         // subcaso 3b - rotação simples à esquerda
         // subcaso 3c - rotação dupla à esquerda
@@ -253,12 +286,29 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   }
   public NodeRn<T> resolveCase3Insertion(NodeRn<T> v) {
     try {
-      if (isCase3Insertion(v)) {
-        if (isSubcase3aInsertion(v)) v = rightSimpleRotation(v.getGrandfather());
-        else if (isSubcase3bInsertion(v)) v = leftSimpleRotation(v.getGrandfather());
-        else if (isSubcase3cInsertion(v)) v = leftDoubleRotation(v.getGrandfather());
-        else if (isSubcase3dInsertion(v)) v = rightDoubleRotation(v.getGrandfather());
+      if (super.getDebug()) System.out.println("resolveCase3Insertion");
+
+      NodeRn<T> w = v.getParent();
+      NodeRn<T> t = v.getGrandfather();      
+      t.setRed();
+
+      if (isSubcase3aInsertion(v)) {
+        w.setBlack();        
+        v = rightSimpleRotation(v.getGrandfather());
       }
+      else if (isSubcase3bInsertion(v)) {
+        w.setBlack();
+        v = leftSimpleRotation(v.getGrandfather());
+      }
+      else if (isSubcase3cInsertion(v)) {
+        v.setBlack();
+        v = leftDoubleRotation(v.getGrandfather());
+      }
+      else if (isSubcase3dInsertion(v)) {
+        v.setBlack();
+        v = rightDoubleRotation(v.getGrandfather());
+      }
+
       return v;
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.resolveCase3Insertion(NodeRn<T> n)\n" + e.getMessage());
@@ -274,9 +324,10 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Boolean r = false;
       NodeRn<T> w = v.getParent();
       if (
-        super.isLeftChild(v) &&
-        super.isLeftChild(w)
-      ) {
+          super.isLeftChild(v) &&
+          super.isLeftChild(w)
+        ) {
+        if (super.getDebug()) System.out.println("isSubcase3aInsertion");
         r = true;
       }      
       return r;
@@ -294,9 +345,10 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Boolean r = false;
       NodeRn<T> w = v.getParent();
       if (
-        super.isRightChild(v) &&
-        super.isRightChild(w)
-      ) {
+          super.isRightChild(v) &&
+          super.isRightChild(w)
+        ) {
+        if (super.getDebug()) System.out.println("isSubcase3bInsertion");
         r = true;
       }
       return r;
@@ -314,10 +366,11 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Boolean r = false;
       NodeRn<T> w = v.getParent();
       if (
-        super.isLeftChild(v) &&
-        super.isRightChild(w)
-      ) {
-        r = true;
+          super.isLeftChild(v) &&
+          super.isRightChild(w)
+        ) {
+          if (super.getDebug()) System.out.println("isSubcase3cInsertion");
+          r = true;
       }
       return r;
     } catch (Exception e) {
@@ -336,7 +389,8 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       if (
         super.isRightChild(v) &&
         super.isLeftChild(w)
-      ) {
+        ) {
+        if (super.getDebug()) System.out.println("isSubcase3dInsertion");
         r = true;
       }      
       return r;
@@ -349,6 +403,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       String s = "";
       String l = "";
       String e = "";
+      String space = " ";
       Iterator i;
       NodeRn<T> n;
       if (super.size() != 0){
@@ -360,8 +415,8 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
             n = (NodeRn<T>) i.next();
             // calcula espaço padrão para coluna atual
             e = "";
-            int sizeE = n.getKey().toString().length() + 2;          
-            for (int j = 0; j < sizeE; j ++) e += " ";
+            int sizeE = n.getKey().toString().length();          
+            for (int j = 0; j < sizeE; j ++) e += space;
             // impressão 
             if (depth(n) == h) {
               // linha para value
@@ -375,7 +430,11 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
               s += e;
             }
             // insere espaço na linha de ligação
-            l += e;
+            if (depth(n) == h) {
+              if ((hasLeft(n)) ^ (hasRight(n))) l += space;
+              else if (isExternal(n)) l += e; 
+            }
+            else l += e;
           }
           // adiciona linha de ligação abaixo da linha de valores
           if (l.indexOf("\\") + l.indexOf("/") != -2) {
@@ -402,7 +461,9 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       // critério 1: não precisa ser testada, pois todos os nós folhas são sempre negros
       if (super.size() == 0) return isRn;
       // critério 2: o Node root deve ser negro
-      if (getRoot().isRed()) throw new RuntimeException("Condição 2 não atendida: NodeRn<T> root tem cor 'R'.");
+      if (getRoot().isRed()) throw new RuntimeException(
+        "Condição 2 não atendida: NodeRn<T> root: " + getRoot().getKey() + " tem cor 'R'."
+      );
       Iterator i;
       NodeRn<T> v;
       i = nodes();
@@ -413,15 +474,21 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           if (!isExternal(v)) {
             if (v.getLeftChild() != null)
               if (v.getLeftChild().isRed())
-                throw new RuntimeException("Condição 3 não atendida: NodeRn<T> v tem cor 'R' e seu filno esquerdo tem cor 'R'.");            
+                throw new RuntimeException(
+                  "Condição 3 não atendida: NodeRn<T> v: " + v.getKey() + " tem cor 'R' e seu filho esquerdo: " + v.getLeftChild().getKey() + " tem cor 'R'."
+                );            
             if (v.getRightChild() != null)
               if (v.getRightChild().isRed())
-                throw new RuntimeException("Condição 3 não atendida: NodeRn<T> v tem cor 'R' e seu filno direito tem cor 'R'.");            
+                throw new RuntimeException(
+                  "Condição 3 não atendida: NodeRn<T> v: " + v.getKey() + " tem cor 'R' e seu filho direito: " + v.getRightChild().getKey() + " tem cor 'R'."
+                );            
           }
         }
         // critério 4: Os caminhos de v para seus nós descendentes externos possuem idêntico número de nós negros
         if (blackHeight(v.getLeftChild()) != blackHeight(v.getRightChild()))
-          throw new RuntimeException("Condição 4 não atendida: altura negra dos filhos de NodeRn<T> v são diferentes.");            
+          throw new RuntimeException(
+            "Condição 4 não atendida: altura negra dos filhos de NodeRn<T> v: " + v.getKey() + " são diferentes."
+          );            
       }
       return isRn;
     } catch (Exception e) {

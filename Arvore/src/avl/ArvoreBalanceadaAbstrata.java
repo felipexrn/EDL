@@ -8,7 +8,7 @@ public abstract class ArvoreBalanceadaAbstrata<T extends Comparable<T>, N extend
         super(c);
     }
     public N rightSimpleRotation(N b) {        
-        if (super.getDebug()) System.out.println("rightSimpleRotationAbstract");        
+        if (super.getDebug()) System.out.println("rightSimpleRotationAbstract");     
         // troca ligações entre a e b
         N a = b.getLeftChild();
         b.setLeftChild(a.getRightChild());
@@ -27,7 +27,7 @@ public abstract class ArvoreBalanceadaAbstrata<T extends Comparable<T>, N extend
         return a;
     }
     public N leftSimpleRotation(N b) {             
-        if (super.getDebug()) System.out.println("leftSimpleRotationAbstract");
+        if (super.getDebug()) System.out.println("leftSimpleRotationAbstract");        
         // troca ligações entre a e b
         N a = b.getRightChild();
         b.setRightChild(a.getLeftChild());
@@ -47,14 +47,14 @@ public abstract class ArvoreBalanceadaAbstrata<T extends Comparable<T>, N extend
     }
     public N rightDoubleRotation(N b) {
         if (super.getDebug()) System.out.println("rightDoubleRotationAbsrtact"); 
-        N a = leftSimpleRotation(b.getLeftChild());
-        a = rightSimpleRotation(a.getParent());
+        N a = this.leftSimpleRotation(b.getLeftChild());
+        a = this.rightSimpleRotation(a.getParent());
         return a;
     }
     public N leftDoubleRotation(N b) {
         if (super.getDebug()) System.out.println("leftDoubleRotationAbsrtact"); 
-        N a = rightSimpleRotation(b.getRightChild());
-        a = leftSimpleRotation(a.getParent());
+        N a = this.rightSimpleRotation(b.getRightChild());
+        a = this.leftSimpleRotation(a.getParent());
         return a;
     }
 }
