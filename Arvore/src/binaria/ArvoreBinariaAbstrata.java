@@ -374,7 +374,7 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
       s += "Depths: " + strDepths();
     }
     else
-      s = "Árvore vazia";
+      s = "Arvore vazia";
     System.out.println(s);
   }
 	public int size() {

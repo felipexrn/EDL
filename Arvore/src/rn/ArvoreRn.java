@@ -8,7 +8,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   private String colorRed = "\033[31m"; 
   private String colorReset = "\033[0m";
   public ArvoreRn(int type) {
-    super(type);
+    super(type); 
   }
   public ArvoreRn(GenericComparator<T, NodeRn<T>> c) {
     super(c);
@@ -469,10 +469,28 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       throw new RuntimeException("Erro durante isSituation3Remove!\n" + e.getMessage());
     }
   }
+  public void resolveSituation3Remove(NodeRn<T> v, NodeRn<T> x) {
+    try {
+      if (super.getDebug()) System.out.println("resolveSituation3Remove");
+      /*
+      Situação 3 – v é negro e x é negro.
+      */
+      // caso 1
+      if ()
+      // caso 2a
+      // caso 2b
+      // caso 3
+      // caso 4
+      
+      
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante resolveSituation3Remove!\n" + e.getMessage());
+    }
+  }
   public Boolean isCase1Remove(NodeRn<T> v, NodeRn<T> x) {
     try {
       /*
-      Caso 1: se x é negro e x tem irmão w rubro e pai negro.
+      Caso 1: se x é negro e x tem irmão w rubro e t(pai de x) é negro.
       Marque ele com um duplo negro e faça o seguinte:
       • Faça uma rotação simples esquerda
       • Pinte w de negro
@@ -480,9 +498,21 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       • Chame o caso 2b
       */
       Boolean r = false;
-      if (true) {
-        if (super.getDebug()) System.out.println("isCase1Remove");
-        r = true;
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      if (
+          (x != null) &&
+          (r != null) &&
+          (t != null)
+        ) {
+          if (
+            x.isBlack() && 
+            w.isRed() &&
+            t.isBlack()
+          ) {
+          if (super.getDebug()) System.out.println("isCase1Remove");
+          r = true;
+        }
       }
       return r;
     } catch (Exception e) {
