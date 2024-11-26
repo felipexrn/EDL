@@ -3,12 +3,13 @@ import java.util.Iterator;
 import Arvore.src.binaria.*;
 import Arvore.src.avl.*;
 
+
 public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<T,NodeRn<T>>  implements IArvoreBinaria<T, NodeRn<T>>, IArvoreRn<T> {
   private String colorBlack = "\033[34m"; // Azul
-  private String colorRed = "\033[31m"; 
+  private String colorRed = "\033[31m";
   private String colorReset = "\033[0m";
   public ArvoreRn(int type) {
-    super(type); 
+    super(type);
   }
   public ArvoreRn(GenericComparator<T, NodeRn<T>> c) {
     super(c);
@@ -20,23 +21,23 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       throw new IllegalArgumentException("Tipo incompatível de nó: " + p.getClass().getName());
     }
   }
-  public NodeRn<T> include(T k){ 
+  public NodeRn<T> include(T k){
     try {
       //if (super.getDebug()) System.out.println("include");
-      NodeRn<T> v = super.include(k);   
+      NodeRn<T> v = super.include(k);  
       rebalance(v, null, true);
       return v;
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.include(T k)\n" + e.getMessage());
     }
   }
-	public NodeRn<T> remove(T k){ 
+  public NodeRn<T> remove(T k){
     try {
       //if (super.getDebug()) System.out.println("remove");
-      
+     
       // Encontre o nó v a ser removido
       NodeRn<T> v = super.search(null, k);
-      
+     
       // Guarda o sucessor de k para rebalancear a arvore
       NodeRn<T> x = super.getSucessor(k);    
       Boolean isFromRight = false;
@@ -59,10 +60,12 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       // remove k
       v = super.remove(k);
 
+
       /*if (getDebug()) {
         System.out.println("n:");
         n.showLinks();
       }*/
+
 
       /*if ((super.size() > 0) && (n.getParent() != null) && (!isSucessorCase(n)) && (m != n.getParent())) {
         if (getDebug()) {
@@ -70,6 +73,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         }
         throw new RuntimeException("Pai direfente do esperado!");
       }*/
+
 
       // Rebalanceia a árvore
       if (super.size() > 0) rebalance(v, x, false);
@@ -81,7 +85,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   public NodeRn<T> rebalance(NodeRn<T> v, NodeRn<T> x, Boolean inInsert) {
     try {  
       if (super.getDebug()) System.out.println("rebalance");
-      
+     
       // Condição de parada se for raiz
       if (v == null) return null;
       //if (super.getDebug()) System.out.println("parada raiz");  
@@ -92,7 +96,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         // critério 2: o Node root deve ser negro
         if (v.getParent() == null)
           v.setBlack();
-        
+       
         if (isCase2Include(v)) {
           v = resolveCase2Include(v);
           return rebalance(v, null, inInsert);
@@ -104,7 +108,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         else if (isCase1Include(v)) {          
           return null;
         }
-        } 
+        }
       // se remoção
       else {
         if (isSituation1Remove(v, x)) {
@@ -115,12 +119,15 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           return null;
         }
         else if (isSituation3Remove(v, x)) {
+          resolveSituation3Remove(v, x);
           return null;
         }
         else if (isSituation4Remove(v, x)) {
+          resolveSituation4Remove(v, x);
           return null;
         }
       }
+
 
       return null;
     } catch (Exception e) {
@@ -145,6 +152,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         b.showLinks();
       }*/
 
+
       return a;
     } catch (Exception e) {
       throw new RuntimeException("Erro em: ArvoreRn.rightSimpleRotation(NodeRn<T> b)\n" + e.getMessage());
@@ -165,6 +173,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         a.showLinks();
         b.showLinks();
       }*/
+
 
       return a;
     } catch (Exception e) {
@@ -203,14 +212,14 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   }
   public Boolean isCase1Include(NodeRn<T> v) {
     try {
-      /* 
+      /*
       Caso 1 da inserção:
       se w, o pai de v, é negro, nada mais precisa ser feito já que o critério 4 foi mantido.
       */
       Boolean r = false;
       if (v.getParent() == null || v.getParent().isBlack()) {        
         if (super.getDebug()) System.out.println("isCase1Include");
-        r = true; 
+        r = true;
       }
       return r;
     } catch (Exception e) {
@@ -256,13 +265,13 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       t.setRed();
       u.setBlack();
       w.setBlack();
-      
+     
       // critério 2: o Node root deve ser negro
       if (t.getParent() == null) t.setBlack();
-      
+     
       if ((t.getParent() != null) && t.getParent().isRed())
-        return t; 
-      
+        return t;
+     
       return v;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante resolveCase2Include!\n" + e.getMessage());
@@ -300,9 +309,11 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
     try {
       if (super.getDebug()) System.out.println("resolveCase3Include");
 
+
       NodeRn<T> w = v.getParent();
       NodeRn<T> t = v.getGrandfather();      
       t.setRed();
+
 
       if (isSubcase3aInclude(v)) {
         w.setBlack();        
@@ -320,6 +331,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         v.setBlack();
         v = rightDoubleRotation(v.getGrandfather());
       }
+
 
       return v;
     } catch (Exception e) {
@@ -481,11 +493,22 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         resolveCase2bRemove(v, x);
       }
       // caso 2a
+      if (isCase2aRemove(v, x)) {
+        resolveCase2aRemove(v, x);
+      }
       // caso 2b
+      if (isCase2bRemove(v, x)) {
+        resolveCase2bRemove(v, x);
+      }
       // caso 3
+      if (isCase3Remove(v, x)) {
+        resolveCase3Remove(v, x);
+      }
       // caso 4
-      
-      
+      if (isCase4Remove(v, x)) {
+        resolveCase4Remove(v, x);
+      }
+     
     } catch (Exception e) {
       throw new RuntimeException("Erro durante resolveSituation3Remove!\n" + e.getMessage());
     }
@@ -509,7 +532,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           (t != null)
         ) {
           if (
-            x.isBlack() && 
+            x.isBlack() &&
             w.isRed() &&
             t.isBlack()
           ) {
@@ -545,24 +568,56 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   public Boolean isCase2aRemove(NodeRn<T> v, NodeRn<T> x) {
     try {
       /*
-      Caso 2a: se x é negro, tem irmão w negro com filhos negros e pai negro.
+      Caso 2a: se x é negro, tem w(irmão de x) negro com filhos negros e t(pai de x) negro.
       faça o seguinte:
       • Pinte o irmão w de rubro
       */
       Boolean r = false;
-      if (true) {
-        if (super.getDebug()) System.out.println("isCase2aRemove");
-        r = true;
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      NodeRn<T> wLN = x.getLeftNephew();
+      NodeRn<T> wRN = x.getRightNephew();
+      if (
+          (x != null) &&
+          (w != null) &&
+          (t != null)
+        ) {
+        if (
+            x.isBlack() &&
+            w.isBlack() &&
+            (
+              ((wLN == null) || wLN.isBlack()) &&
+              ((wRN == null) || wRN.isBlack())
+            ) &&
+            t.isBlack()
+          ) {
+          if (super.getDebug()) System.out.println("isCase2aRemove");
+          r = true;
+        }
       }
       return r;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante isCase2aRemove!\n" + e.getMessage());
     }
   }
+  public void resolveCase2aRemove(NodeRn<T> v, NodeRn<T> x) {
+    try {
+      if (super.getDebug()) System.out.println("resolveCase2aRemove");
+      /*
+      Caso 2a: se x é negro, tem w(irmão de x) negro com filhos negros e t(pai de x) negro.
+      faça o seguinte:
+      • Pinte w(irmão de x) de rubro
+      */
+      NodeRn<T> w = x.getBrother();
+      w.setRed();
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante resolveCase2aRemove!\n" + e.getMessage());
+    }
+  }
   public Boolean isCase2bRemove(NodeRn<T> v, NodeRn<T> x) {
     try {
       /*
-      Caso 2b: se x é negro, tem w(irmão de x) negro com filhos negros e t(pai de x) rubro. 
+      Caso 2b: se x é negro, tem w(irmão de x) negro com filhos negros e t(pai de x) rubro.
       faça o seguinte:
       • Pinte w(irmão de x) de rubro e o t(pai de x) de negro
       */
@@ -577,7 +632,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           (t != null)
         ) {
           if (
-            x.isBlack() && 
+            x.isBlack() &&
             w.isBlack() &&
             (
               ((wLN == null) || wLN.isBlack()) &&
@@ -598,7 +653,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
     try {
       if (super.getDebug()) System.out.println("resolveCase2bRemove");
       /*
-      Caso 2b: se x é negro, tem w (irmão de x) negro com filhos negros e t(pai de w) é rubro. 
+      Caso 2b: se x é negro, tem w (irmão de x) negro com filhos negros e t(pai de w) é rubro.
       faça o seguinte:
       • Pinte w(irmão de x) de rubro e t(pai de x) de negro
       */
@@ -613,40 +668,158 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   public Boolean isCase3Remove(NodeRn<T> v, NodeRn<T> x) {
     try {
       /*
-      Caso 3: se x é negro, tem irmão w negro, tem pai de qualquer cor (rubro ou negro), tem
-      irmão w com filho esquerdo rubro e irmão w com filho direito negro. faça o seguinte:
-      • Rotação simples direita em w
-      • Trocar as cores de w com seu filho esquerdo
+      Caso 3: se x é negro, tem  w(irmão de x) negro, tem t(pai de x) de qualquer cor (rubro ou negro), tem
+      w(irmão de x) com filho esquerdo rubro e w(irmão de x) com filho direito negro. faça o seguinte:
+      se x for filho esquerdo:
+        • Rotação simples direita em w(irmão de x) se x for filho esquerdo
+        • Trocar as cores de w com seu filho esquerdo
+      se x for filho direito:
+        • Rotação simples esquerda em w(irmão de x) se x for filho direito
+        • Trocar as cores de w com seu filho direito
       */
       Boolean r = false;
-      if (true) {
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      NodeRn<T> wLN = x.getLeftNephew();
+      NodeRn<T> wRN = x.getRightNephew();
+      if (
+          (x != null) &&
+          (w != null) &&
+          (t != null)
+        ) {
+          if (
+            (
+              (x.isBlack() && isLeftChild(x)) &&
+              w.isBlack() &&
+              (
+                ((wLN == null) || wLN.isRed()) &&
+                ((wRN == null) || wRN.isBlack())
+              )
+            ) || (
+              (x.isBlack() && isRightChild(x)) &&
+              w.isBlack() &&
+              (
+                ((wLN == null) || wLN.isBlack()) &&
+                ((wRN == null) || wRN.isRed())
+              )
+            )
+          ) {
         if (super.getDebug()) System.out.println("isCase3Remove");
         r = true;
+        }
       }
       return r;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante isCase3Remove!\n" + e.getMessage());
     }
   }
+  public void resolveCase3Remove(NodeRn<T> v, NodeRn<T> x) {
+    try {
+      if (super.getDebug()) System.out.println("resolveCase3Remove");
+      /*
+      Caso 3: se x é negro, tem  w(irmão de x) negro, tem t(pai de x) de qualquer cor (rubro ou negro), tem
+      w(irmão de x) com filho esquerdo rubro e w(irmão de x) com filho direito negro. faça o seguinte:
+      se x for filho esquerdo:
+        • Rotação simples direita em w(irmão de x) se x for filho esquerdo
+        • Trocar as cores de w com seu filho esquerdo
+      se x for filho direito:
+        • Rotação simples esquerda em w(irmão de x) se x for filho direito
+        • Trocar as cores de w com seu filho direito
+      */
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      NodeRn<T> wLN = x.getLeftNephew();
+      NodeRn<T> wRN = x.getRightNephew();
+      if (isLeftChild(x)) {
+        super.rightSimpleRotation(w);
+        w.setRed();
+        wLN.setBlack();
+      } else if (isRightChild(x)) {
+        super.leftSimpleRotation(w);
+        w.setRed();
+        wRN.setBlack();
+      }
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante resolveCase3Remove!\n" + e.getMessage());
+    }
+  }
   public Boolean isCase4Remove(NodeRn<T> v, NodeRn<T> x) {
     try {
       /*
-      Caso 4: se x é negro, tem irmão w negro, tem pai de qualquer cor (rubro ou negro), tem
-      irmão w com filho esquerdo qualquer cor e irmão w com filho direito rubro.
+      Caso 4: se x é negro, tem w(irmão de x) negro, tem t(pai de x) de qualquer cor (rubro ou negro), tem
+      w(irmão de x) com filho esquerdo qualquer cor e com filho direito rubro.
       faça o seguinte:
-    • Rotação simples a esquerda
-    • Pinte o pai de negro
-    • w igual a cor anterior do pai de x
-    • Pinte o filho direito de w de negro
+      • Rotação simples a esquerda
+      • Pinte o pai de negro
+      • w igual a cor anterior do pai de x
+      • Pinte o filho direito de w de negro
       */
       Boolean r = false;
-      if (true) {
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      NodeRn<T> wLN = x.getLeftNephew();
+      NodeRn<T> wRN = x.getRightNephew();
+      if (
+          (x != null) &&
+          (w != null) &&
+          (t != null)
+        ) {
+          if (
+            (
+              (x.isBlack() && isLeftChild(x)) &&
+              w.isBlack() &&
+              ((wRN == null) || wRN.isRed())
+            ) || (
+              (x.isBlack() && isRightChild(x)) &&
+              w.isBlack() &&
+              ((wLN == null) || wLN.isRed())
+            )
+          ) {
         if (super.getDebug()) System.out.println("isCase4Remove");
         r = true;
+        }
       }
       return r;
     } catch (Exception e) {
       throw new RuntimeException("Erro durante isCase4Remove!\n" + e.getMessage());
+    }
+  }
+  public void resolveCase4Remove(NodeRn<T> v, NodeRn<T> x) {
+    try {
+      if (super.getDebug()) System.out.println("resolveCase4Remove");
+      /*
+      Caso 4: se x é negro, tem w(irmão de x) negro, tem t(pai de x) de qualquer cor (rubro ou negro), tem
+      w(irmão de x) com filho esquerdo qualquer cor e com filho direito rubro.
+      Se x é filho esquerdo:
+        • Rotação simples a esquerda
+        • w recebe a cor de t(pai de x)
+        • Pinte o t(pai de x) de negro        
+        • Pinte o filho direito de w de negro
+      Se x é filho direito:
+        • Rotação simples a direita
+        • w recebe a cor de t(pai de x)
+        • Pinte o t(pai de x) de negro
+        • Pinte o filho esquerdo de w de negro
+      */
+      NodeRn<T> w = x.getBrother();
+      NodeRn<T> t = x.getParent();
+      NodeRn<T> wLN = x.getLeftNephew();
+      NodeRn<T> wRN = x.getRightNephew();
+      if (isLeftChild(x)) {
+        super.leftSimpleRotation(w);
+        if (t.isRed()) w.setRed();
+        else w.setBlack();
+        t.setBlack();
+        wRN.setBlack();
+      } else if (isRightChild(x)) {
+        super.rightSimpleRotation(w);
+        if (t.isRed()) w.setRed();
+        else w.setBlack();
+        t.setBlack();
+        wLN.setBlack();
+      }
+    } catch (Exception e) {
+      throw new RuntimeException("Erro durante resolveCase4Remove!\n" + e.getMessage());
     }
   }
   public Boolean isSituation4Remove(NodeRn<T> v, NodeRn<T> x) {
@@ -697,12 +870,12 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
             e = "";
             int sizeE = n.getKey().toString().length();          
             for (int j = 0; j < sizeE; j ++) e += space;
-            // impressão 
+            // impressão
             if (depth(n) == h) {
               // linha para value
               s += (n.isRed() ? colorRed : colorBlack) + n.getKey() + colorReset + "";            
               // linha para ligação
-              if (hasLeft(n)) l += "/"; 
+              if (hasLeft(n)) l += "/";
               if (hasRight(n)) l += "\\";
             }
             else {
@@ -712,7 +885,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
             // insere espaço na linha de ligação
             if (depth(n) == h) {
               if ((hasLeft(n)) ^ (hasRight(n))) l += space;
-              else if (isExternal(n)) l += e; 
+              else if (isExternal(n)) l += e;
             }
             else l += e;
           }
@@ -775,5 +948,4 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       throw new RuntimeException("Arvore não é rubro-negra!\n" + e.getMessage());
     }
   }
-} 
-  
+}
