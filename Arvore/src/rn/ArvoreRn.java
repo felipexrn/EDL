@@ -36,7 +36,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       //if (super.getDebug()) System.out.println("remove");
      
       // Encontre o nó v a ser removido
-      NodeRn<T> v = super.search(null, k);
+      NodeRn<T> v = super.search(super.getRoot(), k);
      
       // Guarda o sucessor de k para rebalancear a arvore
       NodeRn<T> x = super.getSucessor(k);    
