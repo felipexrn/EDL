@@ -193,10 +193,9 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
   }
   public N getSucessor(T k) {
     N n = search(root, k);
-    if (isExternal(n)) n = null;
-    else if (!hasRight(n)) n = null;    
-    else n = search(n.getRightChild(), n.getKey());
-    return n;
+    if (isExternal(n)) return null;
+    else if (!hasRight(n)) return n.getLeftChild();    
+    return search(n.getRightChild(), n.getKey());
   }
   public Boolean isSucessorCase(N n) {
     return (isInternal(n) && hasRight(n));

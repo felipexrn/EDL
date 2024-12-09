@@ -38,40 +38,16 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       //if (super.getDebug()) System.out.println("remove");
      
       // Encontre o nó v a ser removido
-      NodeRn<T> v = super.search(super.getRoot(), k);
-     
+      NodeRn<T> v = super.search(getRoot(), k);
+      
       // Guarda o sucessor de k para rebalancear a arvore
-      NodeRn<T> x = super.getSucessor(k);    
-      Boolean isFromRight = false;
-      if (x != null) {
-        isFromRight = isRightChild(x);
-        if (x != getRoot()) x = x.getParent();
-        /*if (getDebug()) {
-          System.out.println("x!=null");
-          x.showLinks();
-        }*/
-      } else {
-        x = createNode(v.getParent(), k);
-        if (isBlack(v)) x.setBlack();
-        else x.setRed();
+      NodeRn<T> x = super.getSucessor(k);          
+      if (x == null) {
+        x = v;
       }
+
       // remove k
       v = super.remove(k);
-
-
-      /*if (getDebug()) {
-        System.out.println("n:");
-        n.showLinks();
-      }*/
-
-
-      /*if ((super.size() > 0) && (n.getParent() != null) && (!isSucessorCase(n)) && (m != n.getParent())) {
-        if (getDebug()) {
-          System.out.println("root: " + getRoot().getKey());
-        }
-        throw new RuntimeException("Pai direfente do esperado!");
-      }*/
-
 
       // Rebalanceia a árvore
       if (super.size() > 0) rebalance(v, x, false);

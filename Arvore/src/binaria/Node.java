@@ -43,7 +43,7 @@ public abstract class Node<T extends Comparable<T>, N extends Node<T, N>> implem
   public N getBrother() {
     // brother = irmão
     if (getParent() == null) return null;
-    if (getParent().getLeftChild() == this) return getParent().getRightChild();
+    else if (getParent().getLeftChild() == this) return getParent().getRightChild();
     return getParent().getLeftChild(); 
   }
   public N getUncle() {
