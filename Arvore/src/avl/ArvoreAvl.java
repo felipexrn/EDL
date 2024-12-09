@@ -28,41 +28,17 @@ public class ArvoreAvl<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata
   }
 	public NodeAvl<T> remove(T k){ 
     try {
-      //if (super.getDebug()) System.out.println("remove");
-      
-      // Guarda o sucessor de k para rebalancear a arvore
-      NodeAvl<T> m = super.getSucessor(k);    
+      //if (super.getDebug()) System.out.println("remove");  
+
       Boolean isFromRight = false;
-      if (m != null) {
-        isFromRight = isRightChild(m);
-        if (m != getRoot()) m = m.getParent();
-        /*if (getDebug()) {
-          System.out.println("m!=null");
-          m.showLinks();
-        }*/
-      } else {
-        m = super.search(getRoot(), k);
-        isFromRight = isRightChild(m);
-        if (m != getRoot()) m = m.getParent();
-        /*if (getDebug()) {
-          System.out.println("m==null");
-          m.showLinks();
-        }*/
-      }
+      NodeAvl<T> m = super.search(getRoot(), k);
+      
+      if (super.isInternal(m) && super.hasRight(m)) m = search(m.getRightChild(), m.getKey());
+      isFromRight = isRightChild(m);
+      if (m != getRoot()) m = m.getParent();
+
       // remove k
       NodeAvl<T> n = super.remove(k);
-
-      /*if (getDebug()) {
-        System.out.println("n:");
-        n.showLinks();
-      }*/
-
-      /*if ((super.size() > 0) && (n.getParent() != null) && (!isSucessorCase(n)) && (m != n.getParent())) {
-        if (getDebug()) {
-          System.out.println("root: " + getRoot().getKey());
-        }
-        throw new RuntimeException("Pai direfente do esperado!");
-      }*/
 
       // Rebalanceia a árvore
       if (super.size() > 0) rebalance(m, isFromRight, false);

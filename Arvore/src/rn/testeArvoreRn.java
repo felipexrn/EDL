@@ -6,7 +6,7 @@ public class testeArvoreRn {
       // 0=inteiro    
       ArvoreRn ARN = new ArvoreRn(0);
       System.out.println("instanciada Arvore Rubro Negra do tipo: " + ARN.getComparer().getStrType());
-      ARN.setDebug(false);
+      ARN.setDebug(true);
       if(ARN.getDebug()) System.out.println("Debug ligado.");
       else System.out.println("Debug desligado.");
       // NodeRn n = new NodeRn(null, 1);

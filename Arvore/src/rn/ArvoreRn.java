@@ -8,6 +8,8 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
   private String colorBlack = "\033[34m"; // Azul
   private String colorRed = "\033[31m";
   private String colorReset = "\033[0m";
+  private String red = "R";
+  private String black = "B";
   public ArvoreRn(int type) {
     super(type);
   }
@@ -49,13 +51,9 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           x.showLinks();
         }*/
       } else {
-        x = super.search(getRoot(), k);
-        isFromRight = isRightChild(x);
-        if (x != getRoot()) x = x.getParent();
-        /*if (getDebug()) {
-          System.out.println("x==null");
-          x.showLinks();
-        }*/
+        x = createNode(v.getParent(), k);
+        if (isBlack(v)) x.setBlack();
+        else x.setRed();
       }
       // remove k
       v = super.remove(k);
@@ -429,7 +427,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Nada necessita ser feito, pois a árvore Rubro-Negra continua atendendo a todos os critérios.
       */
       Boolean r = false;
-      if (v.isRed() && x.isRed()) {
+      if (isRed(v) && isRed(x)) {
         if (super.getDebug()) System.out.println("isSituation1Remove");
         r = true;
       }
@@ -445,8 +443,8 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Pinte x de negro e pare.
       */
       Boolean r = false;
-      if (v.isBlack() && x.isRed()) {
-        if (super.getDebug()) System.out.println("isSituation2Remove");
+      if (isBlack(v) && isRed(x)) {
+        if (super.getDebug()) System.out.println("isSituation2Remove");        
         r = true;
       }
       return r;
@@ -461,7 +459,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Situação 2 – v é negro e x é rubro.
       Pinte x de negro e pare.
       */
-      x.setBlack();
+      if (x != null) x.setBlack();
     } catch (Exception e) {
       throw new RuntimeException("Erro durante resolveSituation2Remove!\n" + e.getMessage());
     }
@@ -472,7 +470,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Situação 3 – v é negro e x é negro.
       */
       Boolean r = false;
-      if (v.isBlack() && x.isBlack()) {
+      if (isBlack(v) && isBlack(x)) {
         if (super.getDebug()) System.out.println("isSituation3Remove");
         r = true;
       }
@@ -532,9 +530,9 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           (t != null)
         ) {
           if (
-            x.isBlack() &&
-            w.isRed() &&
-            t.isBlack()
+            isBlack(x) &&
+            isRed(w) &&
+            isBlack(t)
           ) {
           if (super.getDebug()) System.out.println("isCase1Remove");
           r = true;
@@ -583,13 +581,13 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           (t != null)
         ) {
         if (
-            x.isBlack() &&
-            w.isBlack() &&
+            isBlack(x) &&
+            isBlack(w) &&
             (
-              ((wLN == null) || wLN.isBlack()) &&
-              ((wRN == null) || wRN.isBlack())
+              ((wLN == null) || isBlack(wLN)) &&
+              ((wRN == null) || isBlack(wRN))
             ) &&
-            t.isBlack()
+            isBlack(t)
           ) {
           if (super.getDebug()) System.out.println("isCase2aRemove");
           r = true;
@@ -632,13 +630,13 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
           (t != null)
         ) {
           if (
-            x.isBlack() &&
-            w.isBlack() &&
+            isBlack(x) &&
+            isBlack(w) &&
             (
-              ((wLN == null) || wLN.isBlack()) &&
-              ((wRN == null) || wRN.isBlack())
+              ((wLN == null) || isBlack(wLN)) &&
+              ((wRN == null) || isBlack(wRN))
             ) &&
-            t.isRed()
+            isRed(t)
           ) {
           if (super.getDebug()) System.out.println("isCase2bRemove");
           r = true;
@@ -689,18 +687,18 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         ) {
           if (
             (
-              (x.isBlack() && isLeftChild(x)) &&
-              w.isBlack() &&
+              (isBlack(x) && isLeftChild(x)) &&
+              isBlack(w) &&
               (
-                ((wLN == null) || wLN.isRed()) &&
-                ((wRN == null) || wRN.isBlack())
+                ((wLN == null) || isRed(wLN)) &&
+                ((wRN == null) || isBlack(wRN))
               )
             ) || (
-              (x.isBlack() && isRightChild(x)) &&
-              w.isBlack() &&
+              (isBlack(x) && isRightChild(x)) &&
+              isBlack(w) &&
               (
-                ((wLN == null) || wLN.isBlack()) &&
-                ((wRN == null) || wRN.isRed())
+                ((wLN == null) || isBlack(wLN)) &&
+                ((wRN == null) || isRed(wRN))
               )
             )
           ) {
@@ -766,13 +764,13 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
         ) {
           if (
             (
-              (x.isBlack() && isLeftChild(x)) &&
-              w.isBlack() &&
-              ((wRN == null) || wRN.isRed())
+              (isBlack(x) && isLeftChild(x)) &&
+              isBlack(w) &&
+              ((wRN == null) || isRed(wRN))
             ) || (
-              (x.isBlack() && isRightChild(x)) &&
-              w.isBlack() &&
-              ((wLN == null) || wLN.isRed())
+              (isBlack(x) && isRightChild(x)) &&
+              isBlack(w) &&
+              ((wLN == null) || isRed(wLN))
             )
           ) {
         if (super.getDebug()) System.out.println("isCase4Remove");
@@ -807,13 +805,13 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       NodeRn<T> wRN = x.getRightNephew();
       if (isLeftChild(x)) {
         super.leftSimpleRotation(w);
-        if (t.isRed()) w.setRed();
+        if (isRed(t)) w.setRed();
         else w.setBlack();
         t.setBlack();
         wRN.setBlack();
       } else if (isRightChild(x)) {
         super.rightSimpleRotation(w);
-        if (t.isRed()) w.setRed();
+        if (isRed(t)) w.setRed();
         else w.setBlack();
         t.setBlack();
         wLN.setBlack();
@@ -828,7 +826,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       Situação 3 – v é vermelho e x é negro.
       */
       Boolean r = false;
-      if (v.isRed() && x.isBlack()) {
+      if (isRed(v) && isBlack(x)) {
         if (super.getDebug()) System.out.println("isSituation4Remove");
         r = true;
       }
@@ -850,6 +848,16 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
     } catch (Exception e) {
       throw new RuntimeException("Erro durante resolveSituation4Remove!\n" + e.getMessage());
     }
+  }
+  public Boolean isRed(NodeRn<T> n){
+    Boolean r = true;
+    if (n == null) return false;
+    else return n.getColor().equals(red);
+  }
+  public Boolean isBlack(NodeRn<T> n){
+    Boolean r = true;
+    if (n == null) return true;
+    else return n.getColor().equals(black);
   }
   public void show() {
     try {
@@ -873,7 +881,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
             // impressão
             if (depth(n) == h) {
               // linha para value
-              s += (n.isRed() ? colorRed : colorBlack) + n.getKey() + colorReset + "";            
+              s += (isRed(n) ? colorRed : colorBlack) + n.getKey() + colorReset + "";            
               // linha para ligação
               if (hasLeft(n)) l += "/";
               if (hasRight(n)) l += "\\";
@@ -914,7 +922,7 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       // critério 1: não precisa ser testada, pois todos os nós folhas são sempre negros
       if (super.size() == 0) return isRn;
       // critério 2: o Node root deve ser negro
-      if (getRoot().isRed()) throw new RuntimeException(
+      if (isRed(getRoot())) throw new RuntimeException(
         "Condição 2 não atendida: NodeRn<T> root: " + getRoot().getKey() + " tem cor 'R'."
       );
       Iterator i;
@@ -923,15 +931,15 @@ public class ArvoreRn<T extends Comparable<T>> extends ArvoreBalanceadaAbstrata<
       while(i.hasNext()) {
         v = (NodeRn<T>) i.next();
         // critério 3: Se v é rubro, seus filhos devem ser negros
-        if (v.isRed()) {
+        if (isRed(v)) {
           if (!isExternal(v)) {
             if (v.getLeftChild() != null)
-              if (v.getLeftChild().isRed())
+              if (isRed(v.getLeftChild()))
                 throw new RuntimeException(
                   "Condição 3 não atendida: NodeRn<T> v: " + v.getKey() + " tem cor 'R' e seu filho esquerdo: " + v.getLeftChild().getKey() + " tem cor 'R'."
                 );            
             if (v.getRightChild() != null)
-              if (v.getRightChild().isRed())
+              if (isRed(v.getRightChild()))
                 throw new RuntimeException(
                   "Condição 3 não atendida: NodeRn<T> v: " + v.getKey() + " tem cor 'R' e seu filho direito: " + v.getRightChild().getKey() + " tem cor 'R'."
                 );            
