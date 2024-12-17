@@ -208,7 +208,11 @@ public abstract class ArvoreBinariaAbstrata<T extends Comparable<T>, N extends N
     return false;
   }
   public Boolean isLeftChild(N n) {
-    return (!isRightChild(n)) && (getRoot() != n);
+    if ((n != null) &&
+        (n.getParent() != null) &&
+        (n.getParent().getLeftChild() != null))
+      return n.getParent().getLeftChild() == n;
+    return false;
   }
 	public N getRoot() {
     return this.root;

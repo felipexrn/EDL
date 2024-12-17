@@ -67,7 +67,7 @@ public class testeArvoreRnAleatorio {
                 throw new FileNotFoundException(corVermelho+"Arquivo '" + arquivo + "' não encontrado!\n" + e.getMessage()+corPadrao);
             } catch (Exception e) {
                 throw new Exception(corVermelho+"Erro ao inserir itens na árvore!\n" + e.getMessage()+corPadrao);
-            }         
+            }                     
 
             // teste de remoção
             System.out.println("TESTE DE REMOÇÃO");
@@ -93,7 +93,11 @@ public class testeArvoreRnAleatorio {
                 }
             } catch (Exception e) {
                 throw new Exception(corVermelho+"Erro ao remover itens da árvore!\n" + e.getMessage()+corPadrao);
-            }  
+            }            
+            
+            // verificação dos testes relizados 
+            ARn.test();
+
             System.out.println(corVerde+"Teste bem sucedido"+corPadrao);
         }
         catch (Exception e) {

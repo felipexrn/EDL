@@ -57,4 +57,10 @@ public abstract class ArvoreBalanceadaAbstrata<T extends Comparable<T>, N extend
         a = this.leftSimpleRotation(a.getParent());
         return a;
     }
+    public Boolean isLeftChild(N n) {
+        return super.isLeftChild(n);
+    }
+    public Boolean isRightChild(N n) {
+        return super.isRightChild(n);
+    }
 }
