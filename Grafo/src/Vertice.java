@@ -1,10 +1,13 @@
 package Grafo.src;
 public class Vertice{
-    private Object obj;
+    private Object o;
     public Vertice(Object o) {
-        obj = o;
+        this.o = o;
     }
     public Object get() {
-        return obj;
+        return this.o;
+    }
+    public void set(Object o) {
+        this.o = o;
     }
 }
